@@ -1,0 +1,135 @@
+{
+    "children": [
+        {
+            "name": "Education",
+            "children": [
+                {
+                    "name": "Free, universal pre-kindergarten for all three- and four-year-olds",
+                    "desc": "",
+                    "group": "education",
+                    "value": 200,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Tuition-free two-year community college",
+                    "desc": "",
+                    "group": "education",
+                    "value": 109,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Increase Pell Grants for low-income students",
+                    "desc": "",
+                    "group": "education",
+                    "value": 80,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Programs to increase college completion",
+                    "desc": "Invest in evidence-based strategies to strengthen completion and retention rates at community colleges and institutions that serve students from our most disadvantaged communities",
+                    "group": "education",
+                    "value": 62,
+                    "colname": "level3"
+                },
+                {
+                    "name": "HBCU investment",
+                    "desc": "Provide two years of subsidized tuition for students from families earning less than $125,000 enrolled in a four-year HBCU, TCU, or MSI",
+                    "group": "education",
+                    "value": 39,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Diversify teachers",
+                    "desc": "Funding to train, equip, and diversify American teachers",
+                    "group": "education",
+                    "value": 9,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Aid Grants",
+                    "desc": "Expand existing institutional aid grants to HBCUs, TCUs, and MSIs",
+                    "group": "education",
+                    "value": 5,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Skilled Healthcare workers",
+                    "desc": "Programs to increase skilled healthcare workers",
+                    "group": "education",
+                    "value": 2,
+                    "colname": "level3"
+                }
+            ],
+            "colname": "level2"
+        },
+        {
+            "name": "Families and Children",
+            "children": [
+                {
+                    "name": "Childcare",
+                    "desc": "Make child care affordable, invest in high-quality care, and fund training for child care providers",
+                    "group": "fam",
+                    "value": 225,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Family and medical leave",
+                    "desc": "Create a national comprehensive paid family and medical leave program",
+                    "group": "fam",
+                    "value": 225,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Expand EBT",
+                    "desc": "Expand summer EBT to all eligible children nationwide",
+                    "group": "fam",
+                    "value": 25,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Free meals",
+                    "desc": "Expand free meals for children in the highest poverty districts",
+                    "group": "fam",
+                    "value": 17,
+                    "colname": "level3"
+                }
+            ],
+            "colname": "level2"
+        },
+        {
+            "name": "Expanded Tax Credit Extensions",
+            "children": [
+                {
+                    "name": "Child Tax Credit expansions",
+                    "desc": "Extend the Child Tax Credit expansions from the American Rescue Plan through 2025 and permanently make the Child Tax Credit fully refundable",
+                    "group": "tax",
+                    "value": 450,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Extend ACA premiums",
+                    "desc": "Extend expanded ACA premiums tax credits from the American Rescue Plan",
+                    "group": "tax",
+                    "value": 200,
+                    "colname": "level3"
+                },
+                {
+                    "name": "EITC permanent",
+                    "desc": "Make the American Rescue Plan Earned Income Tax Credit (EITC) expansion for childless workers permanent",
+                    "group": "tax",
+                    "value": 125,
+                    "colname": "level3"
+                },
+                {
+                    "name": "CDCTC permanent",
+                    "desc": "Make permanent the temporary Child and Dependent Care Tax Credit (CDCTC) expansion enacted in the American Rescue Plan",
+                    "group": "tax",
+                    "value": 80,
+                    "colname": "level3"
+                }
+            ],
+            "colname": "level2"
+        }
+    ],
+    "name": "American Jobs Plan"
+}

@@ -1,0 +1,155 @@
+{
+    "children": [
+        {
+            "name": "Transportation",
+            "children": [
+                {
+                    "name": "Electrifying vehicles",
+                    "desc": "Invest in Electric Vehicles (EV), including consumer rebates to purchase EVs, grants and incentives to build 500,000 new charging stations, and replacing and electrifying federal vehicle fleet",
+                    "group": "transport",
+                    "value": 174,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Highways, bridges, roads",
+                    "desc": "Modernize bridges, highways, roads, and main streets in critical need of repair",
+                    "group": "transport",
+                    "value": 115,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Modernizing public transit",
+                    "desc": "Modernize public transit",
+                    "group": "transport",
+                    "value": 85,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Rail service",
+                    "desc": "Improve passenger and freight rail service",
+                    "group": "transport",
+                    "value": 80,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Airports, water transit",
+                    "desc": "",
+                    "group": "transport",
+                    "value": 42,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Transportation inequities",
+                    "desc": "",
+                    "group": "transport",
+                    "value": 45,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Infrastructure",
+                    "desc": "",
+                    "group": "transport",
+                    "value": 50,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Other misc. programs",
+                    "desc": "",
+                    "group": "transport",
+                    "value": 30,
+                    "colname": "level3"
+                }
+            ],
+            "colname": "level2"
+        },
+        {
+            "name": "Community Infrastructure",
+            "children": [
+                {
+                    "name": "Clean drinking water",
+                    "desc": "",
+                    "group": "community",
+                    "value": 111,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Broadband",
+                    "desc": "",
+                    "group": "community",
+                    "value": 100,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Electric",
+                    "desc": "",
+                    "group": "community",
+                    "value": 100,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Housing",
+                    "desc": "",
+                    "group": "community",
+                    "value": 213,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Schools and VA hospitals",
+                    "desc": "",
+                    "group": "community",
+                    "value": 155,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Other misc. programs",
+                    "desc": "",
+                    "group": "community",
+                    "value": 28,
+                    "colname": "level3"
+                }
+            ],
+            "colname": "level2"
+        },
+        {
+            "name": "R&D, Workforce, Manufacturing",
+            "children": [
+                {
+                    "name": "Research & development",
+                    "desc": "",
+                    "group": "research",
+                    "value": 180,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Manufacturing",
+                    "desc": "",
+                    "group": "research",
+                    "value": 300,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Workforce development",
+                    "desc": "",
+                    "group": "research",
+                    "value": 100,
+                    "colname": "level3"
+                }
+            ],
+            "colname": "level2"
+        },
+        {
+            "name": "ElderCare",
+            "children": [
+                {
+                    "name": "Home/community-based care",
+                    "desc": "", 
+                    "group": "eldercare",
+                    "value": 400,
+                    "colname": "level3"
+                }
+            ],
+            "colname": "level2"
+        }
+    ],
+    "name": "American Jobs Plan"
+}

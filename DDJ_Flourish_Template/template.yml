@@ -1,0 +1,82 @@
+# The 'id' should be a string that uniquely identifies your template
+id: 'Doomsayer'
+name: Onboarding VisAhoi
+description: A tryout onboarding template for a project of the university of applied sciences St. Pölten
+author: FH St. Pölten (doomsayer)
+version: 1.0.1
+
+# This template is compatible with SDK version 3
+sdk_version: 3
+
+build:
+  # Defines the build processes used to build your template from source.
+  # You can have any number of build processes, and changes to the relevant
+  # files will trigger the appropriate build. Here we define build scripts
+  # for JavaScript and CSS.
+
+  src:
+    script: npm run build
+    # You can specify a whole directory, or individual files, or both.
+    # A change inside the directory or to any of the listed files will
+    # trigger a rebuild and reload.
+    directory: src
+    files:
+      - rollup.config.js
+
+  less:
+    script: npm run less
+    directory: less
+
+settings:
+  # Creates a settings panel that enables the end user to set the default state for
+  # individual visualisations made with this template.
+  #
+  # Available types:
+  # • "number" >> gives a number input. Optionally add "min:", "max:", and "step:" properties.
+  # • "string" >> gives an text input
+  # • "text" >> gives a textarea
+  # • "boolean" >> gives a checkbox
+  # • "color" >> gives a color picker
+
+  - Basic Settings # Headings can be used to break up the settings into collapsible sections
+  - property: background_color # property for storing the setting's value in the template's state
+    name: Background color # Name appears above setting
+    description: Set the background color of the visualisation # Description that appears in question mark next to name
+    type: color # Setting type
+  - property: showText # Refers to a property in the template's state object
+    name: Show Thext # Display name for the settings panel
+    description: Whether to show the text above the visualization or not # Optional description for the settings panel
+    type: boolean # See available types above
+  - property: headlineText # property for storing the setting's value in the template's state
+    name: Headline Text # Name appears above setting
+    description: Set the headline for the visualisation or leave it empty # Description that appears in question mark next to name
+    type: string # Setting type
+  - property: subheaderText # property for storing the setting's value in the template's state
+    name: Subheader Text # Name appears above setting
+    description: Set the subheader for the visualisation or leave it empty # Description that appears in question mark next to name
+    type: string # Setting type
+  - property: introText # property for storing the setting's value in the template's state
+    name: Intro Text # Name appears above setting
+    description: Set the intro text for the visualisation or leave it empty # Description that appears in question mark next to name
+    type: string # Setting type
+
+  - Vega-Lite # Headings can be used to break up the settings into collapsible sections
+  - property: vegaLiteScheme # Refers to a property in the template's state object
+    name: Paste your vega-lite code here in order to show it # Display name for the settings panel
+    description: Please paste only valid vega-lite code that includes all important configurations # Optional description for the settings panel
+    type: text # See available types above
+
+
+data:
+  # The data section determines how data is made available to your template,
+  # and the sample data that is used. See the documentation.
+  - key: label # Property name in the dataset
+    name: Label # Name to be displayed in the editor
+    dataset: data # Name of dataset
+    type: column # Are we selecting a single or multiple columns
+    column: "sampleData::A" # Which column should be selected 
+  - key: value
+    name: Value
+    dataset: data
+    type: column
+    column: "sampleData::B"
