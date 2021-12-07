@@ -7,7 +7,7 @@ the university of applied sciences FHSTP.
 ![Bitbucket open issues](https://img.shields.io/bitbucket/issues/iuricode/README-template?style=for-the-badge)
 ![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/iuricode/README-template?style=for-the-badge)
 
-<img src="exemplo-image.png" alt="Onboarding Logo">
+<img src="DDJ_Onboarding.png" alt="Onboarding Logo">
 
 > Make sure to read all the necessary infromations within each project before working with them!
 
