@@ -60,7 +60,8 @@
                     "colname": "level3"
                 }
             ],
-            "colname": "level2"
+            "colname": "level2",
+            "color": "#d1dadd"
         },
         {
             "name": "Community Infrastructure",
@@ -108,7 +109,8 @@
                     "colname": "level3"
                 }
             ],
-            "colname": "level2"
+            "colname": "level2",
+            "color": "#dedede"
         },
         {
             "name": "R&D, Workforce, Manufacturing",
@@ -135,7 +137,8 @@
                     "colname": "level3"
                 }
             ],
-            "colname": "level2"
+            "colname": "level2",
+            "color": "#e0ddc6"
         },
         {
             "name": "ElderCare",
@@ -148,7 +151,8 @@
                     "colname": "level3"
                 }
             ],
-            "colname": "level2"
+            "colname": "level2",
+            "color": "#e5e9f0"
         }
     ],
     "name": "American Jobs Plan"

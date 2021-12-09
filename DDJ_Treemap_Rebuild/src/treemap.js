@@ -41,7 +41,12 @@ export const createTreemap = (
 
   // Get the categories for the different colors
   const categories = root.data.children.map((e) => e.name);
+  const categoryColors = root.data.children.map((e) => e.color);
   color.domain(categories);
+  
+  if (categoryColors !== []) {
+    color.range(categoryColors);
+  }
 
   // Get the min and max values
   const result = root.leaves().map((e) => e.value);

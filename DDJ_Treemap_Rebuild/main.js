@@ -14,8 +14,7 @@ import './style.css';
 // createTreemap('#chart', data);
 
 // Jobs Plan Treemap
-const colors = ['#e63946', '#f1faee', '#a8dadc', '#457b9d', '#ade8f4'];
-createTreemap('#chart', dataJobs, colors);
+createTreemap('#chart', dataJobs);
 
 // Families Plan Treemap
 createTreemap('#chart2', dataFamilies);

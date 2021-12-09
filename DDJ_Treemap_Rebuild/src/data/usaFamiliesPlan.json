@@ -60,7 +60,8 @@
                     "colname": "level3"
                 }
             ],
-            "colname": "level2"
+            "colname": "level2",
+            "color": "#ede3de"
         },
         {
             "name": "Families and Children",
@@ -94,7 +95,8 @@
                     "colname": "level3"
                 }
             ],
-            "colname": "level2"
+            "colname": "level2",
+            "color": "#efefef"
         },
         {
             "name": "Expanded Tax Credit Extensions",
@@ -128,8 +130,9 @@
                     "colname": "level3"
                 }
             ],
-            "colname": "level2"
+            "colname": "level2",
+            "color": "#d8dee9"
         }
     ],
-    "name": "American Jobs Plan"
+    "name": "American Families Plan"
 }
