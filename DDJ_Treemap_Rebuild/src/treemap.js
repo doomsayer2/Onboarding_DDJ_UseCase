@@ -89,7 +89,8 @@ export const createTreemap = (
     .text((d) => d.data.name)
     .call(wrapTextInRect, 5)
     .attr('font-size', '9px')
-    .attr('fill', '#2c3e50');
+    .attr('fill', '#2c3e50')
+    .style('opacity', 0.7);
 
   // Add title for the 3 groups
   svg
@@ -99,9 +100,11 @@ export const createTreemap = (
     .append('text')
     .attr('x', (d) => d.x0)
     .attr('y', (d) => d.y0 + 21)
-    .text((d) => d.data.name)
-    .attr('font-size', '19px')
-    .attr('fill', (d) => color(d.data.name));
+    .text((d) => {
+      return `${d.data.name} $${d.data.total}`
+    })
+    .attr('font-size', '12px')
+    .attr('fill', '#2c3e50');
 
   // Text wrapping -- OLD
   // const wrap = textwrap().bounds({ height: 30, width: 40 }).method('tspans');
@@ -112,7 +115,7 @@ export const createTreemap = (
     .attr('class', 'd3-tip')
     .html(
       (EVENT, d) =>
-        `<p><u>Description</u>: ${d.data.desc}</p><p><u>Value</u>: ${d.data.value}</p>`
+        `<p><u>Description</u>: ${d.data.desc}</p><p><u>Value</u>: $${d.data.value} B</p>`
     );
   svg.call(tip);
   rects.on('mouseover', tip.show).on('mouseout', tip.hide);

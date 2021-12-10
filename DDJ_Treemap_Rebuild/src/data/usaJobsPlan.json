@@ -1,6 +1,56 @@
 {
     "children": [
         {
+            "name": "Community Infrastructure",
+            "children": [
+                {
+                    "name": "Clean drinking water",
+                    "desc": "",
+                    "group": "community",
+                    "value": 111,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Broadband",
+                    "desc": "",
+                    "group": "community",
+                    "value": 100,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Electric",
+                    "desc": "",
+                    "group": "community",
+                    "value": 100,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Housing",
+                    "desc": "",
+                    "group": "community",
+                    "value": 213,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Schools and VA hospitals",
+                    "desc": "",
+                    "group": "community",
+                    "value": 155,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Other misc. programs",
+                    "desc": "",
+                    "group": "community",
+                    "value": 28,
+                    "colname": "level3"
+                }
+            ],
+            "colname": "level2",
+            "color": "#dedede",
+            "total": "0"
+        },
+        {
             "name": "Transportation",
             "children": [
                 {
@@ -61,56 +111,8 @@
                 }
             ],
             "colname": "level2",
-            "color": "#d1dadd"
-        },
-        {
-            "name": "Community Infrastructure",
-            "children": [
-                {
-                    "name": "Clean drinking water",
-                    "desc": "",
-                    "group": "community",
-                    "value": 111,
-                    "colname": "level3"
-                },
-                {
-                    "name": "Broadband",
-                    "desc": "",
-                    "group": "community",
-                    "value": 100,
-                    "colname": "level3"
-                },
-                {
-                    "name": "Electric",
-                    "desc": "",
-                    "group": "community",
-                    "value": 100,
-                    "colname": "level3"
-                },
-                {
-                    "name": "Housing",
-                    "desc": "",
-                    "group": "community",
-                    "value": 213,
-                    "colname": "level3"
-                },
-                {
-                    "name": "Schools and VA hospitals",
-                    "desc": "",
-                    "group": "community",
-                    "value": 155,
-                    "colname": "level3"
-                },
-                {
-                    "name": "Other misc. programs",
-                    "desc": "",
-                    "group": "community",
-                    "value": 28,
-                    "colname": "level3"
-                }
-            ],
-            "colname": "level2",
-            "color": "#dedede"
+            "color": "#d1dadd",
+            "total": "0"
         },
         {
             "name": "R&D, Workforce, Manufacturing",
@@ -138,21 +140,23 @@
                 }
             ],
             "colname": "level2",
-            "color": "#e0ddc6"
+            "color": "#e0ddc6",
+            "total": "0"
         },
         {
             "name": "ElderCare",
             "children": [
                 {
                     "name": "Home/community-based care",
-                    "desc": "", 
+                    "desc": "",
                     "group": "eldercare",
                     "value": 400,
                     "colname": "level3"
                 }
             ],
             "colname": "level2",
-            "color": "#e5e9f0"
+            "color": "#e5e9f0",
+            "total": "0"
         }
     ],
     "name": "American Jobs Plan"

@@ -61,7 +61,8 @@
                 }
             ],
             "colname": "level2",
-            "color": "#ede3de"
+            "color": "#ede3de",
+            "total": "0"
         },
         {
             "name": "Families and Children",
@@ -96,7 +97,8 @@
                 }
             ],
             "colname": "level2",
-            "color": "#efefef"
+            "color": "#efefef",
+            "total": "0"
         },
         {
             "name": "Expanded Tax Credit Extensions",
@@ -131,7 +133,8 @@
                 }
             ],
             "colname": "level2",
-            "color": "#d8dee9"
+            "color": "#d8dee9",
+            "total": "0"
         }
     ],
     "name": "American Families Plan"
