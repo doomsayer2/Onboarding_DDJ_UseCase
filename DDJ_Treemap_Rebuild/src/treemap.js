@@ -101,7 +101,7 @@ export const createTreemap = (
     .attr('x', (d) => d.x0)
     .attr('y', (d) => d.y0 + 21)
     .text((d) => {
-      return `${d.data.name} $${d.data.total}`
+      return `${d.data.name} $${d.data.total}B`
     })
     .attr('font-size', '12px')
     .attr('fill', '#2c3e50');
@@ -115,7 +115,7 @@ export const createTreemap = (
     .attr('class', 'd3-tip')
     .html(
       (EVENT, d) =>
-        `<p><u>Description</u>: ${d.data.desc}</p><p><u>Value</u>: $${d.data.value} B</p>`
+        `<p><u>Description</u>: ${d.data.desc}</p><p><u>Value</u>: $${d.data.value}B</p>`
     );
   svg.call(tip);
   rects.on('mouseover', tip.show).on('mouseout', tip.hide);

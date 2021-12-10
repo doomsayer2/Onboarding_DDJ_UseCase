@@ -22,6 +22,23 @@ body {
   font-style: italic;
 }
 
+.numberBig {
+  color: rgb(199, 0, 0);
+  font-size: 22px;
+  line-height: 26px;
+}
+
+.numberSmall {
+  color: rgb(199, 0, 0);
+  font-size: 17px;
+  line-height: 20px;
+}
+
+
+/*
+  TOOLTIP CSS
+*/
+
 .d3-tip {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.6em;
