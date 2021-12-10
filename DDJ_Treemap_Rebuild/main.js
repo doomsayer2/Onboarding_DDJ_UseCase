@@ -13,11 +13,15 @@ import './style.css';
 // Sample Treemap
 // createTreemap('#chart', data);
 
+// Chart width and heights
+const width = (window.innerWidth / 2) - 20;
+const height = (window.innerHeight * 0.7);
+
 // Jobs Plan Treemap
-createTreemap('#chart', dataJobs);
+createTreemap('#chart', dataJobs, undefined, { width, height });
 
 // Families Plan Treemap
-createTreemap('#chart2', dataFamilies);
+createTreemap('#chart2', dataFamilies, undefined, { width, height });
 
 /**
  * Data Analysis

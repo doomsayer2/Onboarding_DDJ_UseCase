@@ -13,12 +13,16 @@ export const createTreemap = (
     '#69659B',
     '#819ED1',
     '#B9DFDC',
-  ]
+  ],
+  dimensions = {
+    width: window.innerWidth * 0.8,
+    height: window.innerHeight * 0.7
+  }
 ) => {
   // Set the dimensions and margins of the graph
   const margin = { top: 10, right: 10, bottom: 10, left: 10 };
-  const width = window.innerWidth * 0.8 - margin.left - margin.right;
-  const height = window.innerHeight * 0.7 - margin.top - margin.bottom;
+  const width = dimensions.width - margin.left - margin.right;
+  const height = dimensions.height - margin.top - margin.bottom;
 
   // Color Scale
   const color = d3.scaleOrdinal().range(colorRange);
