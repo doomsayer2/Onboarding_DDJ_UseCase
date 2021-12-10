@@ -1,107 +1,7 @@
 {
     "children": [
         {
-            "name": "Education",
-            "children": [
-                {
-                    "name": "Free, universal pre-kindergarten for all three- and four-year-olds",
-                    "desc": "",
-                    "group": "education",
-                    "value": 200,
-                    "colname": "level3"
-                },
-                {
-                    "name": "Tuition-free two-year community college",
-                    "desc": "",
-                    "group": "education",
-                    "value": 109,
-                    "colname": "level3"
-                },
-                {
-                    "name": "Increase Pell Grants for low-income students",
-                    "desc": "",
-                    "group": "education",
-                    "value": 80,
-                    "colname": "level3"
-                },
-                {
-                    "name": "Programs to increase college completion",
-                    "desc": "Invest in evidence-based strategies to strengthen completion and retention rates at community colleges and institutions that serve students from our most disadvantaged communities",
-                    "group": "education",
-                    "value": 62,
-                    "colname": "level3"
-                },
-                {
-                    "name": "HBCU investment",
-                    "desc": "Provide two years of subsidized tuition for students from families earning less than $125,000 enrolled in a four-year HBCU, TCU, or MSI",
-                    "group": "education",
-                    "value": 39,
-                    "colname": "level3"
-                },
-                {
-                    "name": "Diversify teachers",
-                    "desc": "Funding to train, equip, and diversify American teachers",
-                    "group": "education",
-                    "value": 9,
-                    "colname": "level3"
-                },
-                {
-                    "name": "Aid Grants",
-                    "desc": "Expand existing institutional aid grants to HBCUs, TCUs, and MSIs",
-                    "group": "education",
-                    "value": 5,
-                    "colname": "level3"
-                },
-                {
-                    "name": "Skilled Healthcare workers",
-                    "desc": "Programs to increase skilled healthcare workers",
-                    "group": "education",
-                    "value": 2,
-                    "colname": "level3"
-                }
-            ],
-            "colname": "level2",
-            "color": "#ede3de",
-            "total": "0"
-        },
-        {
-            "name": "Families and Children",
-            "children": [
-                {
-                    "name": "Childcare",
-                    "desc": "Make child care affordable, invest in high-quality care, and fund training for child care providers",
-                    "group": "fam",
-                    "value": 225,
-                    "colname": "level3"
-                },
-                {
-                    "name": "Family and medical leave",
-                    "desc": "Create a national comprehensive paid family and medical leave program",
-                    "group": "fam",
-                    "value": 225,
-                    "colname": "level3"
-                },
-                {
-                    "name": "Expand EBT",
-                    "desc": "Expand summer EBT to all eligible children nationwide",
-                    "group": "fam",
-                    "value": 25,
-                    "colname": "level3"
-                },
-                {
-                    "name": "Free meals",
-                    "desc": "Expand free meals for children in the highest poverty districts",
-                    "group": "fam",
-                    "value": 17,
-                    "colname": "level3"
-                }
-            ],
-            "colname": "level2",
-            "color": "#efefef",
-            "total": "0"
-        },
-        {
-            "name": "Expanded Tax Credit Extensions",
+            "name": "Tax cuts and credits",
             "children": [
                 {
                     "name": "Child Tax Credit expansions",
@@ -111,7 +11,7 @@
                     "colname": "level3"
                 },
                 {
-                    "name": "Extend ACA premiums",
+                    "name": "Extend ACA tax credit",
                     "desc": "Extend expanded ACA premiums tax credits from the American Rescue Plan",
                     "group": "tax",
                     "value": 200,
@@ -134,8 +34,125 @@
             ],
             "colname": "level2",
             "color": "#d8dee9",
-            "total": "0"
+            "total": 855
+        },
+        {
+            "name": "Children and Families",
+            "children": [
+                {
+                    "name": "Childcare",
+                    "desc": "Make child care affordable, invest in high-quality care, and fund training for child care providers",
+                    "group": "fam",
+                    "value": 225,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Paid leave",
+                    "desc": "Create a national comprehensive paid family and medical leave program",
+                    "group": "fam",
+                    "value": 225,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Expand EBT",
+                    "desc": "Expand summer EBT to all eligible children nationwide",
+                    "group": "fam",
+                    "value": 25,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Free meals",
+                    "desc": "Expand free meals for children in the highest poverty districts",
+                    "group": "fam",
+                    "value": 17,
+                    "colname": "level3"
+                }
+            ],
+            "colname": "level2",
+            "color": "#efefef",
+            "total": 492
+        },
+        {
+            "name": "Education",
+            "children": [
+                {
+                    "name": "Free universal Pre-K",
+                    "desc": "Free, universal pre-kindergarten for all three- and four-year-olds",
+                    "group": "education",
+                    "value": 200,
+                    "colname": "level3"
+                },
+                {
+                    "name": "2 years free community college",
+                    "desc": "Tuition-free two-year community college",
+                    "group": "education",
+                    "value": 109,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Pell grants",
+                    "desc": "Increase Pell Grants for low-income students",
+                    "group": "education",
+                    "value": 80,
+                    "colname": "level3"
+                },
+                {
+                    "name": "College completion",
+                    "desc": "Invest in evidence-based strategies to strengthen completion and retention rates at community colleges and institutions that serve students from our most disadvantaged communities",
+                    "group": "education",
+                    "value": 62,
+                    "colname": "level3"
+                },
+                {
+                    "name": "HBCU investment",
+                    "desc": "Provide two years of subsidized tuition for students from families earning less than $125,000 enrolled in a four-year HBCU, TCU, or MSI",
+                    "group": "education",
+                    "value": 39,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Other",
+                    "desc": "Funding to train, equip, and diversify American teachers; Expand existing institutional aid grants to HBCUs, TCUs, and MSIs; Programs to increase skilled healthcare workers",
+                    "group": "education",
+                    "value": 16,
+                    "colname": "level3"
+                }
+            ],
+            "colname": "level2",
+            "color": "#ede3de",
+            "total": 506
+        }, 
+        {
+            "name": "Nutrition",
+            "children": [
+                {
+                    "name": "Nutrition",
+                    "desc": "To expand access to nutrition for children by investing in nutrition support",
+                    "group": "nutrition",
+                    "value": 45,
+                    "colname": "level3"
+                }
+            ],
+            "colname": "level2",
+            "color": "#e0ddc6",
+            "total": 45
+        }, 
+        {
+            "name": "Unemployment insurance",
+            "children": [
+                {
+                    "name": "Unemployment insurance",
+                    "desc": "Automatically adjust the length and amount of unemployment insurance benefits workers can receive, depending on economic conditions.",
+                    "group": "education",
+                    "value": 2,
+                    "colname": "level3"
+                }
+            ],
+            "colname": "level2",
+            "color": "#d1dadd",
+            "total": 2
         }
     ],
-    "name": "American Families Plan"
+    "name": "American Families Plan",
+    "total": 1900
 }
