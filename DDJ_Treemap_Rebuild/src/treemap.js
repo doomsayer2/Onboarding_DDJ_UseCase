@@ -28,7 +28,7 @@ export const createTreemap = (
   const color = d3.scaleOrdinal().range(colorRange);
 
   // Opacity based on value
-  const opacity = d3.scaleLinear().range([0.5, 1]);
+  const opacity = d3.scaleLinear().range([0.2, 1]);
 
   // Append the svg object to the body of the page
   const svg = d3
@@ -76,7 +76,8 @@ export const createTreemap = (
     .attr('title', (d) => `The value: ${d.data.value}`)
     .style('stroke', 'black')
     .style('fill', (d) => color(d.parent.data.name))
-    .style('opacity', (d) => opacity(d.data.value));
+    // .style('opacity', (d) => opacity(d.data.value));
+    .style('opacity', 0.5);
 
   // Add Textlabels
   svg

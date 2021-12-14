@@ -47,7 +47,7 @@
                 }
             ],
             "colname": "level2",
-            "color": "#dedede",
+            "color": "#80b1d3",
             "total": 707
         },
         {
@@ -111,7 +111,7 @@
                 }
             ],
             "colname": "level2",
-            "color": "#d1dadd",
+            "color": "#fdb462",
             "total": 621
         },
         {
@@ -141,7 +141,7 @@
                 }
             ],
             "colname": "level2",
-            "color": "#e0ddc6",
+            "color": "#b3de69",
             "total": 580
         },
         {
@@ -156,7 +156,7 @@
                 }
             ],
             "colname": "level2",
-            "color": "#e5e9f0",
+            "color": "#fccde5",
             "total": 400
         }
     ],

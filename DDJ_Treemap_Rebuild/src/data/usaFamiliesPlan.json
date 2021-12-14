@@ -33,7 +33,7 @@
                 }
             ],
             "colname": "level2",
-            "color": "#d8dee9",
+            "color": "#8dd3c7",
             "total": 855
         },
         {
@@ -69,7 +69,7 @@
                 }
             ],
             "colname": "level2",
-            "color": "#efefef",
+            "color": "#ffffb3",
             "total": 492
         },
         {
@@ -119,7 +119,7 @@
                 }
             ],
             "colname": "level2",
-            "color": "#ede3de",
+            "color": "#bebada",
             "total": 506
         }, 
         {
@@ -134,23 +134,8 @@
                 }
             ],
             "colname": "level2",
-            "color": "#e0ddc6",
+            "color": "#fb8072",
             "total": 45
-        }, 
-        {
-            "name": "Unemployment insurance",
-            "children": [
-                {
-                    "name": "Unemployment insurance",
-                    "desc": "Automatically adjust the length and amount of unemployment insurance benefits workers can receive, depending on economic conditions.",
-                    "group": "education",
-                    "value": 2,
-                    "colname": "level3"
-                }
-            ],
-            "colname": "level2",
-            "color": "#d1dadd",
-            "total": 2
         }
     ],
     "name": "American Families Plan",
