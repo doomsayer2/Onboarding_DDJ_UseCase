@@ -1,47 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Treemap: Biden’s tax overhaul</title>
-  </head>
-  <body>
-    <div id="app">
-      <h1>Biden’s tax overhaul</h1>
-      <small>The president wants corporations and the wealthiest Americans to fund his spending plan</small>
 
-      <br />
-      
-      <div class="container">
-        <div class="cell">
-          <h2>Jobs Plan</h2>
-          <span class="numberBig">~$2.31T</span>
-          <div id="chart"></div>
-          <span class="sourceInfo"><strong>Source:</strong> <a href="https://www.investopedia.com/what-s-in-joe-biden-s-usd2-trillion-american-jobs-plan-5120273">Jobs Plan</a></span>   
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Treemap: Biden’s tax overhaul</title>
+</head>
 
-        <div class="cell">
-          <h2>Families Plan</h2>
-          <span class="numberBig">~$1.9T</span>
-          <div id="chart2"></div>
-          <span class="sourceInfo"><strong>Source:</strong> <a href="https://www.crfb.org/blogs/whats-president-bidens-american-families-plan">Families Plan</a></span>
-        </div>
-        
-        <div class="cell">
-          SOME TEXT
-        </div>
+<body>
+  <div id="app">
+    <h1>Biden’s tax overhaul</h1>
+    <small>The president wants corporations and the wealthiest Americans to fund his spending plan</small>
+
+    <br />
+
+    <div class="container">
+      <div class="cell">
+        <h2>Jobs Plan</h2>
+        <span class="numberBig">~$2.31T</span>
+        <div id="chart"></div>
+        <span class="sourceInfo"><strong>Source:</strong> <a
+            href="https://www.investopedia.com/what-s-in-joe-biden-s-usd2-trillion-american-jobs-plan-5120273">Jobs
+            Plan</a></span>
       </div>
 
+      <div class="cell">
+        <h2>Families Plan</h2>
+        <span class="numberBig">~$1.9T</span>
+        <div id="chart2"></div>
+        <span class="sourceInfo"><strong>Source:</strong> <a
+            href="https://www.crfb.org/blogs/whats-president-bidens-american-families-plan">Families Plan</a></span>
+      </div>
 
-      <br />
-      <br />
-      <br />
+      <div class="textCell">
+        <fieldset>
+          <legend>Reading the chart</legend>
+          <ul>
+            <li>The treemap visualization shows the breakdown of the Biden Administration's tax overhaul plan for Jobs
+              and
+              Families in America level by level.</li>
+            <li>The size of each rectangle represents the spendings in US-Dollars (e.g., the Housing rectangle,
+              representing $213 billion, is approx. twice as large as the Clean drinking rectangle, representing $111
+              billion.)</li>
+            <li>The area covered by the whole treemap is subdivided recursively according to the amount of money they
+              represent, level by level.</li>
+            <li>On the top level, the area is split between American Jobs Plan and American Families Plan.</li>
+            <li>Items within a sub-category are represented by rectangles that are closely packed together with
+              increasingly larger gaps to the neighboring categories. For example, within the American Jobs Plan, the
+              area
+              is further subdivided into Community infrastructure, Workforce Development, Transportation, and Eldercare.
+            </li>
+            <li>Items on the bottom level that belong to the same sub-category are visually represented by using the
+              same
+              color.</li>
+          </ul>
+        </fieldset>
 
-      <footer>
+        <fieldset>
+          <legend>Interacting with the chart</legend>
+          <ul>
+            <li>Hover over the rectangles (e.g., Housing) to get the dedicated value ($ 213 Billion) of the sub-category
+              and further information.</li>
+          </ul>
+        </fieldset>
 
-      </footer>
+        <fieldset>
+          <legend>Analyzing the chart</legend>
+          <ul>
+            <li>Seek out the largest rectangle of each group and look for significant differences within each colored
+              group.</li>
+            <li>Money spent on Community infrastructure is approx. equal to the money spent on Transportation, followed
+              by R&D, Workforce, Manufacturing, and Eldercare.</li>
+            <li>Interestingly, in Transportation, $174 Billion are spent on Electrifying vehicles.</li>
+            <li>In the Families Plan, Expanded Tax Credit Extensions, $ 450 Billion is spent on Child Tax Credit
+              expansions aiming to permanently make the Child Tax Credit fully refundable.</li>
+            <li>In the Education category, Skilled healthcare workers are the sub-category with the least spent Billion
+              dollars ($ 2 Billion) in comparison to the others.</li>
+          </ul>
+        </fieldset>
+      </div>
     </div>
-    <script type="module" src="/main.js"></script>
-  </body>
+
+
+    <br />
+    <br />
+    <br />
+
+    <footer>
+
+    </footer>
+  </div>
+  <script type="module" src="/main.js"></script>
+</body>
+
 </html>
