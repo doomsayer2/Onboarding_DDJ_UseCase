@@ -41,15 +41,13 @@ body {
 }
 
 .cell {
-  position: -webkit-sticky;
-  /* Safari */
+  position: -webkit-sticky;/* Safari */
   position: sticky;
   top: 0;
-  height: 1px;
-  /* Little trick to make sticky work */
+  height: 1px; /* Little trick to make sticky work */
 }
 
-.textCell>fieldset {
+.textCell > fieldset {
   border: 1px solid #d3d3d3;
   line-height: 1.2;
   font-size: 0.9em;
