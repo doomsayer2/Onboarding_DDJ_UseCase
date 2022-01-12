@@ -16,7 +16,7 @@ export const createTreemap = (
   ],
   dimensions = {
     width: window.innerWidth * 0.8,
-    height: window.innerHeight * 0.7
+    height: window.innerHeight * 0.7,
   }
 ) => {
   // Set the dimensions and margins of the graph
@@ -47,7 +47,7 @@ export const createTreemap = (
   const categories = root.data.children.map((e) => e.name);
   const categoryColors = root.data.children.map((e) => e.color);
   color.domain(categories);
-  
+
   if (categoryColors !== []) {
     color.range(categoryColors);
   }
@@ -101,11 +101,15 @@ export const createTreemap = (
     .append('text')
     .attr('x', (d) => d.x0)
     .attr('y', (d) => d.y0 + 21)
-    .text((d) => {
-      return `${d.data.name} $${d.data.total}B`
-    })
     .attr('font-size', '12px')
-    .attr('fill', '#2c3e50');
+    .attr('fill', '#2c3e50')
+    .append('tspan')
+    .text((d) => d.data.name)
+    .append('tspan')
+    .text((d) => {
+      return ` ${d.data.total}B`;
+    })
+    .attr('fill', '#c70000');
 
   // Text wrapping -- OLD
   // const wrap = textwrap().bounds({ height: 30, width: 40 }).method('tspans');

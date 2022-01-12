@@ -101,11 +101,15 @@ export const createTreemap = (
     .append('text')
     .attr('x', (d) => d.x0)
     .attr('y', (d) => d.y0 + 21)
-    .text((d) => {
-      return `${d.data.name} $${d.data.total}B`
-    })
     .attr('font-size', '12px')
-    .attr('fill', '#2c3e50');
+    .attr('fill', '#2c3e50')
+    .append('tspan')
+    .text((d) => d.data.name)
+    .append('tspan')
+    .text((d) => {
+      return ` ${d.data.total}B`;
+    })
+    .attr('fill', '#c70000');
 
   // Text wrapping -- OLD
   // const wrap = textwrap().bounds({ height: 30, width: 40 }).method('tspans');
