@@ -15,7 +15,7 @@ import './style.css';
 
 // Chart width and heights
 const width = (window.innerWidth / 2) - 20;
-const height = (window.innerHeight * 0.7);
+const height = (window.innerHeight * 0.9);
 
 // Jobs Plan Treemap
 createTreemap('#chart', dataJobs, undefined, { width, height });
