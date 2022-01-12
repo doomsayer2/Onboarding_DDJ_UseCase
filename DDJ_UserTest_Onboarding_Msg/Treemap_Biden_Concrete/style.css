@@ -94,7 +94,7 @@ ul.style_1 > li::after {
 }
 
 ul.style_1 > li::before {
-  content: '\25B6';
+  content: '\2BC8';
   left: -2.75rem;
   top: 0;
   height: calc(2rem - 1px);
