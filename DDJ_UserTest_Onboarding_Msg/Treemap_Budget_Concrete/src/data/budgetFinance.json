@@ -1,0 +1,284 @@
+{
+    "children": [
+        {
+            "name": "Arbeit, Soziales, Gesundheit und Familie",
+            "children": [
+                {
+                    "name": "Arbeit",
+                    "desc": "...",
+                    "group": "B",
+                    "value": 9117.4,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Soziales und Konsumentenschutz",
+                    "desc": "...",
+                    "group": "B",
+                    "value": 4204.7,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Pensionsversicherung",
+                    "desc": "...",
+                    "group": "B",
+                    "value": 12468.8,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Pensionen - Beamtinnen und Beamte",
+                    "desc": "...",
+                    "group": "B",
+                    "value": 10752.8,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Gesundheit",
+                    "desc": "...",
+                    "group": "B",
+                    "value": 3243.8,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Familie und Jugend",
+                    "desc": "...",
+                    "group": "B",
+                    "value": 7687.1,
+                    "colname": "level3"
+                }
+            ],
+            "colname": "level2",
+            "color": "#d41f25",
+            "total": 47474.7
+        },
+        {
+            "name": "Wirtschaft, Infrastruktur und Umwelt",
+            "children": [
+                {
+                    "name": "Wirtschaft",
+                    "desc": "...",
+                    "group": "D",
+                    "value": 2008.1,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Mobilität",
+                    "desc": "...",
+                    "group": "D",
+                    "value": 4841.7,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Landwirtschaft, Regionen und Tourismus",
+                    "desc": "...",
+                    "group": "D",
+                    "value": 3372.9,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Klima, Umwelt und Energie",
+                    "desc": "...",
+                    "group": "D",
+                    "value": 2400.1,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Finanzausgleich",
+                    "desc": "...",
+                    "group": "D",
+                    "value": 1943.4,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Bundesvermögen",
+                    "desc": "...",
+                    "group": "D",
+                    "value": 3002.0,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Finanzmarktstabilität",
+                    "desc": "...",
+                    "group": "D",
+                    "value": 1172.8,
+                    "colname": "level3"
+                }
+            ],
+            "colname": "level2",
+            "color": "#a0c86b",
+            "total": 18740.9
+        },
+        {
+            "name": "Recht und Sicherheit",
+            "children": [
+                {
+                    "name": "Präsidentschaftskanzlei",
+                    "desc": "...",
+                    "group": "A",
+                    "value": 11.5,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Bundesgesetzgebung",
+                    "desc": "...",
+                    "group": "A",
+                    "value": 398.6,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Verfassungsgerichtshof",
+                    "desc": "...",
+                    "group": "A",
+                    "value": 17.3,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Verwaltungsgerichtshof",
+                    "desc": "...",
+                    "group": "A",
+                    "value": 22.5,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Volksanwaltschaft",
+                    "desc": "...",
+                    "group": "A",
+                    "value": 13.0,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Rechnungshof",
+                    "desc": "...",
+                    "group": "A",
+                    "value": 37.4,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Bundeskanzleramt",
+                    "desc": "...",
+                    "group": "A",
+                    "value": 480.8,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Inneres",
+                    "desc": "...",
+                    "group": "A",
+                    "value": 3245.9,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Äußeres",
+                    "desc": "...",
+                    "group": "A",
+                    "value": 560.4,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Justiz",
+                    "desc": "...",
+                    "group": "A",
+                    "value": 1872.2,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Militärische Angelegenheiten",
+                    "desc": "...",
+                    "group": "A",
+                    "value": 2713.1,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Finanzverwaltung",
+                    "desc": "...",
+                    "group": "A",
+                    "value": 1174.3,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Öffentlicher Dienst und Sport",
+                    "desc": "...",
+                    "group": "A",
+                    "value": 451.4,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Fremdenwesen",
+                    "desc": "...",
+                    "group": "A",
+                    "value": 347.4,
+                    "colname": "level3"
+                }
+            ],
+            "colname": "level2",
+            "color": "#ffdf4f",
+            "total": 11345.8
+        },
+        {
+            "name": "Bildung, Forschung, Kunst und Kultur",
+            "children": [
+                {
+                    "name": "Bildung",
+                    "desc": "...",
+                    "group": "C",
+                    "value": 10288.0,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Wissenschaft undForschung",
+                    "desc": "Tuition-free two-year community college",
+                    "group": "C",
+                    "value": 5621.2,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Pell grants",
+                    "desc": "Kunst und Kultur",
+                    "group": "C",
+                    "value": 557.1,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Wirtschaft (Forschung)",
+                    "desc": "...",
+                    "group": "C",
+                    "value": 170.4,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Innovation und Technologie (Forschung)",
+                    "desc": "...",
+                    "group": "C",
+                    "value": 581.6,
+                    "colname": "level3"
+                }
+            ],
+            "colname": "level2",
+            "color": "#6dabde",
+            "total": 17158.3
+        },
+        {
+            "name": "Kassa und Zinsen",
+            "children": [
+                {
+                    "name": "Kassenverwaltung",
+                    "desc": "...",
+                    "group": "E",
+                    "value": 62.5,
+                    "colname": "level3"
+                },
+                {
+                    "name": "Finanzierung, Währungstauschverträge",
+                    "desc": "Tuition-free two-year community college",
+                    "group": "C",
+                    "value": 4299.0,
+                    "colname": "level3"
+                }
+            ],
+            "colname": "level2",
+            "color": "#bcbec0",
+            "total": 4361.5
+        }
+    ],
+    "name": "Finanzierungshaushalt Auszahlungen",
+    "total": 99081.2
+}

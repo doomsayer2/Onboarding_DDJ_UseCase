@@ -5,7 +5,7 @@ export const wrapTextInRect = (text, offset) => {
     let text = d3.select(this);
     const d = text.data();
     const width = Math.abs(d[0].x1 - d[0].x0) - offset;
-    
+
     let words = text.text().split(/\s+/).reverse(),
       word,
       line = [],
@@ -21,7 +21,6 @@ export const wrapTextInRect = (text, offset) => {
         .attr('y', y)
         .attr('dy', dy + 'em');
 
-    
     while ((word = words.pop())) {
       line.push(word);
       tspan.text(line.join(' '));

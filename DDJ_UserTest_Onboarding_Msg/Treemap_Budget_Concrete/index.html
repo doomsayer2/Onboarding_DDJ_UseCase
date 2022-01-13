@@ -1,47 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Treemap: Biden’s tax overhaul</title>
-  </head>
-  <body>
-    <div id="app">
-      <h1>Biden’s tax overhaul</h1>
-      <small>The president wants corporations and the wealthiest Americans to fund his spending plan</small>
 
-      <br />
-      
-      <div class="container">
-        <div class="cell">
-          <h2>Jobs Plan</h2>
-          <span class="numberBig">~$2.31T</span>
-          <div id="chart"></div>
-          <span class="sourceInfo"><strong>Source:</strong> <a href="https://www.investopedia.com/what-s-in-joe-biden-s-usd2-trillion-american-jobs-plan-5120273">Jobs Plan</a></span>   
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Treemap: Das Budget in Zahlen und Grafiken</title>
+</head>
 
-        <div class="cell">
-          <h2>Families Plan</h2>
-          <span class="numberBig">~$1.9T</span>
-          <div id="chart2"></div>
-          <span class="sourceInfo"><strong>Source:</strong> <a href="https://www.crfb.org/blogs/whats-president-bidens-american-families-plan">Families Plan</a></span>
-        </div>
-        
-        <div class="cell">
-          SOME TEXT
-        </div>
+<body>
+  <div id="app">
+    <h1>Bundesministerium Finanzen</h1>
+    <small>Das Budget von Österreich, in Zahlen und Grafiken.</small>
+
+    <br />
+
+    <div class="container">
+      <div class="cell">
+        <h2>Finanzierungshaushalt Auszahlungen</h2>
+        <span class="numberBig">81822.9 Mio. €</span>
+        <div id="chart"></div>
+        <span class="sourceInfo"><strong>Source:</strong> <a
+            href="https://service.bmf.gv.at/Budget/Budgets/VBB/de/2022/Home/Treemap?currency=MioEuro&showTable=false&showGrafic=true&type=FV&houseHold=1">Finanzierungshaushalt
+            Auszahlungen</a></span>
       </div>
 
+      <div class="textCell">
+        <fieldset>
+          <legend>Reading the chart</legend>
+          <ul class="style_1">
+            <li>The treemap visualization shows the breakdown of the <strong>financing budget payoffs</strong> level by
+              level.</li>
+            <li>The size of each rectangle represents the <strong>outflow of cash and cash equivalents</strong> in
+              <strong>€ Euro</strong> (e.g., the <strong>public pension scheme</strong> rectangle, representing
+              <strong>€ 12,456.8 million</strong>, is approx. twice as large as the <strong>Family and youth</strong>
+              rectangle, representing <strong>€ 7,687.1 million</strong>.)
+            </li>
+            <li>The area covered by the whole treemap is subdivided recursively according to the amount of
+              <strong>money</strong> they represent, level by level.
+            </li>
+            <li>On the top level, the area is split between <strong>Arbeit, Soziales, Gesundheit und Familie;
+                Wirtschaft, Infrastruktur und Umwelt; Bildung, Forschung, Kunst & Kultur; Recht & Sicherheit; Kassa &
+                Zinsen.</strong></li>
+            <li>Items within a sub-category are represented by rectangles that are closely packed together with
+              increasingly larger gaps to the neighboring categories. For example, within the <strong>Arbeit, Soziales,
+                Gesundheit und Familie</strong>, the area is further subdivided into <strong>public pension schemes,
+                family and youth, health care, work, social affairs and consumer protection, and pensions of
+                officials.</strong></li>
+            <li>Items on the bottom level that belong to the same sub-category are visually represented by using the
+              same color.</li>
+          </ul>
+        </fieldset>
 
-      <br />
-      <br />
-      <br />
+        <fieldset>
+          <legend>Interacting with the chart</legend>
+          <ul class="style_1">
+            <li>Hover over the rectangles (e.g., <strong>family and youth</strong>) to get the dedicated value
+              (<strong>€ 7,687.1 million | 7,8%</strong>) of the sub-category and further information. </li>
+          </ul>
+        </fieldset>
 
-      <footer>
-
-      </footer>
+        <fieldset>
+          <legend>Analyzing the chart</legend>
+          <ul class="style_1">
+            <li>Seek out the largest rectangular values (or the largest group of rectangles) and look out for
+              significant color variations.</li>
+            <li>Money spent on <strong>pensions of officials</strong> is approx. equal to the money spent on
+              <strong>education</strong>.
+            </li>
+            <li><strong>Economy (research)</strong> is the sub-category with the least spent million € (€170.4 million )
+              in comparison to the others in this category (<strong>education, science, and research, innovation and
+                technology, art and culture</strong>).</li>
+          </ul>
+        </fieldset>
+      </div>
     </div>
-    <script type="module" src="/main.js"></script>
-  </body>
+
+
+    <br />
+    <br />
+    <br />
+
+    <footer>
+
+    </footer>
+  </div>
+  <script type="module" src="/main.js"></script>
+</body>
+
 </html>

@@ -1,8 +1,7 @@
 import { createTreemap } from './src/treemap';
 import { type } from '@antv/dw-analyzer';
 // import data from './src/data/sample.json';
-import dataJobs from './src/data/usaJobsPlan.json';
-import dataFamilies from './src/data/usaFamiliesPlan.json';
+import dataBudget from './src/data/budgetFinance.json';
 
 import './style.css';
 
@@ -17,13 +16,10 @@ import './style.css';
 const width = (window.innerWidth / 2) - 20;
 const height = (window.innerHeight * 0.9);
 
-// Jobs Plan Treemap
-createTreemap('#chart', dataJobs, undefined, { width, height });
-
-// Families Plan Treemap
-createTreemap('#chart2', dataFamilies, undefined, { width, height });
+// Budget Treemap
+createTreemap('#chart', dataBudget, undefined, { width, height });
 
 /**
  * Data Analysis
  */
-console.log('DataWizard- AntV', type([dataJobs]));
+console.log('DataWizard- AntV', type([dataBudget]));
