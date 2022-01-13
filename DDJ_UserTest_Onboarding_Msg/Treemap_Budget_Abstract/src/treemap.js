@@ -1,5 +1,4 @@
 import * as d3 from 'd3';
-// import { textwrap } from 'd3-textwrap';
 import { tip as d3tip } from 'd3-v6-tip';
 import { wrapTextInRect } from './util.js';
 
@@ -96,28 +95,29 @@ export const createTreemap = (
     .attr('x', (d) => d.x0 + 5) // +5 to adjust position (more right)
     .attr('y', (d) => d.y0 + 20) // +20 to adjust position (lower)
     .text((d) => d.data.name)
-    .call(wrapTextInRect, 10)
-    .attr('font-size', '7px')
+    .attr('font-size', '0.5em')
     .attr('fill', '#2c3e50')
-    .style('opacity', 0.9);
+    .style('opacity', 0.9)
+    .call(wrapTextInRect, 10);
+
 
   // Add title for the 3 groups
-  // svg
-  //   .selectAll('titles')
-  //   .data(root.descendants().filter((d) => d.depth == 1))
-  //   .enter()
-  //   .append('text')
-  //   .attr('x', (d) => d.x0)
-  //   .attr('y', (d) => d.y0 + 21)
-  //   .attr('font-size', '11px')
-  //   .attr('fill', '#2c3e50')
-  //   .append('tspan')
-  //   .text((d) => d.data.name)
-  //   .append('tspan')
-  //   .text((d) => {
-  //     return ` ${d.data.total} Mio. €`;
-  //   })
-  //   .attr('fill', '#c70000');
+  svg
+    .selectAll('titles')
+    .data(root.descendants().filter((d) => d.depth == 1))
+    .enter()
+    .append('text')
+    .attr('x', (d) => d.x0)
+    .attr('y', (d) => d.y0 + 21)
+    .attr('font-size', '0.7em')
+    .attr('fill', '#2c3e50')
+    .append('tspan')
+    .text((d) => d.data.name)
+    .append('tspan')
+    .text((d) => {
+      return ` ${d.data.total} Mio. €`;
+    })
+    .attr('fill', '#c70000');
 
   // Text wrapping -- OLD
   // const wrap = textwrap().bounds({ height: 30, width: 40 }).method('tspans');

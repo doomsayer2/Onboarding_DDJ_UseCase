@@ -14,7 +14,7 @@ import './style.css';
 
 // Chart width and heights
 const width = (window.innerWidth / 2) - 20;
-const height = (window.innerHeight * 0.9);
+const height = (window.innerHeight * 0.7);
 
 // Budget Treemap
 createTreemap('#chart', dataBudget, undefined, { width, height });
