@@ -34,8 +34,13 @@ export const createTreemap = (
   const svg = d3
     .select(elm)
     .append('svg')
-    .attr("preserveAspectRatio", "xMinYMin meet")
-    .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
+    .attr('preserveAspectRatio', 'xMinYMin meet')
+    .attr(
+      'viewBox',
+      `0 0 ${width + margin.left + margin.right} ${
+        height + margin.top + margin.bottom
+      }`
+    )
     .append('g')
     .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
@@ -84,32 +89,35 @@ export const createTreemap = (
     .selectAll('text')
     .data(root.leaves())
     .join('text')
+    .filter((d) => {
+      return d.value > 1000
+    })
     .attr('class', 'info')
     .attr('x', (d) => d.x0 + 5) // +5 to adjust position (more right)
     .attr('y', (d) => d.y0 + 20) // +20 to adjust position (lower)
     .text((d) => d.data.name)
-    .call(wrapTextInRect, 5)
-    .attr('font-size', '9px')
+    .call(wrapTextInRect, 10)
+    .attr('font-size', '7px')
     .attr('fill', '#2c3e50')
-    .style('opacity', 0.7);
+    .style('opacity', 0.9);
 
   // Add title for the 3 groups
-  svg
-    .selectAll('titles')
-    .data(root.descendants().filter((d) => d.depth == 1))
-    .enter()
-    .append('text')
-    .attr('x', (d) => d.x0)
-    .attr('y', (d) => d.y0 + 21)
-    .attr('font-size', '12px')
-    .attr('fill', '#2c3e50')
-    .append('tspan')
-    .text((d) => d.data.name)
-    .append('tspan')
-    .text((d) => {
-      return ` ${d.data.total}B`;
-    })
-    .attr('fill', '#c70000');
+  // svg
+  //   .selectAll('titles')
+  //   .data(root.descendants().filter((d) => d.depth == 1))
+  //   .enter()
+  //   .append('text')
+  //   .attr('x', (d) => d.x0)
+  //   .attr('y', (d) => d.y0 + 21)
+  //   .attr('font-size', '11px')
+  //   .attr('fill', '#2c3e50')
+  //   .append('tspan')
+  //   .text((d) => d.data.name)
+  //   .append('tspan')
+  //   .text((d) => {
+  //     return ` ${d.data.total} Mio. €`;
+  //   })
+  //   .attr('fill', '#c70000');
 
   // Text wrapping -- OLD
   // const wrap = textwrap().bounds({ height: 30, width: 40 }).method('tspans');
@@ -120,7 +128,7 @@ export const createTreemap = (
     .attr('class', 'd3-tip')
     .html(
       (EVENT, d) =>
-        `<p><u>Description</u>: ${d.data.desc}</p><p><u>Value</u>: $${d.data.value}B</p>`
+        `<p><u>Description</u>: ${d.data.name}</p><p><u>Value</u>: $${d.data.value} Mio. €</p>`
     );
   svg.call(tip);
   rects.on('mouseover', tip.show).on('mouseout', tip.hide);

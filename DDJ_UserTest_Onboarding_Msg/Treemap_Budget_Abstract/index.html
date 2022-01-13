@@ -1,47 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Treemap: Biden’s tax overhaul</title>
-  </head>
-  <body>
-    <div id="app">
-      <h1>Biden’s tax overhaul</h1>
-      <small>The president wants corporations and the wealthiest Americans to fund his spending plan</small>
 
-      <br />
-      
-      <div class="container">
-        <div class="cell">
-          <h2>Jobs Plan</h2>
-          <span class="numberBig">~$2.31T</span>
-          <div id="chart"></div>
-          <span class="sourceInfo"><strong>Source:</strong> <a href="https://www.investopedia.com/what-s-in-joe-biden-s-usd2-trillion-american-jobs-plan-5120273">Jobs Plan</a></span>   
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Treemap: Das Budget in Zahlen und Grafiken</title>
+</head>
 
-        <div class="cell">
-          <h2>Families Plan</h2>
-          <span class="numberBig">~$1.9T</span>
-          <div id="chart2"></div>
-          <span class="sourceInfo"><strong>Source:</strong> <a href="https://www.crfb.org/blogs/whats-president-bidens-american-families-plan">Families Plan</a></span>
-        </div>
-        
-        <div class="cell">
-          SOME TEXT
-        </div>
+<body>
+  <div id="app">
+    <h1>Bundesministerium Finanzen</h1>
+    <small>Das Budget von Österreich, in Zahlen und Grafiken.</small>
+
+    <br />
+
+    <div class="container">
+      <div class="cell">
+        <h2>Finanzierungshaushalt Auszahlungen</h2>
+        <span class="numberBig">81822.9 Mio. €</span>
+        <div id="chart"></div>
+        <span class="sourceInfo"><strong>Source:</strong> <a
+            href="https://service.bmf.gv.at/Budget/Budgets/VBB/de/2022/Home/Treemap?currency=MioEuro&showTable=false&showGrafic=true&type=FV&houseHold=1">Finanzierungshaushalt
+            Auszahlungen</a></span>
       </div>
 
+      <div class="textCell">
+        <fieldset>
+          <legend>Reading the chart</legend>
+          <ul class="style_1">
+            <li>The treemap visualization shows the breakdown of <strong>hierarchical data</strong> level by level.</li>
+            <li>The size of each rectangle represents <strong>a quantitative value</strong> associated with each element in the hierarchy.</li>
+            <li>The area covered by the whole treemap is subdivided recursively <strong>into sub-categories</strong> according to their quantitative values, level by level.</li>
+            <li>Items within a sub-category are represented by rectangles that are closely packed together with increasingly larger gaps to the neighboring categories.</li>
+            <li>Items on the bottom level that belong to the same sub-category are visually represented by using the same color.</li>
+          </ul>
+        </fieldset>
 
-      <br />
-      <br />
-      <br />
+        <fieldset>
+          <legend>Interacting with the chart</legend>
+          <ul class="style_1">
+            <li>Hover over the rectangles to get the dedicated value of the sub-category and further information.</li>
+          </ul>
+        </fieldset>
 
-      <footer>
-
-      </footer>
+        <fieldset>
+          <legend>Analyzing the chart</legend>
+          <ul class="style_1">
+            <li>Seek out the largest rectangle of each group and look for significant differences within each colored group.</li>
+          </ul>
+        </fieldset>
+      </div>
     </div>
-    <script type="module" src="/main.js"></script>
-  </body>
+
+
+    <br />
+    <br />
+    <br />
+
+    <footer>
+
+    </footer>
+  </div>
+  <script type="module" src="/main.js"></script>
+</body>
+
 </html>
