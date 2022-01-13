@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import { tip as d3tip } from 'd3-v6-tip';
-import { wrapTextInRect } from './util.js';
+import { wrapTextInRect, dotme } from './util.js';
 
 export const createTreemap = (
   elm,
@@ -102,22 +102,26 @@ export const createTreemap = (
 
 
   // Add title for the 3 groups
-  svg
+  const titles = svg
     .selectAll('titles')
     .data(root.descendants().filter((d) => d.depth == 1))
     .enter()
     .append('text')
+    .attr('class', 'titles')
+    .attr('title', (d) => d.data.name)
     .attr('x', (d) => d.x0)
     .attr('y', (d) => d.y0 + 21)
-    .attr('font-size', '0.7em')
-    .attr('fill', '#2c3e50')
+    .attr('font-size', '0.6em')
+    .attr('fill', '#2c3e50');
+  titles
     .append('tspan')
-    .text((d) => d.data.name)
+    .text((d) => d.data.name).each(dotme)
     .append('tspan')
     .text((d) => {
       return ` ${d.data.total} Mio. €`;
     })
     .attr('fill', '#c70000');
+
 
   // Text wrapping -- OLD
   // const wrap = textwrap().bounds({ height: 30, width: 40 }).method('tspans');
@@ -130,6 +134,13 @@ export const createTreemap = (
       (EVENT, d) =>
         `<p><u>Description</u>: ${d.data.name}</p><p><u>Value</u>: $${d.data.value} Mio. €</p>`
     );
+
+  const tipTitle = d3tip()
+      .attr('class', 'd3-tip')
+      .html((EVENT, d) => d.data.name);
+
   svg.call(tip);
+  svg.call(tipTitle);
   rects.on('mouseover', tip.show).on('mouseout', tip.hide);
+  titles.on('mouseover', tipTitle.show).on('mouseout', tipTitle.hide);
 };

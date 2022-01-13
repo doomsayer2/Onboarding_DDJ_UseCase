@@ -38,3 +38,15 @@ export const wrapTextInRect = (text, offset) => {
     }
   });
 };
+
+export function dotme() {
+  let self = d3.select(this),
+    textLength = self.node().getComputedTextLength(),
+    text = self.text();
+  let width = 44, padding = 2;
+  while (textLength > width - 2 * padding && text.length > 0) {
+    text = text.slice(0, -1);
+    self.text(text + '...');
+    textLength = self.node().getComputedTextLength();
+  }
+};
