@@ -1,7 +1,6 @@
 import * as d3 from 'd3';
-// import { textwrap } from 'd3-textwrap';
 import { tip as d3tip } from 'd3-v6-tip';
-import { wrapTextInRect } from './util.js';
+import { wrapTextInRect, dotme } from './util.js';
 
 export const createTreemap = (
   elm,
@@ -90,38 +89,39 @@ export const createTreemap = (
     .data(root.leaves())
     .join('text')
     .filter((d) => {
-      return d.value > 1000
+      return d.value > 1000;
     })
     .attr('class', 'info')
     .attr('x', (d) => d.x0 + 5) // +5 to adjust position (more right)
     .attr('y', (d) => d.y0 + 20) // +20 to adjust position (lower)
     .text((d) => d.data.name)
-    .call(wrapTextInRect, 10)
-    .attr('font-size', '7px')
+    .attr('font-size', '0.5em')
     .attr('fill', '#2c3e50')
-    .style('opacity', 0.9);
+    .style('opacity', 0.9)
+    .call(wrapTextInRect, 10)
+    .each(fontSize);
 
   // Add title for the 3 groups
-  // svg
-  //   .selectAll('titles')
-  //   .data(root.descendants().filter((d) => d.depth == 1))
-  //   .enter()
-  //   .append('text')
-  //   .attr('x', (d) => d.x0)
-  //   .attr('y', (d) => d.y0 + 21)
-  //   .attr('font-size', '11px')
-  //   .attr('fill', '#2c3e50')
-  //   .append('tspan')
-  //   .text((d) => d.data.name)
-  //   .append('tspan')
-  //   .text((d) => {
-  //     return ` ${d.data.total} Mio. €`;
-  //   })
-  //   .attr('fill', '#c70000');
-
-  // Text wrapping -- OLD
-  // const wrap = textwrap().bounds({ height: 30, width: 40 }).method('tspans');
-  // d3.select(elm).selectAll('.info').call(wrap);
+  const titles = svg
+    .selectAll('titles')
+    .data(root.descendants().filter((d) => d.depth == 1))
+    .enter()
+    .append('text')
+    .attr('class', 'titles')
+    .attr('title', (d) => d.data.name)
+    .attr('x', (d) => d.x0)
+    .attr('y', (d) => d.y0 + 21)
+    .attr('font-size', '0.6em')
+    .attr('fill', '#2c3e50');
+  titles
+    .append('tspan')
+    .text((d) => d.data.name)
+    .each(dotme)
+    .append('tspan')
+    .text((d) => {
+      return ` ${d.data.total} Mio. €`;
+    })
+    .attr('fill', '#c70000');
 
   // Tooltips
   const tip = d3tip()
@@ -130,6 +130,28 @@ export const createTreemap = (
       (EVENT, d) =>
         `<p><u>Description</u>: ${d.data.name}</p><p><u>Value</u>: $${d.data.value} Mio. €</p>`
     );
+
+  const tipTitle = d3tip()
+    .attr('class', 'd3-tip')
+    .html((EVENT, d) => d.data.name);
+
   svg.call(tip);
+  svg.call(tipTitle);
   rects.on('mouseover', tip.show).on('mouseout', tip.hide);
+  titles.on('mouseover', tipTitle.show).on('mouseout', tipTitle.hide);
 };
+
+export const clearTreemap = (elm) => {
+  d3.select(elm).selectAll('*').remove();
+};
+
+function fontSize(d) {
+  let height = d.y1 - d.y0;
+  let width = d.x1 - d.x0;
+  let size = width / 18;
+  d3.select(this).style('font-size', size + 'px');
+  while (this.getBBox().width >= width || this.getBBox().height >= height) {
+    size--;
+    d3.select(this).style('font-size', size + 'px');
+  }
+}
