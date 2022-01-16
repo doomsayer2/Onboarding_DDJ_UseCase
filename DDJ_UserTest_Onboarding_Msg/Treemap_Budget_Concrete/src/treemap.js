@@ -113,15 +113,18 @@ export const createTreemap = (
     .attr('y', (d) => d.y0 + 21)
     .attr('font-size', '0.6em')
     .attr('fill', '#2c3e50');
+    
   titles
     .append('tspan')
     .text((d) => d.data.name)
-    .each(dotme)
+    // .each(dotme)
     .append('tspan')
     .text((d) => {
       return ` ${d.data.total} Mio. €`;
     })
     .attr('fill', '#c70000');
+
+    titles.each(fontSize)
 
   // Tooltips
   const tip = d3tip()
