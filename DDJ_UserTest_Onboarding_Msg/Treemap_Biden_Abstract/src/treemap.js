@@ -88,21 +88,24 @@ export const createTreemap = (
     .attr('x', (d) => d.x0 + 5) // +5 to adjust position (more right)
     .attr('y', (d) => d.y0 + 20) // +20 to adjust position (lower)
     .text((d) => d.data.name)
-    .call(wrapTextInRect, 5)
-    .attr('font-size', '11px')
+    .attr('font-size', '0.7em')
     .attr('fill', '#2c3e50')
-    .style('opacity', 0.7);
+    .style('opacity', 0.9)
+    .call(wrapTextInRect, 10)
+    .each(fontSize);
 
   // Add title for the 3 groups
-  svg
+  const titles = svg
     .selectAll('titles')
     .data(root.descendants().filter((d) => d.depth == 1))
     .enter()
     .append('text')
     .attr('x', (d) => d.x0)
     .attr('y', (d) => d.y0 + 21)
-    .attr('font-size', '17px')
-    .attr('fill', '#2c3e50')
+    .attr('font-size', '1.1em')
+    .attr('fill', '#2c3e50');
+
+  titles
     .append('tspan')
     .text((d) => d.data.name)
     .append('tspan')
@@ -110,6 +113,8 @@ export const createTreemap = (
       return ` ${d.data.total}B`;
     })
     .attr('fill', '#c70000');
+
+    titles.each(fontSizeTitles);
 
   // Text wrapping -- OLD
   // const wrap = textwrap().bounds({ height: 30, width: 40 }).method('tspans');
@@ -125,3 +130,29 @@ export const createTreemap = (
   svg.call(tip);
   rects.on('mouseover', tip.show).on('mouseout', tip.hide);
 };
+
+export const clearTreemap = (elm) => {
+  d3.select(elm).selectAll('*').remove();
+};
+
+function fontSize(d) {
+  let height = d.y1 - d.y0;
+  let width = d.x1 - d.x0;
+  let size = width / 12;
+  d3.select(this).style('font-size', size + 'px');
+  while (this.getBBox().width >= width || this.getBBox().height >= height) {
+    size--;
+    d3.select(this).style('font-size', size + 'px');
+  }
+}
+
+function fontSizeTitles(d) {
+  let height = d.y1 - d.y0;
+  let width = d.x1 - d.x0;
+  let size = width / 17;
+  d3.select(this).style('font-size', size + 'px');
+  while (this.getBBox().width >= width || this.getBBox().height >= height) {
+    size--;
+    d3.select(this).style('font-size', size + 'px');
+  }
+}
