@@ -1,4 +1,4 @@
-import { createTreemap } from './src/treemap';
+import { createTreemap, clearTreemap } from './src/treemap';
 import { type } from '@antv/dw-analyzer';
 // import data from './src/data/sample.json';
 import dataBudget from './src/data/budgetFinance.json';
@@ -9,15 +9,21 @@ import './style.css';
  * Treemaps
  */
 
-// Sample Treemap
-// createTreemap('#chart', data);
+const charts = () => {
+    // Chart width and heights
+    const width = (window.innerWidth / 2) - 20;
+    const height = (window.innerHeight * 0.9);
+    
+    // Budget Treemap
+    createTreemap('#chart', dataBudget, undefined, { width, height });
+};
 
-// Chart width and heights
-const width = (window.innerWidth / 2) - 20;
-const height = (window.innerHeight * 0.7);
+charts();
 
-// Budget Treemap
-createTreemap('#chart', dataBudget, undefined, { width, height });
+window.onresize = () => {
+    clearTreemap('#chart');
+    charts();
+};
 
 /**
  * Data Analysis

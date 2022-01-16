@@ -89,7 +89,7 @@ export const createTreemap = (
     .data(root.leaves())
     .join('text')
     .filter((d) => {
-      return d.value > 1000
+      return d.value > 1000;
     })
     .attr('class', 'info')
     .attr('x', (d) => d.x0 + 5) // +5 to adjust position (more right)
@@ -98,8 +98,8 @@ export const createTreemap = (
     .attr('font-size', '0.5em')
     .attr('fill', '#2c3e50')
     .style('opacity', 0.9)
-    .call(wrapTextInRect, 10);
-
+    .call(wrapTextInRect, 10)
+    .each(fontSize);
 
   // Add title for the 3 groups
   const titles = svg
@@ -113,19 +113,18 @@ export const createTreemap = (
     .attr('y', (d) => d.y0 + 21)
     .attr('font-size', '0.6em')
     .attr('fill', '#2c3e50');
+    
   titles
     .append('tspan')
-    .text((d) => d.data.name).each(dotme)
+    .text((d) => d.data.name)
+    // .each(dotme)
     .append('tspan')
     .text((d) => {
       return ` ${d.data.total} Mio. €`;
     })
     .attr('fill', '#c70000');
 
-
-  // Text wrapping -- OLD
-  // const wrap = textwrap().bounds({ height: 30, width: 40 }).method('tspans');
-  // d3.select(elm).selectAll('.info').call(wrap);
+    titles.each(fontSize)
 
   // Tooltips
   const tip = d3tip()
@@ -136,11 +135,26 @@ export const createTreemap = (
     );
 
   const tipTitle = d3tip()
-      .attr('class', 'd3-tip')
-      .html((EVENT, d) => d.data.name);
+    .attr('class', 'd3-tip')
+    .html((EVENT, d) => d.data.name);
 
   svg.call(tip);
   svg.call(tipTitle);
   rects.on('mouseover', tip.show).on('mouseout', tip.hide);
   titles.on('mouseover', tipTitle.show).on('mouseout', tipTitle.hide);
 };
+
+export const clearTreemap = (elm) => {
+  d3.select(elm).selectAll('*').remove();
+};
+
+function fontSize(d) {
+  let height = d.y1 - d.y0;
+  let width = d.x1 - d.x0;
+  let size = width / 18;
+  d3.select(this).style('font-size', size + 'px');
+  while (this.getBBox().width >= width || this.getBBox().height >= height) {
+    size--;
+    d3.select(this).style('font-size', size + 'px');
+  }
+}
