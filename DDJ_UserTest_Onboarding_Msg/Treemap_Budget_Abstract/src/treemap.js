@@ -95,11 +95,10 @@ export const createTreemap = (
     .attr('x', (d) => d.x0 + 5) // +5 to adjust position (more right)
     .attr('y', (d) => d.y0 + 20) // +20 to adjust position (lower)
     .text((d) => d.data.name)
-    .attr('font-size', '0.5em')
+    .attr('font-size', '0.6em')
     .attr('fill', '#2c3e50')
     .style('opacity', 0.9)
-    .call(wrapTextInRect, 10)
-    .each(fontSize);
+    .call(wrapTextInRect, 1);
 
   // Add title for the 3 groups
   const titles = svg
@@ -111,20 +110,18 @@ export const createTreemap = (
     .attr('title', (d) => d.data.name)
     .attr('x', (d) => d.x0)
     .attr('y', (d) => d.y0 + 21)
-    .attr('font-size', '0.6em')
+    .attr('font-size', '0.9em')
     .attr('fill', '#2c3e50');
     
   titles
     .append('tspan')
     .text((d) => d.data.name)
-    // .each(dotme)
+    .each(dotme)
     .append('tspan')
     .text((d) => {
       return ` ${d.data.total} Mio. €`;
     })
     .attr('fill', '#c70000');
-
-    titles.each(fontSize)
 
   // Tooltips
   const tip = d3tip()
@@ -147,14 +144,3 @@ export const createTreemap = (
 export const clearTreemap = (elm) => {
   d3.select(elm).selectAll('*').remove();
 };
-
-function fontSize(d) {
-  let height = d.y1 - d.y0;
-  let width = d.x1 - d.x0;
-  let size = width / 18;
-  d3.select(this).style('font-size', size + 'px');
-  while (this.getBBox().width >= width || this.getBBox().height >= height) {
-    size--;
-    d3.select(this).style('font-size', size + 'px');
-  }
-}

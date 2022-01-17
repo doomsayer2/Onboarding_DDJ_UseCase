@@ -4,7 +4,7 @@ export const wrapTextInRect = (text, offset) => {
   text.each(function () {
     let text = d3.select(this);
     const d = text.data();
-    const width = Math.abs(d[0].x1 - d[0].x0) - offset;
+    const width = this.getBBox().width - offset;
 
     let words = text.text().split(/\s+/).reverse(),
       word,
@@ -24,7 +24,7 @@ export const wrapTextInRect = (text, offset) => {
     while ((word = words.pop())) {
       line.push(word);
       tspan.text(line.join(' '));
-      if (tspan.node().getComputedTextLength() > width) {
+      if (tspan.node().getComputedTextLength() > width && line.length !== 1) {
         line.pop();
         tspan.text(line.join(' '));
         line = [word];
