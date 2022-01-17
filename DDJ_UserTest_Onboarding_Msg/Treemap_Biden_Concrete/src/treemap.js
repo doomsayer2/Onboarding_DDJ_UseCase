@@ -91,7 +91,7 @@ export const createTreemap = (
     .attr('font-size', '0.7em')
     .attr('fill', '#2c3e50')
     .style('opacity', 0.9)
-    .call(wrapTextInRect, 10)
+    .call(wrapTextInRect, 0)
     .each(fontSize);
 
   // Add title for the 3 groups
@@ -114,7 +114,6 @@ export const createTreemap = (
     })
     .attr('fill', '#c70000');
 
-    titles.each(fontSizeTitles);
 
   // Text wrapping -- OLD
   // const wrap = textwrap().bounds({ height: 30, width: 40 }).method('tspans');
@@ -139,19 +138,10 @@ function fontSize(d) {
   let height = d.y1 - d.y0;
   let width = d.x1 - d.x0;
   let size = width / 12;
-  d3.select(this).style('font-size', size + 'px');
-  while (this.getBBox().width >= width || this.getBBox().height >= height) {
-    size--;
-    d3.select(this).style('font-size', size + 'px');
-  }
-}
 
-function fontSizeTitles(d) {
-  let height = d.y1 - d.y0;
-  let width = d.x1 - d.x0;
-  let size = width / 17;
   d3.select(this).style('font-size', size + 'px');
-  while (this.getBBox().width >= width || this.getBBox().height >= height) {
+
+  while (this.getBBox().width >= width || this.getBBox().height >= height || size > 26) {
     size--;
     d3.select(this).style('font-size', size + 'px');
   }

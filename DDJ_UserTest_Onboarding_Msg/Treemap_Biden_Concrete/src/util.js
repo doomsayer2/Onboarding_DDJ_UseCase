@@ -4,7 +4,7 @@ export const wrapTextInRect = (text, offset) => {
   text.each(function () {
     let text = d3.select(this);
     const d = text.data();
-    const width = Math.abs(d[0].x1 - d[0].x0) - offset;
+    const width = this.getBBox().width - offset;
     
     let words = text.text().split(/\s+/).reverse(),
       word,
