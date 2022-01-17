@@ -93,7 +93,7 @@ export const createTreemap = (
     .attr('x', (d) => d.x0 + 5) // +5 to adjust position (more right)
     .attr('y', (d) => d.y0 + 20) // +20 to adjust position (lower)
     .text((d) => d.data.name)
-    .attr('font-size', '0.99em')
+    .attr('font-size', '0.92em')
     .attr('fill', '#2c3e50')
     .style('opacity', 0.9)
     .call(wrapTextInRect, 3)
