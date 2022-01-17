@@ -34,8 +34,13 @@ export const createTreemap = (
   const svg = d3
     .select(elm)
     .append('svg')
-    .attr("preserveAspectRatio", "xMinYMin meet")
-    .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
+    .attr('preserveAspectRatio', 'xMinYMin meet')
+    .attr(
+      'viewBox',
+      `0 0 ${width + margin.left + margin.right} ${
+        height + margin.top + margin.bottom
+      }`
+    )
     .append('g')
     .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
@@ -88,11 +93,10 @@ export const createTreemap = (
     .attr('x', (d) => d.x0 + 5) // +5 to adjust position (more right)
     .attr('y', (d) => d.y0 + 20) // +20 to adjust position (lower)
     .text((d) => d.data.name)
-    .attr('font-size', '0.7em')
+    .attr('font-size', '0.99em')
     .attr('fill', '#2c3e50')
     .style('opacity', 0.9)
-    .call(wrapTextInRect, 10)
-    .each(fontSize);
+    .call(wrapTextInRect, 3)
 
   // Add title for the 3 groups
   const titles = svg
@@ -102,7 +106,7 @@ export const createTreemap = (
     .append('text')
     .attr('x', (d) => d.x0)
     .attr('y', (d) => d.y0 + 21)
-    .attr('font-size', '1.1em')
+    .attr('font-size', '1.4em')
     .attr('fill', '#2c3e50');
 
   titles
@@ -114,7 +118,6 @@ export const createTreemap = (
     })
     .attr('fill', '#c70000');
 
-    titles.each(fontSizeTitles);
 
   // Text wrapping -- OLD
   // const wrap = textwrap().bounds({ height: 30, width: 40 }).method('tspans');
@@ -125,7 +128,7 @@ export const createTreemap = (
     .attr('class', 'd3-tip')
     .html(
       (EVENT, d) =>
-        `<p><u>Description</u>: ${d.data.desc}</p><p><u>Value</u>: $${d.data.value}B</p>`
+        `<p><u>Name</u>: ${d.data.name}</p><p><u>Description</u>: ${d.data.desc}</p><p><u>Value</u>: $${d.data.value}B</p>`
     );
   svg.call(tip);
   rects.on('mouseover', tip.show).on('mouseout', tip.hide);
@@ -134,25 +137,3 @@ export const createTreemap = (
 export const clearTreemap = (elm) => {
   d3.select(elm).selectAll('*').remove();
 };
-
-function fontSize(d) {
-  let height = d.y1 - d.y0;
-  let width = d.x1 - d.x0;
-  let size = width / 12;
-  d3.select(this).style('font-size', size + 'px');
-  while (this.getBBox().width >= width || this.getBBox().height >= height) {
-    size--;
-    d3.select(this).style('font-size', size + 'px');
-  }
-}
-
-function fontSizeTitles(d) {
-  let height = d.y1 - d.y0;
-  let width = d.x1 - d.x0;
-  let size = width / 17;
-  d3.select(this).style('font-size', size + 'px');
-  while (this.getBBox().width >= width || this.getBBox().height >= height) {
-    size--;
-    d3.select(this).style('font-size', size + 'px');
-  }
-}

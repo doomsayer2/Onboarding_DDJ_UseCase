@@ -124,7 +124,7 @@ export const createTreemap = (
     .attr('class', 'd3-tip')
     .html(
       (EVENT, d) =>
-        `<p><u>Description</u>: ${d.data.desc}</p><p><u>Value</u>: $${d.data.value}B</p>`
+        `<p><u>Name</u>: ${d.data.name}</p><p><u>Description</u>: ${d.data.desc}</p><p><u>Value</u>: $${d.data.value}B</p>`
     );
   svg.call(tip);
   rects.on('mouseover', tip.show).on('mouseout', tip.hide);
