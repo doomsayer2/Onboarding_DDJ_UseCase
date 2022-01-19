@@ -89,7 +89,7 @@ export const createTreemap = (
     .data(root.leaves())
     .join('text')
     .filter((d) => {
-      return d.value > 1000;
+      return d.value > 400;
     })
     .attr('class', 'info')
     .attr('x', (d) => d.x0 + 5) // +5 to adjust position (more right)
