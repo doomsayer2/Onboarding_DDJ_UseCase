@@ -29,6 +29,9 @@ export const createTreemap = (
   // Opacity based on value
   const opacity = d3.scaleLinear().range([0.2, 1]);
 
+  // Number format
+  const format = d3.format(',');
+
   // Append the svg object to the body of the page
   const svg = d3
     .select(elm)
@@ -77,7 +80,7 @@ export const createTreemap = (
     .attr('y', (d) => d.y0)
     .attr('width', (d) => d.x1 - d.x0)
     .attr('height', (d) => d.y1 - d.y0)
-    .attr('title', (d) => `The value: ${d.data.value}`)
+    .attr('title', (d) => `The value: ${format(d.data.value)}`)
     .style('stroke', 'black')
     .style('fill', (d) => color(d.parent.data.name))
     // .style('opacity', (d) => opacity(d.data.value));
@@ -118,7 +121,7 @@ export const createTreemap = (
     .text((d) => d.data.name)
     .append('tspan')
     .text((d) => {
-      return ` ${d.data.total} Mio. €`;
+      return ` ${format(d.data.total)} Mio. €`;
     })
     .attr('fill', '#c70000');
 
@@ -127,7 +130,7 @@ export const createTreemap = (
     .attr('class', 'd3-tip')
     .html(
       (EVENT, d) =>
-        `<p><u>Description</u>: ${d.data.name}</p><p><u>Value</u>: $${d.data.value} Mio. €</p>`
+        `<p><u>Name</u>: ${d.data.name}</p><p><u>Value</u>: ${format(d.data.value)} Mio. €</p>`
     );
 
   // const tipTitle = d3tip()
