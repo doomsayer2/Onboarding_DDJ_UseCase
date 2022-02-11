@@ -1,4 +1,4 @@
-import { populateHtml, convertToObject } from './utils/utils';
+import { populateHtml } from './utils/utils';
 import * as d3 from 'd3';
 
 const initialValues = {
@@ -50,4 +50,5 @@ export function draw() {
 
   // Always call the update() after the initial draw
   update();
+
 }
