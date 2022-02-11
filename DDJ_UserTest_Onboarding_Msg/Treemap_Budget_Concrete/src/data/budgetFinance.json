@@ -1,45 +1,45 @@
 {
     "children": [
         {
-            "name": "Arbeit, Soziales, Gesundheit und Familie",
+            "name": "Work, Social Affairs, Health and Family",
             "children": [
                 {
-                    "name": "Arbeit",
+                    "name": "Work",
                     "desc": "...",
                     "group": "B",
                     "value": 9117.4,
                     "colname": "level3"
                 },
                 {
-                    "name": "Soziales und Konsumentenschutz",
+                    "name": "Social Affairs and Consumer Protection",
                     "desc": "...",
                     "group": "B",
                     "value": 4204.7,
                     "colname": "level3"
                 },
                 {
-                    "name": "Pensionsversicherung",
+                    "name": "Public Pension Schemes",
                     "desc": "...",
                     "group": "B",
                     "value": 12468.8,
                     "colname": "level3"
                 },
                 {
-                    "name": "Pensionen - Beamtinnen und Beamte",
+                    "name": "Pensions of officials",
                     "desc": "...",
                     "group": "B",
                     "value": 10752.8,
                     "colname": "level3"
                 },
                 {
-                    "name": "Gesundheit",
+                    "name": "Health",
                     "desc": "...",
                     "group": "B",
                     "value": 3243.8,
                     "colname": "level3"
                 },
                 {
-                    "name": "Familie und Jugend",
+                    "name": "Family and Youth",
                     "desc": "...",
                     "group": "B",
                     "value": 7687.1,
@@ -51,52 +51,52 @@
             "total": 47474.7
         },
         {
-            "name": "Wirtschaft, Infrastruktur und Umwelt",
+            "name": "Economy, Infrastructure and Environment",
             "children": [
                 {
-                    "name": "Wirtschaft",
+                    "name": "Economy",
                     "desc": "...",
                     "group": "D",
                     "value": 2008.1,
                     "colname": "level3"
                 },
                 {
-                    "name": "Mobilität",
+                    "name": "Mobility",
                     "desc": "...",
                     "group": "D",
                     "value": 4841.7,
                     "colname": "level3"
                 },
                 {
-                    "name": "Landwirtschaft, Regionen und Tourismus",
+                    "name": "Agriculture, Regions and Tourism",
                     "desc": "...",
                     "group": "D",
                     "value": 3372.9,
                     "colname": "level3"
                 },
                 {
-                    "name": "Klima, Umwelt und Energie",
+                    "name": "Climate, environment and Energy",
                     "desc": "...",
                     "group": "D",
                     "value": 2400.1,
                     "colname": "level3"
                 },
                 {
-                    "name": "Finanzausgleich",
+                    "name": "Financial Compensation",
                     "desc": "...",
                     "group": "D",
                     "value": 1943.4,
                     "colname": "level3"
                 },
                 {
-                    "name": "Bundesvermögen",
+                    "name": "Federal Assets",
                     "desc": "...",
                     "group": "D",
                     "value": 3002.0,
                     "colname": "level3"
                 },
                 {
-                    "name": "Finanzmarktstabilität",
+                    "name": "Financial Market Stability",
                     "desc": "...",
                     "group": "D",
                     "value": 1172.8,
@@ -108,101 +108,101 @@
             "total": 18740.9
         },
         {
-            "name": "Recht und Sicherheit",
+            "name": "Law and Security",
             "children": [
                 {
-                    "name": "Präsidentschaftskanzlei",
+                    "name": "Office of the president",
                     "desc": "...",
                     "group": "A",
                     "value": 11.5,
                     "colname": "level3"
                 },
                 {
-                    "name": "Bundesgesetzgebung",
+                    "name": "Federal Law",
                     "desc": "...",
                     "group": "A",
                     "value": 398.6,
                     "colname": "level3"
                 },
                 {
-                    "name": "Verfassungsgerichtshof",
+                    "name": "Constitutional Court",
                     "desc": "...",
                     "group": "A",
                     "value": 17.3,
                     "colname": "level3"
                 },
                 {
-                    "name": "Verwaltungsgerichtshof",
+                    "name": "Administrative Court",
                     "desc": "...",
                     "group": "A",
                     "value": 22.5,
                     "colname": "level3"
                 },
                 {
-                    "name": "Volksanwaltschaft",
+                    "name": "Ombudsman Board",
                     "desc": "...",
                     "group": "A",
                     "value": 13.0,
                     "colname": "level3"
                 },
                 {
-                    "name": "Rechnungshof",
+                    "name": "Court of Audit",
                     "desc": "...",
                     "group": "A",
                     "value": 37.4,
                     "colname": "level3"
                 },
                 {
-                    "name": "Bundeskanzleramt",
+                    "name": "Federal Chancellery",
                     "desc": "...",
                     "group": "A",
                     "value": 480.8,
                     "colname": "level3"
                 },
                 {
-                    "name": "Inneres",
+                    "name": "Federal Ministry of Home affairs",
                     "desc": "...",
                     "group": "A",
                     "value": 3245.9,
                     "colname": "level3"
                 },
                 {
-                    "name": "Äußeres",
+                    "name": "Federal Ministry for European and International Affairs",
                     "desc": "...",
                     "group": "A",
                     "value": 560.4,
                     "colname": "level3"
                 },
                 {
-                    "name": "Justiz",
+                    "name": "Justice",
                     "desc": "...",
                     "group": "A",
                     "value": 1872.2,
                     "colname": "level3"
                 },
                 {
-                    "name": "Militärische Angelegenheiten",
+                    "name": "Military Affairs",
                     "desc": "...",
                     "group": "A",
                     "value": 2713.1,
                     "colname": "level3"
                 },
                 {
-                    "name": "Finanzverwaltung",
+                    "name": "Financial Administration",
                     "desc": "...",
                     "group": "A",
                     "value": 1174.3,
                     "colname": "level3"
                 },
                 {
-                    "name": "Öffentlicher Dienst und Sport",
+                    "name": "Public Service and Sports",
                     "desc": "...",
                     "group": "A",
                     "value": 451.4,
                     "colname": "level3"
                 },
                 {
-                    "name": "Fremdenwesen",
+                    "name": "Federal Office for Immigration and Asylum ",
                     "desc": "...",
                     "group": "A",
                     "value": 347.4,
@@ -214,38 +214,38 @@
             "total": 11345.8
         },
         {
-            "name": "Bildung, Forschung, Kunst und Kultur",
+            "name": "Education, Research, Art and Culture",
             "children": [
                 {
-                    "name": "Bildung",
+                    "name": "Education",
                     "desc": "...",
                     "group": "C",
                     "value": 10288.0,
                     "colname": "level3"
                 },
                 {
-                    "name": "Wissenschaft und Forschung",
+                    "name": "Science and Research",
                     "desc": "Tuition-free two-year community college",
                     "group": "C",
                     "value": 5621.2,
                     "colname": "level3"
                 },
                 {
-                    "name": "Pell grants",
-                    "desc": "Kunst und Kultur",
+                    "name": "Art and Culture",
+                    "desc": "Art and Culture",
                     "group": "C",
                     "value": 557.1,
                     "colname": "level3"
                 },
                 {
-                    "name": "Wirtschaft (Forschung)",
+                    "name": "Economy (research)",
                     "desc": "...",
                     "group": "C",
                     "value": 170.4,
                     "colname": "level3"
                 },
                 {
-                    "name": "Innovation und Technologie (Forschung)",
+                    "name": "Innovation and technology (research",
                     "desc": "...",
                     "group": "C",
                     "value": 581.6,
@@ -257,18 +257,18 @@
             "total": 17158.3
         },
         {
-            "name": "Kassa und Zinsen",
+            "name": "Cash und Interest",
             "children": [
                 {
-                    "name": "Kassenverwaltung",
+                    "name": "Cash department",
                     "desc": "...",
                     "group": "E",
                     "value": 62.5,
                     "colname": "level3"
                 },
                 {
-                    "name": "Finanzierung, Währungstauschverträge",
-                    "desc": "Tuition-free two-year community college",
+                    "name": "Financing, Currency Exchange Contracts",
+                    "desc": "...",
                     "group": "C",
                     "value": 4299.0,
                     "colname": "level3"
@@ -279,6 +279,6 @@
             "total": 4361.5
         }
     ],
-    "name": "Finanzierungshaushalt Auszahlungen",
+    "name": "Financing budget payoffs",
     "total": 99081.2
 }
