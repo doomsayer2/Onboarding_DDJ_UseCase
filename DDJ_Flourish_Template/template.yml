@@ -1,9 +1,9 @@
 # The 'id' should be a string that uniquely identifies your template
-id: 'Doomsayer'
+id: 'DDJ VisAhoi Treemap by FHSTP'
 name: Onboarding VisAhoi
-description: A tryout onboarding template for a project of the university of applied sciences St. Pölten
-author: FH St. Pölten (doomsayer)
-version: 1.0.1
+description: A template showing the usage of the VisAhoi.js library by using the example of a treemap.
+author: FH St. Pölten
+version: 1.1.0
 
 # This template is compatible with SDK version 3
 sdk_version: 3

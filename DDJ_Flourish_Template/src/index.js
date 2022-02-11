@@ -4,7 +4,8 @@ import * as d3 from 'd3';
 const initialValues = {
   headline: 'Onboarding & Visualization Template',
   subheader: 'This is a possible subheadline.',
-  intro: 'Use this template in order to create your own visualization in vega-lite and use our awesome onbaording from <b>VisAhoi</b>!'
+  intro:
+    'Use this template in order to create your own visualization in vega-lite and use our awesome onbaording from <b>VisAhoi</b>!',
 };
 
 export const data = {};
@@ -18,30 +19,8 @@ export const state = {
   headlineText: initialValues.headline,
   subheaderText: initialValues.subheader,
   introText: initialValues.intro,
-  showText: true,
-  vegaLiteScheme: `{
-    $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
-    description: 'A simple bar chart with embedded data.',
-    data: {
-      values: [
-        {a: 'A', b: 28},
-        {a: 'B', b: 55},
-        {a: 'C', b: 43},
-        {a: 'D', b: 91},
-        {a: 'E', b: 81},
-        {a: 'F', b: 53},
-        {a: 'G', b: 19},
-        {a: 'H', b: 87},
-        {a: 'I', b: 52}
-      ]
-    },
-    mark: 'bar',
-    encoding: {
-      x: {field: 'a', type: 'ordinal'},
-      y: {field: 'b', type: 'quantitative'}
-    }
-  }`,
-  background_color: "#F4F4F4"
+  showText: false,
+  background_color: '#F4F4F4',
 };
 
 export function update() {
@@ -58,13 +37,12 @@ export function update() {
   populateHtml('#headline', state.headlineText);
   populateHtml('#subheader', state.subheaderText);
   populateHtml('#intro', state.introText);
-
-  // Vega-Lite
-  const vegaSpec = convertToObject(state.vegaLiteScheme);
-  vegaEmbed('#vis', vegaSpec);
 }
 
 export function draw() {
+  // Set the default height of the flourish visualization to 70% of available screen height
+  Flourish.setHeight(window.screen.availHeight * 0.7);
+
   // The draw function is called when the template first loads
   populateHtml('#headline', initialValues.headline);
   populateHtml('#subheader', initialValues.subheader);
