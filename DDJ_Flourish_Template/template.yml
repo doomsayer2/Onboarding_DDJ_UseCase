@@ -60,13 +60,6 @@ settings:
     description: Set the intro text for the visualisation or leave it empty # Description that appears in question mark next to name
     type: string # Setting type
 
-  - Vega-Lite # Headings can be used to break up the settings into collapsible sections
-  - property: vegaLiteScheme # Refers to a property in the template's state object
-    name: Paste your vega-lite code here in order to show it # Display name for the settings panel
-    description: Please paste only valid vega-lite code that includes all important configurations # Optional description for the settings panel
-    type: text # See available types above
-
-
 data:
   # The data section determines how data is made available to your template,
   # and the sample data that is used. See the documentation.

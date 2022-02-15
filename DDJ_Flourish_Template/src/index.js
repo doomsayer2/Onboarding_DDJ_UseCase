@@ -50,5 +50,4 @@ export function draw() {
 
   // Always call the update() after the initial draw
   update();
-
 }
