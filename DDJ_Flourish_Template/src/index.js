@@ -1,4 +1,5 @@
 import { populateHtml } from './utils/utils';
+import Treemap from './treemap.js';
 import * as d3 from 'd3';
 
 const initialValues = {
@@ -21,6 +22,7 @@ export const state = {
   introText: initialValues.intro,
   showText: false,
   background_color: '#F4F4F4',
+  plotlyTreemap: null,
 };
 
 export function update() {
@@ -37,17 +39,23 @@ export function update() {
   populateHtml('#headline', state.headlineText);
   populateHtml('#subheader', state.subheaderText);
   populateHtml('#intro', state.introText);
+
+  // Treemap
+  state.plotlyTreemap.createTreemap();
 }
 
 export function draw() {
   // Set the default height of the flourish visualization to 70% of available screen height
   Flourish.setHeight(window.screen.availHeight * 0.7);
-
+  
   // The draw function is called when the template first loads
   populateHtml('#headline', initialValues.headline);
   populateHtml('#subheader', initialValues.subheader);
   populateHtml('#intro', initialValues.intro);
 
+  // Initialize the Treemap
+  state.plotlyTreemap = new Treemap('vis');
+  
   // Always call the update() after the initial draw
   update();
 }
