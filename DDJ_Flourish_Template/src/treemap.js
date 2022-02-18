@@ -13,8 +13,11 @@ export default class Treemap {
         type: 'treemap',
         labels: Treemap.unpack(this.jobsData, 'Label'),
         parents: Treemap.unpack(this.jobsData, 'Parent'),
-        domain: { x: [0, 0.5] },
         values: Treemap.unpack(this.jobsData, 'Value'),
+        marker: {
+          colors: Treemap.unpack(this.jobsData, 'ColorToned50')
+        },
+        domain: { x: [0, 0.5] },
         textinfo: 'label+value',
         hoverinfo: 'label+value',
         outsidetextfont: { size: 20, color: '#222531' },
@@ -23,8 +26,11 @@ export default class Treemap {
         type: 'treemap',
         labels: Treemap.unpack(this.familiesData, 'Label'),
         parents: Treemap.unpack(this.familiesData, 'Parent'),
-        domain: { x: [0.5, 1] },
         values: Treemap.unpack(this.familiesData, 'Value'),
+        marker: {
+          colors: Treemap.unpack(this.familiesData, 'ColorToned50')
+        },
+        domain: { x: [0.5, 1] },
         textinfo: 'label+value',
         hoverinfo: 'label+value',
         outsidetextfont: { size: 20, color: '#222531' },
