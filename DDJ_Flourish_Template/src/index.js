@@ -1,4 +1,4 @@
-import { populateHtml } from './utils/utils';
+import { populateHtml, loadData } from './utils/utils';
 import Treemap from './treemap.js';
 import * as d3 from 'd3';
 
@@ -8,6 +8,8 @@ const initialValues = {
   intro:
     'Use this template in order to create your own visualization in vega-lite and use our awesome onbaording from <b>VisAhoi</b>!',
 };
+
+const dataUrls = ['/usaJobsPlan.csv', '/usaFamiliesPlan.csv'];
 
 export const data = {};
 // If your template includes data tables, use this variable to access the data.
@@ -44,18 +46,22 @@ export function update() {
   state.plotlyTreemap.createTreemap();
 }
 
-export function draw() {
+export async function draw() {
   // Set the default height of the flourish visualization to 70% of available screen height
   Flourish.setHeight(window.screen.availHeight * 0.7);
-  
+
   // The draw function is called when the template first loads
   populateHtml('#headline', initialValues.headline);
   populateHtml('#subheader', initialValues.subheader);
   populateHtml('#intro', initialValues.intro);
 
   // Initialize the Treemap
-  state.plotlyTreemap = new Treemap('vis');
-  
+  state.plotlyTreemap = new Treemap(
+    'vis',
+    await loadData(dataUrls[0]),
+    await loadData(dataUrls[1])
+  );
+
   // Always call the update() after the initial draw
   update();
 }
