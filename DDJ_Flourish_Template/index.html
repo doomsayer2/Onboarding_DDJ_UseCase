@@ -1,30 +1,40 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<!-- The <title> is inserted by Flourish -->
 
-		<!-- Link to a stylesheet, or include an inline <style> section here -->
-		<link rel="stylesheet" type="text/css" href="style.css">
-		
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The <title> is inserted by Flourish -->
 
-		<script src="./lib/plotly.min.js"></script>
-	</head>
-	<body>
-		<!-- If you want to start with a non-empty document, add elements here -->
-		<!-- Relative links are rewritten to refer to the files in the static directory -->
-		<div id="textWrapper">
-			<h2 id="headline"></h2>
-			<h3 id="subheader"></h3>
-			<hr />
-			<p id="intro"></p>
-		</div>
+	<!-- Link to a stylesheet, or include an inline <style> section here -->
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" href="./lib/css/main.css">
 
-		<br/>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
+
+	<script src="./lib/plotly.min.js"></script>
+	<script src="./lib/bundle.js" type="module"></script>
+</head>
+
+<body>
+	<!-- If you want to start with a non-empty document, add elements here -->
+	<!-- Relative links are rewritten to refer to the files in the static directory -->
+	<div id="textWrapper">
+		<h2 id="headline"></h2>
+		<h3 id="subheader"></h3>
+		<hr />
+		<p id="intro"></p>
+	</div>
+
+	<br />
+	<div class="viz-container">
 		<div id="vis"></div>
-	</body>
+		<span id="show-onboarding" class="button-30" title="Show onboarding">
+			📊
+		</span>
+	</div>
+</body>
+
 </html>

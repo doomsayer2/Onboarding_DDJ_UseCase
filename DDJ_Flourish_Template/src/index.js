@@ -1,5 +1,6 @@
 import { populateHtml, loadData } from './utils/utils';
 import Treemap from './treemap.js';
+import Bar from './bar';
 import * as d3 from 'd3';
 
 const initialValues = {
@@ -9,7 +10,7 @@ const initialValues = {
     'Use this template in order to create your own visualization in vega-lite and use our awesome onbaording from <b>VisAhoi</b>!',
 };
 
-const dataUrls = ['/usaJobsPlan.csv', '/usaFamiliesPlan.csv'];
+const dataUrls = ['/usaJobsPlan.csv', '/usaFamiliesPlan.csv', '/barData.csv'];
 
 export const data = {};
 // If your template includes data tables, use this variable to access the data.
@@ -25,6 +26,7 @@ export const state = {
   showText: false,
   background_color: '#F4F4F4',
   plotlyTreemap: null,
+  plotlyBar: null,
 };
 
 export function update() {
@@ -43,7 +45,10 @@ export function update() {
   populateHtml('#intro', state.introText);
 
   // Treemap
-  state.plotlyTreemap.createTreemap();
+  // state.plotlyTreemap.createTreemap();
+
+  // Bar
+  state.plotlyBar.createBarChart();
 }
 
 export async function draw() {
@@ -56,11 +61,14 @@ export async function draw() {
   populateHtml('#intro', initialValues.intro);
 
   // Initialize the Treemap
-  state.plotlyTreemap = new Treemap(
-    'vis',
-    await loadData(dataUrls[0]),
-    await loadData(dataUrls[1])
-  );
+  // state.plotlyTreemap = new Treemap(
+  //   'vis',
+  //   await loadData(dataUrls[0]),
+  //   await loadData(dataUrls[1])
+  // );
+
+  // Initialize the Barchart
+  state.plotlyBar = new Bar('vis', await loadData(dataUrls[2]));
 
   // Always call the update() after the initial draw
   update();
