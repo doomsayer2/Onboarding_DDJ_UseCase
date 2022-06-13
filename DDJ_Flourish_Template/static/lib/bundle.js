@@ -7,6 +7,7 @@ var EVisualizationType;
     EVisualizationType["CHANGE_MATRIX"] = "change-matrix";
     EVisualizationType["HORIZON_GRAPH"] = "horizon-graph";
     EVisualizationType["SCATTERPLOT"] = "scatterplot";
+    EVisualizationType["TREEMAP"] = "treemap";
 })(EVisualizationType || (EVisualizationType = {}));
 const isOnboardingElementAnchor = (element) => {
     return element.element !== undefined;
@@ -19,29 +20,38 @@ var EDefaultOnboardingStages;
 })(EDefaultOnboardingStages || (EDefaultOnboardingStages = {}));
 // TODO: move to right place
 const defaultOnboardingStages = new Map([
-    [EDefaultOnboardingStages.READING, {
+    [
+        EDefaultOnboardingStages.READING,
+        {
             id: EDefaultOnboardingStages.READING,
-            title: 'Reading',
-            iconClass: 'fas fa-glasses',
-            hoverBackgroundColor: 'rgb(92, 59, 112)',
-            backgroundColor: 'rgb(123, 80, 150)',
-            activeBackgroundColor: 'rgb(76, 46, 94)',
-            order: 1
-        }],
-    [EDefaultOnboardingStages.USING, {
+            title: "Reading",
+            iconClass: "fas fa-glasses",
+            hoverBackgroundColor: "rgb(92, 59, 112)",
+            backgroundColor: "rgb(123, 80, 150)",
+            activeBackgroundColor: "rgb(76, 46, 94)",
+            order: 1,
+        },
+    ],
+    [
+        EDefaultOnboardingStages.USING,
+        {
             id: EDefaultOnboardingStages.USING,
-            title: 'Interacting',
-            iconClass: 'fas fa-hand-point-up',
-            backgroundColor: 'rgb(0, 61, 92)',
-            order: 2
-        }],
-    [EDefaultOnboardingStages.ANALYZING, {
+            title: "Interacting",
+            iconClass: "fas fa-hand-point-up",
+            backgroundColor: "rgb(0, 61, 92)",
+            order: 2,
+        },
+    ],
+    [
+        EDefaultOnboardingStages.ANALYZING,
+        {
             id: EDefaultOnboardingStages.ANALYZING,
-            title: 'Analyzing',
-            iconClass: 'fas fa-lightbulb',
-            backgroundColor: 'rgb(254, 128, 41)',
-            order: 3
-        }]
+            title: "Analyzing",
+            iconClass: "fas fa-lightbulb",
+            backgroundColor: "rgb(254, 128, 41)",
+            order: 3,
+        },
+    ],
 ]);
 
 var top$1 = 'top';
@@ -1786,28 +1796,36 @@ var createPopper = /*#__PURE__*/popperGenerator({
  * Returns the dom node which contains the passed text
  * @param textContent the text content of the dom node which should be found
  */
-const getDomNodeByTextContent = (textContent, visElement) => document.createNodeIterator(visElement, // The root node of the chart
+const getDomNodeByTextContent = (textContent, visElement) => document
+    .createNodeIterator(visElement, // The root node of the chart
 NodeFilter.SHOW_TEXT, // Look for text nodes only
 {
     acceptNode(node) {
+        // The filter method of interface NodeFilter
         return new RegExp(textContent).test(node.textContent) // Check if text contains target string
             ? NodeFilter.FILTER_ACCEPT // Found: accept node
             : NodeFilter.FILTER_REJECT; // Not found: reject and continue
-    }
-}).nextNode().parentElement;
+    },
+})
+    .nextNode().parentElement;
 /**
  * Returns the anchor for the requested onboarding specification.
  * Returns undefined if the passed property is undefined.
  * @param prop: the property from the onboarding spec for which the anchor should be returned
  */
 const getAnchor = (prop, visElement) => {
-    if (!prop) { // if prop is undefined -> return
+    if (!prop) {
+        // if prop is undefined -> return
         return;
     }
-    else if (prop.anchor?.findDomNodeByValue) { // the dom node should be found by it's content
+    else if (prop.anchor?.findDomNodeByValue) {
+        // the dom node should be found by it's content
+        // TODO: can findDomNodeByValue be removed?
         const targetDomNode = getDomNodeByTextContent(prop.domNodeValue ? prop.domNodeValue : prop.value, visElement);
         // if no node was found by the given text return undefined, otherwise return the dom node
-        return targetDomNode ? Object.assign({ element: targetDomNode }, (prop.anchor || {})) : undefined;
+        return targetDomNode
+            ? Object.assign({ element: targetDomNode }, prop.anchor || {})
+            : undefined;
     }
     else if (prop.anchor) {
         return prop.anchor;
@@ -1823,7 +1841,7 @@ const getMarkerDomId = (id) => {
     return `visahoi-marker-${id}`;
 };
 
-function generateMessages$4(spec, visElement, ahoiConfig) {
+function generateMessages$5(spec, visElement, ahoiConfig) {
     const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING);
     const interacting = defaultOnboardingStages.get(EDefaultOnboardingStages.USING);
     const messages = [
@@ -1892,10 +1910,10 @@ function generateMessages$4(spec, visElement, ahoiConfig) {
     return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
 }
 const barChart = {
-    generateMessages: generateMessages$4
+    generateMessages: generateMessages$5
 };
 
-function generateMessages$3(spec, visElement) {
+function generateMessages$4(spec, visElement) {
     const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING);
     const messages = [
         {
@@ -1948,13 +1966,13 @@ function generateMessages$3(spec, visElement) {
     return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
 }
 const changeMatrix = {
-    generateMessages: generateMessages$3
+    generateMessages: generateMessages$4
 };
 
 function createColorRect(color = 'white') {
     return `<div class="colorRect" style="background: ${color}"></div>`;
 }
-function generateMessages$2(spec, visElement) {
+function generateMessages$3(spec, visElement) {
     const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING);
     const using = defaultOnboardingStages.get(EDefaultOnboardingStages.USING);
     const messages = [
@@ -2034,10 +2052,10 @@ function generateMessages$2(spec, visElement) {
     return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
 }
 const horizonGraph = {
-    generateMessages: generateMessages$2
+    generateMessages: generateMessages$3
 };
 
-function generateMessages$1(spec, visElement) {
+function generateMessages$2(spec, visElement) {
     const analyzing = defaultOnboardingStages.get(EDefaultOnboardingStages.ANALYZING);
     const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING);
     const interacting = defaultOnboardingStages.get(EDefaultOnboardingStages.USING);
@@ -2047,7 +2065,7 @@ function generateMessages$1(spec, visElement) {
             requires: ['chartTitle'],
             text: `The chart shows the ${spec.chartTitle?.value}.`,
             title: 'Reading the chart',
-            onboardingStage: analyzing,
+            onboardingStage: reading,
             marker: {
                 id: "unique-marker-id-1"
             }
@@ -2107,7 +2125,7 @@ function generateMessages$1(spec, visElement) {
     return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
 }
 const scatterplot = {
-    generateMessages: generateMessages$1
+    generateMessages: generateMessages$2
 };
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -5773,6 +5791,11 @@ function subscribe(store, ...callbacks) {
     const unsub = store.subscribe(...callbacks);
     return unsub.unsubscribe ? () => unsub.unsubscribe() : unsub;
 }
+function get_store_value(store) {
+    let value;
+    subscribe(store, _ => value = _)();
+    return value;
+}
 function component_subscribe(component, store, callback) {
     component.$$.on_destroy.push(subscribe(store, callback));
 }
@@ -6393,6 +6416,99 @@ const resetStore = () => {
     activeMarker.reset();
 };
 
+function generateMessages$1(spec, visElement) {
+    const analyzing = defaultOnboardingStages.get(EDefaultOnboardingStages.ANALYZING);
+    const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING);
+    const interacting = defaultOnboardingStages.get(EDefaultOnboardingStages.USING);
+    const messages = [
+        {
+            anchor: getAnchor(spec.chartTitle, visElement),
+            requires: ['chartTitle'],
+            text: `The chart shows the ${spec.chartTitle?.value}.`,
+            title: 'Reading the chart',
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-1"
+            }
+        },
+        {
+            anchor: getAnchor(spec.desc, visElement),
+            requires: ['desc'],
+            text: `The treemap visualization shows the breakdown of hierarchical data level by level.The size of each rectangle represents a quantitative value associated with each element in the hierarchy.`,
+            title: 'Reading the chart',
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-2"
+            }
+        },
+        {
+            anchor: getAnchor(spec.subDesc, visElement),
+            requires: ['subDesc'],
+            text: `The area covered by the whole treemap is subdivided recursively into sub-categories according to their quantitative values, level by level.`,
+            title: 'Reading the chart',
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-3"
+            }
+        },
+        {
+            anchor: getAnchor(spec.otherDesc, visElement),
+            requires: ['otherDesc'],
+            text: `Items on the bottom level that belong to the same sub-category are visually represented by using the same color.`,
+            title: 'Reading the chart',
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-4"
+            }
+        },
+        {
+            anchor: getAnchor(spec.gapDesc, visElement),
+            requires: ['gapDesc'],
+            text: `Items within a sub-category are represented by rectangles that are closely packed together with increasingly larger gaps to the neighboring categories.`,
+            title: 'Reading the chart',
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-5"
+            }
+        },
+        {
+            anchor: getAnchor(spec.interactingDesc, visElement),
+            requires: ['interactingDesc'],
+            text: `Hover over the rectangles to get the dedicated value of the sub-category and further information.`,
+            title: 'Interacting with the chart',
+            onboardingStage: interacting,
+            marker: {
+                id: "unique-marker-id-6"
+            }
+        },
+        {
+            anchor: getAnchor(spec.maxValueDesc, visElement),
+            requires: ['maxValueDesc', 'maxValue'],
+            text: `The largest rectangle holds the maximum value in the sub-category. In this sub-category ${spec.maxValue?.value} is the maximum value.`,
+            title: 'Analyzing the chart',
+            onboardingStage: analyzing,
+            marker: {
+                id: "unique-marker-id-7"
+            }
+        },
+        {
+            anchor: getAnchor(spec.minValueDesc, visElement),
+            requires: ['minValueDesc', 'minValue'],
+            text: ` The smallest rectangle holds the minimum value in the sub-category. In this sub-category ${spec.minValue?.value} is the minimum value.`,
+            title: 'Analyzing the chart',
+            onboardingStage: analyzing,
+            marker: {
+                id: "unique-marker-id-8"
+            }
+        }
+    ];
+    // Filter for messages where all template variables are available in the spec
+    return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
+}
+const treemap = {
+    generateMessages: generateMessages$1
+};
+
 /* src\components\OnboardingNavigationItem.svelte generated by Svelte v3.44.1 */
 
 function create_fragment$8(ctx) {
@@ -6419,10 +6535,10 @@ function create_fragment$8(ctx) {
 
 			attr(i, "class", i_class_value = "" + (null_to_empty(!/*$activeOnboardingStage*/ ctx[2] || /*stage*/ ctx[0].id !== /*$activeOnboardingStage*/ ctx[2]?.id
 			? /*stage*/ ctx[0].iconClass
-			: 'fas fa-times') + " svelte-uq71vq"));
+			: "fas fa-times") + " svelte-15kr85e"));
 
-			attr(div0, "class", "visahoi-navigation-item-circle svelte-uq71vq");
-			attr(span, "class", "visahoi-stage-title svelte-uq71vq");
+			attr(div0, "class", "visahoi-navigation-item-circle svelte-15kr85e");
+			attr(span, "class", "visahoi-stage-title svelte-15kr85e");
 			set_style(div1, "--background-color", /*stage*/ ctx[0].backgroundColor);
 			set_style(div1, "--hover-background-color", /*stage*/ ctx[0].hoverBackgroundColor || /*stage*/ ctx[0].backgroundColor);
 			set_style(div1, "--bottom", /*bottom*/ ctx[5]);
@@ -6431,7 +6547,7 @@ function create_fragment$8(ctx) {
 			? 'removed'
 			: '') + " " + (/*$navigationAlignment*/ ctx[3] === 'row'
 			? 'horizontal'
-			: 'vertical') + " svelte-uq71vq");
+			: 'vertical') + " svelte-15kr85e");
 		},
 		m(target, anchor) {
 			insert(target, div1, anchor);
@@ -6449,7 +6565,7 @@ function create_fragment$8(ctx) {
 		p(ctx, [dirty]) {
 			if (dirty & /*$activeOnboardingStage, stage*/ 5 && i_class_value !== (i_class_value = "" + (null_to_empty(!/*$activeOnboardingStage*/ ctx[2] || /*stage*/ ctx[0].id !== /*$activeOnboardingStage*/ ctx[2]?.id
 			? /*stage*/ ctx[0].iconClass
-			: 'fas fa-times') + " svelte-uq71vq"))) {
+			: "fas fa-times") + " svelte-15kr85e"))) {
 				attr(i, "class", i_class_value);
 			}
 
@@ -6467,7 +6583,7 @@ function create_fragment$8(ctx) {
 			? 'removed'
 			: '') + " " + (/*$navigationAlignment*/ ctx[3] === 'row'
 			? 'horizontal'
-			: 'vertical') + " svelte-uq71vq")) {
+			: 'vertical') + " svelte-15kr85e")) {
 				attr(div1, "class", div1_class_value);
 			}
 		},
@@ -6489,6 +6605,7 @@ function instance$8($$self, $$props, $$invalidate) {
 	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(2, $activeOnboardingStage = $$value));
 	component_subscribe($$self, navigationAlignment, $$value => $$invalidate(3, $navigationAlignment = $$value));
 	let { stage } = $$props;
+	let { index } = $$props;
 
 	const handleClick = () => {
 		activeOnboardingStage.update(v => (v === null || v === void 0 ? void 0 : v.id) === stage.id
@@ -6496,10 +6613,11 @@ function instance$8($$self, $$props, $$invalidate) {
 		: stage);
 	};
 
-	const bottom = stage.order * 75 + "px";
+	const bottom = (index + 1) * 75 + "px";
 
 	$$self.$$set = $$props => {
 		if ('stage' in $$props) $$invalidate(0, stage = $$props.stage);
+		if ('index' in $$props) $$invalidate(6, index = $$props.index);
 	};
 
 	return [
@@ -6508,14 +6626,15 @@ function instance$8($$self, $$props, $$invalidate) {
 		$activeOnboardingStage,
 		$navigationAlignment,
 		handleClick,
-		bottom
+		bottom,
+		index
 	];
 }
 
 class OnboardingNavigationItem extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$8, create_fragment$8, safe_not_equal, { stage: 0 });
+		init(this, options, instance$8, create_fragment$8, safe_not_equal, { stage: 0, index: 6 });
 	}
 }
 
@@ -6531,7 +6650,7 @@ function create_fragment$7(ctx) {
 	let i_class_value;
 	let t0;
 	let span;
-	let t1_value = (/*$activeOnboardingStage*/ ctx[0]?.title || 'Help') + "";
+	let t1_value = (/*$activeOnboardingStage*/ ctx[0]?.title || "Help") + "";
 	let t1;
 	let mounted;
 	let dispose;
@@ -6544,11 +6663,11 @@ function create_fragment$7(ctx) {
 			t0 = space();
 			span = element("span");
 			t1 = text(t1_value);
-			attr(i, "class", i_class_value = "" + (null_to_empty(/*iconClass*/ ctx[1]) + " svelte-1w3u2ou"));
-			attr(div0, "class", "visahoi-navigation-item-circle svelte-1w3u2ou");
+			attr(i, "class", i_class_value = "" + (null_to_empty(/*iconClass*/ ctx[1]) + " svelte-p2mz9e"));
+			attr(div0, "class", "visahoi-navigation-item-circle svelte-p2mz9e");
 			set_style(div0, "background-color", /*$activeOnboardingStage*/ ctx[0]?.color || navigationMainItemDefaultColor);
-			attr(span, "class", "visahoi-stage-title svelte-1w3u2ou");
-			attr(div1, "class", "visahoi-navigation-main-item svelte-1w3u2ou");
+			attr(span, "class", "visahoi-stage-title svelte-p2mz9e");
+			attr(div1, "class", "visahoi-navigation-main-item svelte-p2mz9e");
 		},
 		m(target, anchor) {
 			insert(target, div1, anchor);
@@ -6564,7 +6683,7 @@ function create_fragment$7(ctx) {
 			}
 		},
 		p(ctx, [dirty]) {
-			if (dirty & /*iconClass*/ 2 && i_class_value !== (i_class_value = "" + (null_to_empty(/*iconClass*/ ctx[1]) + " svelte-1w3u2ou"))) {
+			if (dirty & /*iconClass*/ 2 && i_class_value !== (i_class_value = "" + (null_to_empty(/*iconClass*/ ctx[1]) + " svelte-p2mz9e"))) {
 				attr(i, "class", i_class_value);
 			}
 
@@ -6572,7 +6691,7 @@ function create_fragment$7(ctx) {
 				set_style(div0, "background-color", /*$activeOnboardingStage*/ ctx[0]?.color || navigationMainItemDefaultColor);
 			}
 
-			if (dirty & /*$activeOnboardingStage*/ 1 && t1_value !== (t1_value = (/*$activeOnboardingStage*/ ctx[0]?.title || 'Help') + "")) set_data(t1, t1_value);
+			if (dirty & /*$activeOnboardingStage*/ 1 && t1_value !== (t1_value = (/*$activeOnboardingStage*/ ctx[0]?.title || "Help") + "")) set_data(t1, t1_value);
 		},
 		i: noop,
 		o: noop,
@@ -6600,8 +6719,8 @@ function instance$7($$self, $$props, $$invalidate) {
 	$$self.$$.update = () => {
 		if ($$self.$$.dirty & /*$activeOnboardingStage*/ 1) {
 			$$invalidate(1, iconClass = $activeOnboardingStage
-			? 'fas fa-times'
-			: 'fas fa-question');
+			? "fas fa-times"
+			: "fas fa-question");
 		}
 	};
 
@@ -6620,14 +6739,21 @@ class OnboardingNavigationMainItem extends SvelteComponent {
 function get_each_context$1(ctx, list, i) {
 	const child_ctx = ctx.slice();
 	child_ctx[4] = list[i];
+	child_ctx[6] = i;
 	return child_ctx;
 }
 
-// (22:0) {#each $onboardingStages as stage}
+// (15:2) {#each $onboardingStages.sort((a, b) => a.order - b.order) as stage, index}
 function create_each_block$1(ctx) {
 	let onboardingnavigationitem;
 	let current;
-	onboardingnavigationitem = new OnboardingNavigationItem({ props: { stage: /*stage*/ ctx[4] } });
+
+	onboardingnavigationitem = new OnboardingNavigationItem({
+			props: {
+				stage: /*stage*/ ctx[4],
+				index: /*index*/ ctx[6]
+			}
+		});
 
 	return {
 		c() {
@@ -6662,7 +6788,7 @@ function create_fragment$6(ctx) {
 	let t;
 	let onboardingnavigationmainitem;
 	let current;
-	let each_value = /*$onboardingStages*/ ctx[0];
+	let each_value = /*$onboardingStages*/ ctx[0].sort(func);
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -6685,7 +6811,7 @@ function create_fragment$6(ctx) {
 
 			t = space();
 			create_component(onboardingnavigationmainitem.$$.fragment);
-			attr(div, "class", "visahoi-navigation-container svelte-1twot0m");
+			attr(div, "class", "visahoi-navigation-container svelte-1nviagd");
 			set_style(div, "--flexDirection", /*$navigationAlignment*/ ctx[1]);
 			set_style(div, "height", /*navigationHeight*/ ctx[2] + 'px');
 		},
@@ -6702,7 +6828,7 @@ function create_fragment$6(ctx) {
 		},
 		p(ctx, [dirty]) {
 			if (dirty & /*$onboardingStages*/ 1) {
-				each_value = /*$onboardingStages*/ ctx[0];
+				each_value = /*$onboardingStages*/ ctx[0].sort(func);
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -6760,6 +6886,8 @@ function create_fragment$6(ctx) {
 	};
 }
 
+const func = (a, b) => a.order - b.order;
+
 function instance$6($$self, $$props, $$invalidate) {
 	let $onboardingStages;
 	let $navigationAlignment;
@@ -6805,13 +6933,14 @@ function create_fragment$5(ctx) {
 	let circle_cy_value;
 	let text_1;
 
-	let t_value = (typeof /*marker*/ ctx[6]?.content == 'string'
+	let t_value = (typeof /*marker*/ ctx[6]?.content == "string"
 	? /*marker*/ ctx[6].content
 	: /*order*/ ctx[1]) + "";
 
 	let t;
 	let text_1_x_value;
 	let text_1_y_value;
+	let text_1_font_size_value;
 	let mounted;
 	let dispose;
 
@@ -6826,8 +6955,8 @@ function create_fragment$5(ctx) {
 			set_style(circle, "--backgroundColor", /*backgroundColor*/ ctx[5]);
 
 			attr(circle, "class", circle_class_value = "" + (null_to_empty(`visahoi-marker ${/*$activeMarker*/ ctx[2]?.marker.id === /*marker*/ ctx[6].id
-			? 'active'
-			: ''}`) + " svelte-16hyun0"));
+			? "active"
+			: ""}`) + " svelte-11rwh99"));
 
 			attr(circle, "cx", circle_cx_value = /*markerInformation*/ ctx[0].anchorPosition.cx);
 			attr(circle, "cy", circle_cy_value = /*markerInformation*/ ctx[0].anchorPosition.cy);
@@ -6836,9 +6965,10 @@ function create_fragment$5(ctx) {
 			attr(text_1, "fill", "white");
 			attr(text_1, "x", text_1_x_value = /*markerInformation*/ ctx[0].anchorPosition.x);
 			attr(text_1, "y", text_1_y_value = /*markerInformation*/ ctx[0].anchorPosition.y);
+			attr(text_1, "font-size", text_1_font_size_value = /*markerInformation*/ ctx[0].marker.fontSize);
 			attr(g, "id", getMarkerDomId(/*marker*/ ctx[6].id));
 			attr(g, "text-anchor", "middle");
-			attr(g, "class", "svelte-16hyun0");
+			attr(g, "class", "svelte-11rwh99");
 		},
 		m(target, anchor) {
 			insert(target, g, anchor);
@@ -6853,8 +6983,8 @@ function create_fragment$5(ctx) {
 		},
 		p(ctx, [dirty]) {
 			if (dirty & /*$activeMarker*/ 4 && circle_class_value !== (circle_class_value = "" + (null_to_empty(`visahoi-marker ${/*$activeMarker*/ ctx[2]?.marker.id === /*marker*/ ctx[6].id
-			? 'active'
-			: ''}`) + " svelte-16hyun0"))) {
+			? "active"
+			: ""}`) + " svelte-11rwh99"))) {
 				attr(circle, "class", circle_class_value);
 			}
 
@@ -6866,7 +6996,7 @@ function create_fragment$5(ctx) {
 				attr(circle, "cy", circle_cy_value);
 			}
 
-			if (dirty & /*order*/ 2 && t_value !== (t_value = (typeof /*marker*/ ctx[6]?.content == 'string'
+			if (dirty & /*order*/ 2 && t_value !== (t_value = (typeof /*marker*/ ctx[6]?.content == "string"
 			? /*marker*/ ctx[6].content
 			: /*order*/ ctx[1]) + "")) set_data(t, t_value);
 
@@ -6876,6 +7006,10 @@ function create_fragment$5(ctx) {
 
 			if (dirty & /*markerInformation*/ 1 && text_1_y_value !== (text_1_y_value = /*markerInformation*/ ctx[0].anchorPosition.y)) {
 				attr(text_1, "y", text_1_y_value);
+			}
+
+			if (dirty & /*markerInformation*/ 1 && text_1_font_size_value !== (text_1_font_size_value = /*markerInformation*/ ctx[0].marker.fontSize)) {
+				attr(text_1, "font-size", text_1_font_size_value);
 			}
 		},
 		i: noop,
@@ -7052,7 +7186,7 @@ function create_fragment$4(ctx) {
 			}
 
 			attr(svg, "viewBox", /*viewBox*/ ctx[0]);
-			attr(svg, "class", "visahoi-markers svelte-12uopbj");
+			attr(svg, "class", "visahoi-markers svelte-wyqzfu");
 		},
 		m(target, anchor) {
 			insert(target, svg, anchor);
@@ -20752,17 +20886,18 @@ function create_fragment$3(ctx) {
 			div2 = element("div");
 			t3 = space();
 			div3 = element("div");
-			attr(div0, "class", "visahoi-close-tooltip svelte-260xdz");
-			attr(div1, "class", "visahoi-tooltip-title svelte-260xdz");
-			attr(div2, "class", "visahoi-tooltip-content svelte-260xdz");
+			attr(b, "class", "svelte-17t2ea4");
+			attr(div0, "class", "visahoi-close-tooltip svelte-17t2ea4");
+			attr(div1, "class", "visahoi-tooltip-title svelte-17t2ea4");
+			attr(div2, "class", "visahoi-tooltip-content svelte-17t2ea4");
 			attr(div3, "id", /*arrowId*/ ctx[5]);
-			attr(div3, "class", "visahoi-popperjs-arrow svelte-260xdz");
+			attr(div3, "class", "visahoi-popperjs-arrow svelte-17t2ea4");
 			attr(div3, "data-popper-arrow", "");
 			attr(div4, "id", /*tooltipId*/ ctx[4]);
 
 			attr(div4, "class", div4_class_value = "visahoi-tooltip " + (/*$activeMarker*/ ctx[1] && /*$activeOnboardingStage*/ ctx[2]
 			? ''
-			: 'hidden') + " svelte-260xdz");
+			: 'hidden') + " svelte-17t2ea4");
 
 			set_style(div4, "--stage-color", /*activeMarkerInformation*/ ctx[0]?.message.onboardingStage.backgroundColor);
 		},
@@ -20789,7 +20924,7 @@ function create_fragment$3(ctx) {
 			if (dirty & /*activeMarkerInformation*/ 1 && raw_value !== (raw_value = sanitizeHtml$1(/*activeMarkerInformation*/ ctx[0]?.tooltip.text, /*sanitizerOptions*/ ctx[3]) + "")) div2.innerHTML = raw_value;
 			if (dirty & /*$activeMarker, $activeOnboardingStage*/ 6 && div4_class_value !== (div4_class_value = "visahoi-tooltip " + (/*$activeMarker*/ ctx[1] && /*$activeOnboardingStage*/ ctx[2]
 			? ''
-			: 'hidden') + " svelte-260xdz")) {
+			: 'hidden') + " svelte-17t2ea4")) {
 				attr(div4, "class", div4_class_value);
 			}
 
@@ -21180,7 +21315,7 @@ function create_fragment(ctx) {
 			create_component(onboardingnavigation.$$.fragment);
 			t2 = space();
 			if (if_block) if_block.c();
-			attr(div, "class", "visahoi-onboarding-ui svelte-1t8f8za");
+			attr(div, "class", "visahoi-onboarding-ui svelte-1guvhhe");
 			set_style(div, "width", /*$visWidth*/ ctx[1] + 'px');
 			set_style(div, "height", /*$visHeight*/ ctx[2] + 'px');
 			set_style(div, "top", /*$visYPosition*/ ctx[3] + window.scrollY + 'px');
@@ -21735,49 +21870,82 @@ var lodash_debounce = debounce;
 let onboardingUI;
 const injectOnboarding = (ahoiConfig, visElement, alignment) => {
     onboardingMessages.set(ahoiConfig.onboardingMessages);
-    onboardingStages.set([...new Set(ahoiConfig.onboardingMessages.map((m) => m.onboardingStage))]);
+    ahoiConfig.onboardingMessages.map((m) => m.onboardingStage.id);
+    onboardingStages.set([
+        ...new Set(ahoiConfig.onboardingMessages.map((m) => m.onboardingStage)),
+    ]);
     navigationAlignment.set(alignment);
-    if (ahoiConfig?.backdrop?.show !== null && ahoiConfig?.backdrop?.show !== undefined) {
+    if (ahoiConfig?.backdrop?.show !== null &&
+        ahoiConfig?.backdrop?.show !== undefined) {
         showBackdrop.set(ahoiConfig?.backdrop?.show);
     }
-    if (ahoiConfig?.backdrop?.opacity !== null && ahoiConfig?.backdrop?.opacity !== undefined) {
+    if (ahoiConfig?.backdrop?.opacity !== null &&
+        ahoiConfig?.backdrop?.opacity !== undefined) {
         backdropOpacity.set(ahoiConfig?.backdrop?.opacity);
     }
     const ref = { update: () => { } };
-    const updateOnboarding = (b) => {
-        onboardingMessages.set(b.onboardingMessages);
+    const updateOnboarding = (config) => {
+        onboardingMessages.set(config.onboardingMessages);
         ref.update();
     };
     onboardingUI = new OnboardingUI({
         target: document.body,
         props: {
             ref,
-            visElement
-        }
+            visElement,
+        },
     });
     return {
         updateOnboarding: lodash_debounce(updateOnboarding),
         removeOnboarding: () => {
             onboardingUI.$destroy();
-        }
+        },
     };
+};
+const getOnboardingStages = () => {
+    return get_store_value(onboardingStages);
+};
+const createBasicOnboardingStage = (stage) => {
+    if (!stage.id) {
+        stage.id = "some-new-id";
+    }
+    return stage;
+};
+const createBasicOnboardingMessage = (message) => {
+    const marker = {
+        id: `marker-${v4()}`,
+    };
+    const onboardingMessage = {
+        marker,
+        ...message,
+    };
+    return onboardingMessage;
 };
 
 function generateMessages(visType, spec, visElement) {
+    let messages = [];
     switch (visType) {
         case EVisualizationType.BAR_CHART:
-            return barChart.generateMessages(spec, visElement);
+            messages = barChart.generateMessages(spec, visElement);
+            break;
         case EVisualizationType.CHANGE_MATRIX:
-            return changeMatrix.generateMessages(spec, visElement);
+            messages = changeMatrix.generateMessages(spec, visElement);
+            break;
         case EVisualizationType.HORIZON_GRAPH:
-            return horizonGraph.generateMessages(spec, visElement);
+            messages = horizonGraph.generateMessages(spec, visElement);
+            break;
         case EVisualizationType.SCATTERPLOT:
-            return scatterplot.generateMessages(spec, visElement);
+            messages = scatterplot.generateMessages(spec, visElement);
+            break;
+        case EVisualizationType.TREEMAP:
+            messages = treemap.generateMessages(spec, visElement);
+            break;
     }
-    return [];
+    onboardingStages.set([...new Set(messages.map((m) => m.onboardingStage))]);
+    return messages;
 }
 
-function extractOnboardingSpec$3(chart, coords) {
+function extractOnboardingSpec$4(chart, coords) {
     // from https://github.com/plotly/plotly.js/blob/bff79dc5e76739f674ac3d4c41b63b0fbd6f2ebc/test/jasmine/tests/bar_test.js
     const traceNodes = chart.querySelectorAll("g.points");
     const barNodes = traceNodes[0].querySelectorAll("g.point");
@@ -21847,11 +22015,11 @@ function extractOnboardingSpec$3(chart, coords) {
     };
 }
 function barChartFactory(chart, coords, visElementId) {
-    const onbordingSpec = extractOnboardingSpec$3(chart);
+    const onbordingSpec = extractOnboardingSpec$4(chart);
     return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, visElementId);
 }
 
-function extractOnboardingSpec$2(chart, coords) {
+function extractOnboardingSpec$3(chart, coords) {
     const heatmapData = Array.from(chart.querySelectorAll(".hm"))[0].__data__;
     const t = heatmapData[0].trace;
     return {
@@ -21906,11 +22074,11 @@ function extractOnboardingSpec$2(chart, coords) {
     };
 }
 function changeMatrixFactory(chart, coords, visElementId) {
-    const onbordingSpec = extractOnboardingSpec$2(chart);
+    const onbordingSpec = extractOnboardingSpec$3(chart);
     return generateMessages(EVisualizationType.CHANGE_MATRIX, onbordingSpec, visElementId);
 }
 
-function extractOnboardingSpec$1(chart, coords) {
+function extractOnboardingSpec$2(chart, coords) {
     // from https://github.com/plotly/plotly.js/blob/bff79dc5e76739f674ac3d4c41b63b0fbd6f2ebc/test/jasmine/tests/bar_test.js
     const traceNodes = chart.querySelectorAll("g.fills");
     const areaNodes = traceNodes[0].querySelectorAll("path.js-fill");
@@ -21966,11 +22134,11 @@ function extractOnboardingSpec$1(chart, coords) {
     };
 }
 function horizonGraphFactory(chart, coords, visElementId) {
-    const onbordingSpec = extractOnboardingSpec$1(chart);
+    const onbordingSpec = extractOnboardingSpec$2(chart);
     return generateMessages(EVisualizationType.HORIZON_GRAPH, onbordingSpec, visElementId);
 }
 
-function extractOnboardingSpec(chart, coords) {
+function extractOnboardingSpec$1(chart, coords) {
     const traceNodes = chart.querySelectorAll("g.points");
     const areaNodes = traceNodes[0].querySelectorAll("path.point");
     const areaNodesData = Array.from(areaNodes).map((point) => point.__data__);
@@ -22025,8 +22193,136 @@ function extractOnboardingSpec(chart, coords) {
     };
 }
 function scatterplotFactory(chart, coords, visElementId) {
-    const onbordingSpec = extractOnboardingSpec(chart);
+    const onbordingSpec = extractOnboardingSpec$1(chart);
     return generateMessages(EVisualizationType.SCATTERPLOT, onbordingSpec, visElementId);
+}
+
+function extractOnboardingSpec(chart, coords) {
+    let indexArr = [];
+    let valArr = [];
+    let childArr = [];
+    let maxIndex;
+    let minIndex;
+    let maxLabel = '';
+    let minLabel = '';
+    let parentLabel = '';
+    // set the parent for getting the max and min values of the sub-category
+    chart.data.map((d) => {
+        if (d.parents.length > 1) {
+            if (d.parents[0] === '' && d.parents.length > 2) {
+                parentLabel = d.parents[1];
+            }
+            else {
+                parentLabel = d.parents[0];
+            }
+        }
+    });
+    // To get the min and max values and corresponding labels in each sub-category
+    chart.data.map((dat, i) => {
+        dat.parents.map((parent, j) => {
+            if (parent === parentLabel) {
+                indexArr.push(j);
+            }
+        });
+        dat.values.map((value, id) => {
+            if (indexArr) {
+                indexArr.map((d) => {
+                    if (d === id) {
+                        childArr.push({ value: value,
+                            index: id });
+                        valArr.push(value);
+                    }
+                });
+            }
+        });
+    });
+    const maxVal = Math.max.apply(Math, valArr);
+    const minVal = Math.min.apply(Math, valArr);
+    childArr.map((dd, i) => {
+        if (parseInt(dd.value) === maxVal) {
+            maxIndex = dd.index;
+        }
+        if (parseInt(dd.value) === minVal) {
+            minIndex = dd.index;
+        }
+    });
+    chart.data.map((d) => d.labels.map((label, i) => {
+        if (i === maxIndex) {
+            maxLabel = label;
+        }
+        if (i === minIndex) {
+            minLabel = label;
+        }
+    }));
+    return {
+        chartTitle: {
+            value: chart.layout.title.text,
+            anchor: {
+                findDomNodeByValue: true,
+                offset: { left: -20, top: 10 }
+            }
+        },
+        desc: {
+            value: chart.data[0].labels[0],
+            anchor: {
+                findDomNodeByValue: true,
+                offset: { left: -20, top: 20 }
+            }
+        },
+        subDesc: {
+            // value: chart.data[0].labels[17],
+            value: (chart.data[0].labels[1]) ? chart.data[0].labels[1] : chart.data[0].labels[0],
+            anchor: {
+                findDomNodeByValue: true,
+                offset: { left: -40, top: -30 }
+            }
+        },
+        gapDesc: {
+            value: (chart.data[0].labels[3]) ? chart.data[0].labels[3] : chart.data[0].labels[0],
+            anchor: {
+                findDomNodeByValue: true,
+                offset: { left: -40, top: -60 }
+            }
+        },
+        otherDesc: {
+            value: (chart.data[0].labels[2]) ? chart.data[0].labels[2] : chart.data[0].labels[1] ? chart.data[0].labels[1] : chart.data[0].labels[0],
+            anchor: {
+                findDomNodeByValue: true,
+                offset: { left: -80, top: -30 }
+            }
+        },
+        interactingDesc: {
+            value: chart.data[0].labels[0],
+            anchor: {
+                findDomNodeByValue: true,
+                offset: { left: -20, top: -30 }
+            }
+        },
+        maxValueDesc: {
+            value: maxLabel,
+            anchor: {
+                findDomNodeByValue: true,
+                offset: { left: -20, top: -30 }
+            }
+        },
+        minValueDesc: {
+            value: minLabel,
+            anchor: {
+                findDomNodeByValue: true,
+                offset: { left: -20, top: -20 }
+            }
+        },
+        maxValue: {
+            value: maxVal,
+        },
+        minValue: {
+            value: minVal
+        }
+    };
+}
+function treemapFactory(chart, coords, visElementId) {
+    const onbordingSpec = extractOnboardingSpec(chart);
+    return generateMessages(EVisualizationType.TREEMAP, onbordingSpec, visElementId);
 }
 
 /**
@@ -22040,7 +22336,10 @@ const generateBasicAnnotations = (visType, chart) => {
     const visElement = chart;
     // TODO: coords
     const chartTitlePosition = chart._fullLayout._dfltTitle;
-    coords['chartTitle'] = { x: chartTitlePosition.x, y: chartTitlePosition.y + 20 };
+    coords["chartTitle"] = {
+        x: chartTitlePosition.x,
+        y: chartTitlePosition.y + 20,
+    };
     let onboardingMessages;
     switch (visType) {
         case EVisualizationType.BAR_CHART:
@@ -22054,6 +22353,9 @@ const generateBasicAnnotations = (visType, chart) => {
             break;
         case EVisualizationType.SCATTERPLOT:
             onboardingMessages = scatterplotFactory(chart, coords, visElement);
+            break;
+        case EVisualizationType.TREEMAP:
+            onboardingMessages = treemapFactory(chart, coords, visElement);
             break;
         default:
             throw new Error(`No onboarding for visualization type ${visType} available.`);
@@ -22071,5 +22373,5 @@ async function ahoi(visType, chart, ahoiConfig) {
     return injectOnboarding(ahoiConfig, visElement, "column");
 }
 
-export { EVisualizationType, ahoi, generateBasicAnnotations };
+export { EVisualizationType, ahoi, createBasicOnboardingMessage, createBasicOnboardingStage, generateBasicAnnotations, getOnboardingStages };
 //# sourceMappingURL=bundle.js.map
