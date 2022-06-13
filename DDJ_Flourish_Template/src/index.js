@@ -1,6 +1,7 @@
-import { populateHtml, loadData } from './utils/utils';
-import Treemap from './treemap.js';
 import * as d3 from 'd3';
+import Treemap from './treemap.js';
+import { setUpBasicSettings, setFont } from './interfaceSetup.js';
+import { populateHtml, loadData } from './utils/utils';
 
 const initialValues = {
   headline: 'Onboarding & Visualization Template',
@@ -18,10 +19,10 @@ export const data = {};
 export const state = {
   // The current state of template. You can make some or all of the properties
   // of the state object available to the user as settings in settings.js.
-  example_state_property: 25,
   headlineText: initialValues.headline,
   subheaderText: initialValues.subheader,
   introText: initialValues.intro,
+  fontChoice: null,
   showText: false,
   background_color: '#F4F4F4',
   plotlyTreemap: null,
@@ -34,26 +35,51 @@ export function update() {
   // Tip: to make your template work nicely in the story editor, ensure that all user
   // interface controls such as buttons and sliders update the state and then call update.
 
-  // Basics
+  // ===================
+  //    🔥 Basics
+  // ===================
   document.body.style.backgroundColor = state.background_color;
   d3.select('#textWrapper').classed('hide', !state.showText);
+
+
+  if (state.fontChoice !== null) {
+    setFont(state.fontChoice);   // Update the font if picked
+  }
 
   populateHtml('#headline', state.headlineText);
   populateHtml('#subheader', state.subheaderText);
   populateHtml('#intro', state.introText);
 
-  // Treemap
+  // ===================
+  //  📊 Visualization
+  // ===================
+
+  // Recreate Treemap
   state.plotlyTreemap.createTreemap();
 }
 
 export async function draw() {
-  // Set the default height of the flourish visualization to 70% of available screen height
-  Flourish.setHeight(window.screen.availHeight * 0.7);
-
   // The draw function is called when the template first loads
+  // ===================
+  //    🔥 Basics
+  // ===================
+  
+  Flourish.setHeight(window.screen.availHeight * 0.7);  // Set the default height of the flourish visualization to 70% of available screen height
+
   populateHtml('#headline', initialValues.headline);
   populateHtml('#subheader', initialValues.subheader);
   populateHtml('#intro', initialValues.intro);
+
+  // ===================
+  //   ⚙️ Settings
+  // ===================
+
+  setUpBasicSettings();
+
+
+  // ===================
+  //  📊 Visualization
+  // ===================
 
   // Initialize the Treemap
   state.plotlyTreemap = new Treemap(
@@ -62,6 +88,10 @@ export async function draw() {
     await loadData(dataUrls[1])
   );
 
+
+  // ===================
+  //   ⚡ Finally ⚡
+  // ===================
   // Always call the update() after the initial draw
   update();
 }
