@@ -39,32 +39,39 @@ settings:
   # • "boolean" >> gives a checkbox
   # • "color" >> gives a color picker
 
-  - Basic Settings # Headings can be used to break up the settings into collapsible sections
-  - property: showText # Refers to a property in the template's state object
-    name: Show Intro Area # Display name for the settings panel
-    description: Whether to show the text above the visualization or not. # Optional description for the settings panel
-    type: boolean # See available types above
+  - General Settings # Headings can be used to break up the settings into collapsible sections
+  - property: background_color # property for storing the setting's value in the template's state
+    name: Background color # Name that appears above setting
+    description: Set the background color. # Description that appears on hover of question mark next to name
+    type: color # Setting type
   - property: fontChoice
     description: Pick a font for your template from one of the available Google Fonts in the dropdown
     name: Choose a font
     type: font
+  - property: showText # Refers to a property in the template's state object
+    name: Show Intro Area # Display name for the settings panel
+    description: Whether to show the text above the visualization or not. # Optional description for the settings panel
+    type: boolean # See available types above
+    new_section: true
   - property: headlineText # property for storing the setting's value in the template's state
     name: Headline Text # Name appears above setting
     description: Set the headline for the visualisation or leave it empty. # Description that appears in question mark next to name
     type: string # Setting type
+    show_if:
+      showText: true
   - property: subheaderText # property for storing the setting's value in the template's state
     name: Subheader Text # Name appears above setting
     description: Set the subheader for the visualisation or leave it empty. # Description that appears in question mark next to name
     type: string # Setting type
+    show_if:
+      showText: true
   - property: introText # property for storing the setting's value in the template's state
     name: Intro Text # Name appears above setting
     description: Set the intro text for the visualisation or leave it empty. You can include HTML tags! # Description that appears in question mark next to name
     type: code # Setting type
     size: large # Make the textare bigger
-  - property: background_color # property for storing the setting's value in the template's state
-    name: Background color # Name that appears above setting
-    description: Set the background color. # Description that appears on hover of question mark next to name
-    type: color # Setting type
+    show_if:
+      showText: true
 
 data:
   # The data section determines how data is made available to your template,
