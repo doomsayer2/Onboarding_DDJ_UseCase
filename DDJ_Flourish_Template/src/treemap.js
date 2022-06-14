@@ -1,12 +1,39 @@
+import {
+  EVisualizationType,
+  ahoi,
+  generateBasicAnnotations,
+  createBasicOnboardingMessage,
+  createBasicOnboardingStage,
+  getOnboardingStages
+} from '../static/lib/bundle.js';
+import * as d3 from 'd3';
+
+// Static variables for onboarding
+let chart = null;
+let showOnboarding = false;
+let onboardingUI = null;
+
 export default class Treemap {
+  /**
+   * Creates a treemap object an initializes it with the given data. 
+   * Also stores a reference to the tremmap and creates the onboarding.
+   * @param {string} container The id of the container
+   * @param {*} jobsData 
+   * @param {*} familiesData 
+   */
   constructor(container, jobsData, familiesData) {
     this.container = container;
     this.jobsData = jobsData;
     this.familiesData = familiesData;
 
+    this.graphDiv = document.getElementById(container);
+
     this.createTreemap();
   }
 
+  /**
+   * This method just creates the plotly treemap.
+   */
   createTreemap() {
     const data = [
       {
@@ -40,8 +67,8 @@ export default class Treemap {
       title: {
         text: `Biden's tax overhaul`,
       },
-      height: window.innerHeight,
-      paper_bgcolor: '#F4F4F4',
+      height: window.innerHeight * 0.9,
+      paper_bgcolor: 'transparent',
       annotations: [
         {
           showarrow: false,
@@ -61,10 +88,20 @@ export default class Treemap {
         },
       ],
     };
+    const config = {
+      responsive: true
+    };
 
-    Plotly.newPlot(this.container, data, layout);
+    chart = Plotly.react(this.container, data, layout, config);   // Plotly.react() is more efficient that Plotly.newPlot() for recreation
   }
 
+  /**
+   * Method reutrns a single property as array from an array of objects with several or one property. 
+   * E.g. the "name" property of a data array of objects with the value of "name" from each object.
+   * @param {*} rows The whole array of objects
+   * @param {*} key The key to extract from those objects
+   * @returns An array of the extracted "key" values
+   */
   static unpack(rows, key) {
     return rows.map((row) => row[key]);
   }

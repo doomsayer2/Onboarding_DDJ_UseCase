@@ -53,9 +53,8 @@ export function update() {
   // ===================
   //  📊 Visualization
   // ===================
-
-  // Recreate Treemap
-  state.plotlyTreemap.createTreemap();
+  
+  // ...
 }
 
 export async function draw() {
@@ -64,7 +63,7 @@ export async function draw() {
   //    🔥 Basics
   // ===================
   
-  Flourish.setHeight(window.screen.availHeight * 0.7);  // Set the default height of the flourish visualization to 70% of available screen height
+  // Flourish.setHeight(window.screen.availHeight * 0.7);  // Set the default height of the flourish visualization to 70% of available screen height
 
   populateHtml('#headline', initialValues.headline);
   populateHtml('#subheader', initialValues.subheader);
