@@ -49,8 +49,8 @@ settings:
     name: Choose a font
     type: font
   - property: showText # Refers to a property in the template's state object
-    name: Show Intro Area # Display name for the settings panel
-    description: Whether to show the text above the visualization or not. # Optional description for the settings panel
+    name: Show Introduction Area # Display name for the settings panel
+    description: Whether to show the text above the visualization, you can also customize, or not. # Optional description for the settings panel
     type: boolean # See available types above
     new_section: true
   - property: headlineText # property for storing the setting's value in the template's state
@@ -72,6 +72,18 @@ settings:
     size: large # Make the textare bigger
     show_if:
       showText: true
+  
+  - Onboarding Stage
+  - property: example
+    name: Example
+    description: Example
+    type: string
+
+  - Onboarding Message
+  - property: example2
+    name: Example
+    description: Example
+    type: string
 
 data:
   # The data section determines how data is made available to your template,
