@@ -55,9 +55,7 @@ export function update() {
   //  📊 Visualization
   // ===================
   
-  if (state.showOnboarding) {
-    plotlyTreemap.treemap();
-  }
+  state.showOnboarding ? plotlyTreemap.treemap() : plotlyTreemap.removeOnboarding();
 }
 
 export async function draw() {

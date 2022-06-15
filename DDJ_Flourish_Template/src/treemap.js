@@ -12,6 +12,13 @@ import * as d3 from 'd3';
 let chart = null;
 let onboardingUI = null;
 
+// Resize logic for the onboaridng
+const debounceResize = _.debounce((event) => {
+  onboardingUI?.updateOnboarding(Treemap.getAhoiConfig());
+}, 250);
+
+window.addEventListener('resize', debounceResize);
+
 export default class Treemap {
   /**
    * Creates a treemap object an initializes it with the given data. 
@@ -30,6 +37,9 @@ export default class Treemap {
     this.createTreemap();
   }
 
+  /**
+   * The method rerenders the visualization and creates the onboarding for it
+   */
   async treemap() {
     this.createTreemap();
     
@@ -99,6 +109,13 @@ export default class Treemap {
     };
 
     chart = await Plotly.react(this.container, data, layout, config);   // Plotly.react() is more efficient that Plotly.newPlot() for recreation
+  }
+
+  /**
+   * The method removes the onboarding if needed
+   */
+  removeOnboarding() {
+    onboardingUI?.removeOnboarding();
   }
 
   /**
