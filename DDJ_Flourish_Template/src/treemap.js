@@ -10,7 +10,6 @@ import * as d3 from 'd3';
 
 // Static variables for onboarding
 let chart = null;
-let showOnboarding = false;
 let onboardingUI = null;
 
 export default class Treemap {
@@ -31,10 +30,17 @@ export default class Treemap {
     this.createTreemap();
   }
 
+  async treemap() {
+    this.createTreemap();
+    
+    // Create the onboarding
+    onboardingUI = await ahoi(EVisualizationType.TREEMAP, chart, Treemap.getAhoiConfig());
+  }
+
   /**
    * This method just creates the plotly treemap.
    */
-  createTreemap() {
+  async createTreemap() {
     const data = [
       {
         type: 'treemap',
@@ -92,7 +98,22 @@ export default class Treemap {
       responsive: true
     };
 
-    chart = Plotly.react(this.container, data, layout, config);   // Plotly.react() is more efficient that Plotly.newPlot() for recreation
+    chart = await Plotly.react(this.container, data, layout, config);   // Plotly.react() is more efficient that Plotly.newPlot() for recreation
+  }
+
+  /**
+   * This method generates the onboarding messages based on the visualization type.
+   * @returns The configuration object for the visahoi library
+   */
+  static getAhoiConfig() {
+    const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.TREEMAP, chart);
+
+    // ⚠️ Custom Messages ⚠️
+    // ...
+
+    return {
+      onboardingMessages: defaultOnboardingMessages
+    };
   }
 
   /**

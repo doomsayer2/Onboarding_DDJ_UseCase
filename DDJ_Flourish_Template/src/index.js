@@ -11,6 +11,7 @@ const initialValues = {
 };
 
 const dataUrls = ['/usaJobsPlan.csv', '/usaFamiliesPlan.csv'];
+let plotlyTreemap = null;
 
 export const data = {};
 // If your template includes data tables, use this variable to access the data.
@@ -24,8 +25,8 @@ export const state = {
   introText: initialValues.intro,
   fontChoice: null,
   showText: false,
-  background_color: '#F4F4F4',
-  plotlyTreemap: null,
+  showOnboarding: false,
+  background_color: '#F4F4F4'
 };
 
 export function update() {
@@ -54,7 +55,9 @@ export function update() {
   //  📊 Visualization
   // ===================
   
-  // ...
+  if (state.showOnboarding) {
+    plotlyTreemap.treemap();
+  }
 }
 
 export async function draw() {
@@ -81,7 +84,7 @@ export async function draw() {
   // ===================
 
   // Initialize the Treemap
-  state.plotlyTreemap = new Treemap(
+  plotlyTreemap = new Treemap(
     'vis',
     await loadData(dataUrls[0]),
     await loadData(dataUrls[1])

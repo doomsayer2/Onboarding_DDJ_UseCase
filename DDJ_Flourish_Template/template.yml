@@ -73,6 +73,12 @@ settings:
     show_if:
       showText: true
   
+  - General Onboarding Settings
+  - property: showOnboarding # Refers to a property in the template's state object
+    name: Show Onboarding # Display name for the settings panel
+    description: Whether to show the onboarding or not. # Optional description for the settings panel
+    type: boolean # See available types above
+
   - Onboarding Stage
   - property: example
     name: Example
