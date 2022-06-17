@@ -74,8 +74,7 @@ export async function draw() {
   //   ⚙️ Settings
   // ===================
 
-  setUpBasicSettings();
-
+  // setUpBasicSettings();
 
   // ===================
   //  📊 Visualization

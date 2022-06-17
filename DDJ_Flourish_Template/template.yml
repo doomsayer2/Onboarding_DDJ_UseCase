@@ -48,6 +48,11 @@ settings:
     description: Pick a font for your template from one of the available Google Fonts in the dropdown
     name: Choose a font
     type: font
+  - property: showOnboarding # Refers to a property in the template's state object
+    name: Show Onboarding # Display name for the settings panel
+    description: Whether to show the onboarding or not. It uses the default onboarding messages that are auto generated. # Optional description for the settings panel
+    type: boolean # See available types above
+    new_section: true
   - property: showText # Refers to a property in the template's state object
     name: Show Introduction Area # Display name for the settings panel
     description: Whether to show the text above the visualization, you can also customize, or not. # Optional description for the settings panel
@@ -73,23 +78,23 @@ settings:
     show_if:
       showText: true
   
-  - General Onboarding Settings
-  - property: showOnboarding # Refers to a property in the template's state object
-    name: Show Onboarding # Display name for the settings panel
-    description: Whether to show the onboarding or not. # Optional description for the settings panel
-    type: boolean # See available types above
+  # - General Onboarding Settings
+  # - property: showOnboarding # Refers to a property in the template's state object
+  #   name: Show Onboarding # Display name for the settings panel
+  #   description: Whether to show the onboarding or not. # Optional description for the settings panel
+  #   type: boolean # See available types above
 
-  - Onboarding Stage
-  - property: example
-    name: Example
-    description: Example
-    type: string
+  # - Onboarding Stage
+  # - property: example
+  #   name: Example
+  #   description: Example
+  #   type: string
 
-  - Onboarding Message
-  - property: example2
-    name: Example
-    description: Example
-    type: string
+  # - Onboarding Message
+  # - property: example2
+  #   name: Example
+  #   description: Example
+  #   type: string
 
 data:
   # The data section determines how data is made available to your template,
