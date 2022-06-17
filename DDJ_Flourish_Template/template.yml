@@ -1,10 +1,10 @@
 # The 'id' should be a string that uniquely identifies your template
-id: 'DDJ VisAhoi Treemap by FHStp'
+id: 'visahoi_treemap_fhstp'
 name: Onboarding VisAhoi
 description: A template showing the usage of the VisAhoi.js library by using the example of a treemap. You can fine tune the automatically generated onboarding and also use your custom data if it has a specific format.
 author: FH St. Pölten (Florian Grassinger)
 credits: Wolfgang Aigner (FHStp), Christina Stoiber (FHStp), Dominic Girardi (datavisyn), Daniela Moitzi (datavisyn)
-version: 1.2.0
+version: 1.2.3
 
 # This template is compatible with SDK version 3
 sdk_version: 3
@@ -48,11 +48,6 @@ settings:
     description: Pick a font for your template from one of the available Google Fonts in the dropdown
     name: Choose a font
     type: font
-  - property: showOnboarding # Refers to a property in the template's state object
-    name: Show Onboarding # Display name for the settings panel
-    description: Whether to show the onboarding or not. It uses the default onboarding messages that are auto generated. # Optional description for the settings panel
-    type: boolean # See available types above
-    new_section: true
   - property: showText # Refers to a property in the template's state object
     name: Show Introduction Area # Display name for the settings panel
     description: Whether to show the text above the visualization, you can also customize, or not. # Optional description for the settings panel

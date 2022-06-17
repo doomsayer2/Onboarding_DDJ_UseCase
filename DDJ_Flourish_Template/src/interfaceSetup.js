@@ -10,8 +10,3 @@ export const setFont = ({name, url}) => {
     font_link.setAttribute('href', url);
     document.body.style.fontFamily = name;
 }
-
-export const setUpBasicSettings = () => {
-    // Set the min height of the textare
-    d3.select('#setting-introText').style('height', '180px');
-}

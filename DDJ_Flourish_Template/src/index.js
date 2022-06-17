@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import Treemap from './treemap.js';
-import { setUpBasicSettings, setFont } from './interfaceSetup.js';
+import { setFont } from './interfaceSetup.js';
 import { populateHtml, loadData } from './utils/utils';
 
 const initialValues = {
@@ -74,7 +74,7 @@ export async function draw() {
   //   ⚙️ Settings
   // ===================
 
-  // setUpBasicSettings();
+  
 
   // ===================
   //  📊 Visualization
@@ -86,6 +86,12 @@ export async function draw() {
     await loadData(dataUrls[0]),
     await loadData(dataUrls[1])
   );
+
+  // Show onboarding or not
+  d3.select('#toggleOnboarding').on('change', e => {
+    state.showOnboarding = e.target.checked;
+    update();
+  });
 
 
   // ===================
