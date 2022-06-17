@@ -1,9 +1,10 @@
 # The 'id' should be a string that uniquely identifies your template
-id: 'DDJ VisAhoi Treemap by FHSTP'
+id: 'DDJ VisAhoi Treemap by FHStp'
 name: Onboarding VisAhoi
-description: A template showing the usage of the VisAhoi.js library by using the example of a treemap.
-author: FH St. Pölten
-version: 1.1.0
+description: A template showing the usage of the VisAhoi.js library by using the example of a treemap. You can fine tune the automatically generated onboarding and also use your custom data if it has a specific format.
+author: FH St. Pölten (Florian Grassinger)
+credits: Wolfgang Aigner (FHStp), Christina Stoiber (FHStp), Dominic Girardi (datavisyn), Daniela Moitzi (datavisyn)
+version: 1.2.0
 
 # This template is compatible with SDK version 3
 sdk_version: 3
@@ -38,27 +39,62 @@ settings:
   # • "boolean" >> gives a checkbox
   # • "color" >> gives a color picker
 
-  - Basic Settings # Headings can be used to break up the settings into collapsible sections
+  - General Settings # Headings can be used to break up the settings into collapsible sections
   - property: background_color # property for storing the setting's value in the template's state
-    name: Background color # Name appears above setting
-    description: Set the background color of the visualisation # Description that appears in question mark next to name
+    name: Background color # Name that appears above setting
+    description: Set the background color. # Description that appears on hover of question mark next to name
     type: color # Setting type
-  - property: showText # Refers to a property in the template's state object
-    name: Show Thext # Display name for the settings panel
-    description: Whether to show the text above the visualization or not # Optional description for the settings panel
+  - property: fontChoice
+    description: Pick a font for your template from one of the available Google Fonts in the dropdown
+    name: Choose a font
+    type: font
+  - property: showOnboarding # Refers to a property in the template's state object
+    name: Show Onboarding # Display name for the settings panel
+    description: Whether to show the onboarding or not. It uses the default onboarding messages that are auto generated. # Optional description for the settings panel
     type: boolean # See available types above
+    new_section: true
+  - property: showText # Refers to a property in the template's state object
+    name: Show Introduction Area # Display name for the settings panel
+    description: Whether to show the text above the visualization, you can also customize, or not. # Optional description for the settings panel
+    type: boolean # See available types above
+    new_section: true
   - property: headlineText # property for storing the setting's value in the template's state
     name: Headline Text # Name appears above setting
-    description: Set the headline for the visualisation or leave it empty # Description that appears in question mark next to name
+    description: Set the headline for the visualisation or leave it empty. # Description that appears in question mark next to name
     type: string # Setting type
+    show_if:
+      showText: true
   - property: subheaderText # property for storing the setting's value in the template's state
     name: Subheader Text # Name appears above setting
-    description: Set the subheader for the visualisation or leave it empty # Description that appears in question mark next to name
+    description: Set the subheader for the visualisation or leave it empty. # Description that appears in question mark next to name
     type: string # Setting type
+    show_if:
+      showText: true
   - property: introText # property for storing the setting's value in the template's state
     name: Intro Text # Name appears above setting
-    description: Set the intro text for the visualisation or leave it empty # Description that appears in question mark next to name
-    type: string # Setting type
+    description: Set the intro text for the visualisation or leave it empty. You can include HTML tags! # Description that appears in question mark next to name
+    type: code # Setting type
+    size: large # Make the textare bigger
+    show_if:
+      showText: true
+  
+  # - General Onboarding Settings
+  # - property: showOnboarding # Refers to a property in the template's state object
+  #   name: Show Onboarding # Display name for the settings panel
+  #   description: Whether to show the onboarding or not. # Optional description for the settings panel
+  #   type: boolean # See available types above
+
+  # - Onboarding Stage
+  # - property: example
+  #   name: Example
+  #   description: Example
+  #   type: string
+
+  # - Onboarding Message
+  # - property: example2
+  #   name: Example
+  #   description: Example
+  #   type: string
 
 data:
   # The data section determines how data is made available to your template,
