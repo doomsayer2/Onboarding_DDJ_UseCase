@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import Treemap from './treemap.js';
+import { toggleOnboarding, treemap } from './treemap.js';
 import { setUpBasicSettings, setFont } from './interfaceSetup.js';
 import { populateHtml, loadData } from './utils/utils';
 
@@ -11,7 +11,6 @@ const initialValues = {
 };
 
 const dataUrls = ['/usaJobsPlan.csv', '/usaFamiliesPlan.csv'];
-let plotlyTreemap = null;
 
 export const data = {};
 // If your template includes data tables, use this variable to access the data.
@@ -26,7 +25,7 @@ export const state = {
   fontChoice: null,
   showText: false,
   showOnboarding: false,
-  background_color: '#F4F4F4'
+  background_color: '#F4F4F4',
 };
 
 export function update() {
@@ -42,9 +41,8 @@ export function update() {
   document.body.style.backgroundColor = state.background_color;
   d3.select('#textWrapper').classed('hide', !state.showText);
 
-
   if (state.fontChoice !== null) {
-    setFont(state.fontChoice);   // Update the font if picked
+    setFont(state.fontChoice); // Update the font if picked
   }
 
   populateHtml('#headline', state.headlineText);
@@ -54,8 +52,7 @@ export function update() {
   // ===================
   //  📊 Visualization
   // ===================
-  
-  state.showOnboarding ? plotlyTreemap.treemap() : plotlyTreemap.removeOnboarding();
+  toggleOnboarding(state.showOnboarding);
 }
 
 export async function draw() {
@@ -63,7 +60,7 @@ export async function draw() {
   // ===================
   //    🔥 Basics
   // ===================
-  
+
   // Flourish.setHeight(window.screen.availHeight * 0.7);  // Set the default height of the flourish visualization to 70% of available screen height
 
   populateHtml('#headline', initialValues.headline);
@@ -74,19 +71,13 @@ export async function draw() {
   //   ⚙️ Settings
   // ===================
 
-  // setUpBasicSettings();
 
   // ===================
   //  📊 Visualization
   // ===================
 
   // Initialize the Treemap
-  plotlyTreemap = new Treemap(
-    'vis',
-    await loadData(dataUrls[0]),
-    await loadData(dataUrls[1])
-  );
-
+  await treemap('vis', await loadData(dataUrls[0]), await loadData(dataUrls[1]));
 
   // ===================
   //   ⚡ Finally ⚡
