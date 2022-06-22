@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 import { toggleOnboarding, treemap } from './treemap.js';
 import { setUpBasicSettings, setFont } from './interfaceSetup.js';
-import { populateHtml, loadData } from './utils/utils';
+import { populateHtml, loadData, showEnvironment} from './utils/utils';
 
 const initialValues = {
   headline: 'Onboarding & Visualization Template',
@@ -70,14 +70,18 @@ export async function draw() {
   // ===================
   //   ⚙️ Settings
   // ===================
-
+  showEnvironment();
 
   // ===================
   //  📊 Visualization
   // ===================
 
   // Initialize the Treemap
-  await treemap('vis', await loadData(dataUrls[0]), await loadData(dataUrls[1]));
+  await treemap(
+    'vis',
+    await loadData(dataUrls[0]),
+    await loadData(dataUrls[1])
+  );
 
   // ===================
   //   ⚡ Finally ⚡
