@@ -29,7 +29,7 @@ export const state = {
   background_color: '#F4F4F4'
 };
 
-export function update() {
+export async function update() {
   // The update function is called whenever the user changes a data table or settings
   // in the visualisation editor, or when changing slides in the story editor.
 
@@ -55,7 +55,7 @@ export function update() {
   //  📊 Visualization
   // ===================
   
-  state.showOnboarding ? plotlyTreemap.treemap() : plotlyTreemap.removeOnboarding();
+  state.showOnboarding ? await plotlyTreemap.treemap() : plotlyTreemap.removeOnboarding();
 }
 
 export async function draw() {

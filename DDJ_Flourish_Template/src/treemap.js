@@ -41,7 +41,7 @@ export default class Treemap {
    * The method rerenders the visualization and creates the onboarding for it
    */
   async treemap() {
-    this.createTreemap();
+    await this.createTreemap();
     
     // Create the onboarding
     onboardingUI = await ahoi(EVisualizationType.TREEMAP, chart, Treemap.getAhoiConfig());
