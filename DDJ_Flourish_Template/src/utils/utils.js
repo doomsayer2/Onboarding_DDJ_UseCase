@@ -59,3 +59,14 @@ export const showEnvironment = () => {
       break;
   }
 };
+
+/**
+ * Just a loogger for the console with some stlyes.
+ * @param {*} msg Message to log to console
+ * @param {*} bgColor Background color in console
+ * @param {*} color Font color in console
+ */
+export const logger = (msg, bgColor = 'transparent', color = 'white') => {
+  const styling = `background-color: ${bgColor}; color: ${color}; font-size: 1.2em; padding: 4px;`;
+  console.log(`%c${msg}`, styling);
+}

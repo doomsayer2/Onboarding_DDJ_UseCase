@@ -6,6 +6,7 @@ import {
   createBasicOnboardingStage,
   getOnboardingStages,
 } from '../static/lib/bundle.js';
+import { logger } from './utils/utils.js';
 import * as d3 from 'd3';
 
 /**
@@ -39,6 +40,8 @@ window.addEventListener('resize', debounceResize);
  * The method rerenders the visualization and creates the onboarding for it
  */
 const treemap = async (c, d1, d2) => {
+  logger('treemap() --> async', '#BF616A');
+
   // Set necessary variables
   container = c;
   graphDiv = document.getElementById(container);
@@ -58,6 +61,8 @@ const treemap = async (c, d1, d2) => {
  * This method just creates the plotly treemap.
  */
 const createTreemap = async () => {
+  logger('createTreemap() --> async', '#D08770');
+
   const data = [
     {
       type: 'treemap',
@@ -119,10 +124,13 @@ const createTreemap = async () => {
 };
 
 const createOnboarding = async () => {
+  logger('createOnboarding() --> async', '#EBCB8B');
   onboardingUI = await ahoi(EVisualizationType.TREEMAP, chart, getAhoiConfig());
 };
 
 const toggleOnboarding = (show) => {
+  logger('toggleOnboarding() --> async', '#B48EAD');
+
   show
     ? onboardingEl?.style('display', 'inline')
     : onboardingEl?.style('display', 'none');
@@ -133,6 +141,8 @@ const toggleOnboarding = (show) => {
  * @returns The configuration object for the visahoi library
  */
 const getAhoiConfig = () => {
+  logger('getAhoiConfig() --> async', '#A3BE8C');
+
   const defaultOnboardingMessages = generateBasicAnnotations(
     EVisualizationType.TREEMAP,
     chart
