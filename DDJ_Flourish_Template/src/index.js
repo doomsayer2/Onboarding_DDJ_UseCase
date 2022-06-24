@@ -23,10 +23,19 @@ export const state = {
   headlineText: initialValues.headline,
   subheaderText: initialValues.subheader,
   introText: initialValues.intro,
-  fontChoice: null,
   showText: false,
+
+  fixed_height: false,
+  aspect_ratio: 0.65,
+  height: 650,
+  margin_top: 5,
+  margin_left: 5,
+  margin_right: 5,
+  margin_bottom: 5,
+
+  fontChoice: null,
   showOnboarding: false,
-  background_color: '#F4F4F4'
+  background_color: '#F4F4F4',
 };
 
 export async function update() {
@@ -42,9 +51,8 @@ export async function update() {
   document.body.style.backgroundColor = state.background_color;
   d3.select('#textWrapper').classed('hide', !state.showText);
 
-
   if (state.fontChoice !== null) {
-    setFont(state.fontChoice);   // Update the font if picked
+    setFont(state.fontChoice); // Update the font if picked
   }
 
   populateHtml('#headline', state.headlineText);
@@ -54,8 +62,22 @@ export async function update() {
   // ===================
   //  📊 Visualization
   // ===================
-  
-  state.showOnboarding ? await plotlyTreemap.treemap() : plotlyTreemap.removeOnboarding();
+
+  // Should we show the onboarding or not
+  state.showOnboarding
+    ? await plotlyTreemap.treemap()
+    : plotlyTreemap.removeOnboarding();
+
+  // Update the height of the visualization
+  if (state.fixed_height) {
+    plotlyTreemap.updatePlotlyLayout({
+      height: state.height,
+    });
+  } else {
+    plotlyTreemap.updatePlotlyLayout({
+      height: window.innerWidth * state.aspect_ratio
+    })
+  }
 }
 
 export async function draw() {
@@ -63,7 +85,7 @@ export async function draw() {
   // ===================
   //    🔥 Basics
   // ===================
-  
+
   // Flourish.setHeight(window.screen.availHeight * 0.7);  // Set the default height of the flourish visualization to 70% of available screen height
 
   populateHtml('#headline', initialValues.headline);
@@ -74,7 +96,7 @@ export async function draw() {
   //   ⚙️ Settings
   // ===================
 
-  // setUpBasicSettings();
+  setUpBasicSettings();
 
   // ===================
   //  📊 Visualization
@@ -86,7 +108,6 @@ export async function draw() {
     await loadData(dataUrls[0]),
     await loadData(dataUrls[1])
   );
-
 
   // ===================
   //   ⚡ Finally ⚡

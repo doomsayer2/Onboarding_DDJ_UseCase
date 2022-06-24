@@ -4,7 +4,7 @@ import {
   generateBasicAnnotations,
   createBasicOnboardingMessage,
   createBasicOnboardingStage,
-  getOnboardingStages
+  getOnboardingStages,
 } from '../static/lib/bundle.js';
 import * as d3 from 'd3';
 
@@ -21,11 +21,11 @@ window.addEventListener('resize', debounceResize);
 
 export default class Treemap {
   /**
-   * Creates a treemap object an initializes it with the given data. 
+   * Creates a treemap object an initializes it with the given data.
    * Also stores a reference to the tremmap and creates the onboarding.
    * @param {string} container The id of the container
-   * @param {*} jobsData 
-   * @param {*} familiesData 
+   * @param {*} jobsData
+   * @param {*} familiesData
    */
   constructor(container, jobsData, familiesData) {
     this.container = container;
@@ -42,15 +42,19 @@ export default class Treemap {
    */
   async treemap() {
     await this.createTreemap();
-    
+
     // Create the onboarding
-    onboardingUI = await ahoi(EVisualizationType.TREEMAP, chart, Treemap.getAhoiConfig());
+    onboardingUI = await ahoi(
+      EVisualizationType.TREEMAP,
+      chart,
+      Treemap.getAhoiConfig()
+    );
   }
 
   /**
    * This method just creates the plotly treemap.
    */
-  async createTreemap() {
+  async createTreemap(state = {}) {
     const data = [
       {
         type: 'treemap',
@@ -58,11 +62,12 @@ export default class Treemap {
         parents: Treemap.unpack(this.jobsData, 'Parent'),
         values: Treemap.unpack(this.jobsData, 'Value'),
         marker: {
-          colors: Treemap.unpack(this.jobsData, 'ColorToned50')
+          colors: Treemap.unpack(this.jobsData, 'ColorToned50'),
         },
         domain: { x: [0, 0.5] },
         textinfo: 'label+value',
         hoverinfo: 'label+value',
+        branchvalues: 'total',
         outsidetextfont: { size: 20, color: '#222531' },
       },
       {
@@ -71,11 +76,12 @@ export default class Treemap {
         parents: Treemap.unpack(this.familiesData, 'Parent'),
         values: Treemap.unpack(this.familiesData, 'Value'),
         marker: {
-          colors: Treemap.unpack(this.familiesData, 'ColorToned50')
+          colors: Treemap.unpack(this.familiesData, 'ColorToned50'),
         },
         domain: { x: [0.5, 1] },
         textinfo: 'label+value',
         hoverinfo: 'label+value',
+        branchvalues: 'total',
         outsidetextfont: { size: 20, color: '#222531' },
       },
     ];
@@ -105,10 +111,24 @@ export default class Treemap {
       ],
     };
     const config = {
-      responsive: true
+      responsive: true,
     };
 
-    chart = await Plotly.react(this.container, data, layout, config);   // Plotly.react() is more efficient that Plotly.newPlot() for recreation
+    chart = await Plotly.react(this.container, data, layout, config); // Plotly.react() is more efficient that Plotly.newPlot() for recreation
+  }
+
+  updatePlotlyData() {
+    const data_update = {};
+
+    Plotly.restyle(this.graphDiv, layout_update);
+  }
+
+  updatePlotlyLayout(layout_update) {
+    if (!layout_update) {
+      return;
+    }
+
+    Plotly.relayout(this.graphDiv, layout_update);
   }
 
   /**
@@ -123,18 +143,21 @@ export default class Treemap {
    * @returns The configuration object for the visahoi library
    */
   static getAhoiConfig() {
-    const defaultOnboardingMessages = generateBasicAnnotations(EVisualizationType.TREEMAP, chart);
+    const defaultOnboardingMessages = generateBasicAnnotations(
+      EVisualizationType.TREEMAP,
+      chart
+    );
 
     // ⚠️ Custom Messages ⚠️
     // ...
 
     return {
-      onboardingMessages: defaultOnboardingMessages
+      onboardingMessages: defaultOnboardingMessages,
     };
   }
 
   /**
-   * Method reutrns a single property as array from an array of objects with several or one property. 
+   * Method reutrns a single property as array from an array of objects with several or one property.
    * E.g. the "name" property of a data array of objects with the value of "name" from each object.
    * @param {*} rows The whole array of objects
    * @param {*} key The key to extract from those objects
