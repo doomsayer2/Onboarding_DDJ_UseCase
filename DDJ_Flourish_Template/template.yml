@@ -4,7 +4,7 @@ name: Onboarding VisAhoi (Basic)
 description: A template showing the usage of the VisAhoi.js library by using the example of a treemap. The data of the treemap is fixed! The onboarding can be enabled or disabled and is automatically generated based on the data.
 author: FH St. Pölten (Florian Grassinger)
 credits: Wolfgang Aigner (FHStp), Christina Stoiber (FHStp), Dominic Girardi (datavisyn), Daniela Moitzi (datavisyn), Holger Stitz (datavisyn)
-version: 1.0.0
+version: 1.0.1
 
 # This template is compatible with SDK version 3
 sdk_version: 3
@@ -40,65 +40,33 @@ settings:
   # • "color" >> gives a color picker
 
   - General Settings # Headings can be used to break up the settings into collapsible sections
-  - property: background_color # property for storing the setting's value in the template's state
-    name: Background color # Name that appears above setting
-    description: Set the background color of the visualization and page on the left. # Description that appears on hover of question mark next to name
-    type: color # Setting type
-    new_section: Page
-
-  - property: fontChoice
-    description: Pick a font for your template from one of the available Google Fonts in the dropdown
-    name: Font Family
-    type: font
-
   - property: fixed_height
-    name: Use fixed height
+    name: Use fixed height?
     type: boolean
-    width: half
-    description: If checked you can enter your own height in px.
-    new_section: Height
-  - property: aspect_ratio
-    name: Aspect Ratio (Scaling)
-    type: number
-    min: 0
-    step: 0.01
-    hide_if: fixed_height
+    description: If checked you can enter your own height in px. This will increase the size of the whole page.
+    new_section: Page Height
   - property: height
     name: Height
     type: number
     min: 20
     show_if: fixed_height
 
-  - property: showText # Refers to a property in the template's state object
-    name: Show Introduction Area # Display name for the settings panel
-    description: Whether to show the text above the visualization, you can also customize, or not. # Optional description for the settings panel
+  - property: change_layout # Refers to a property in the template's state object
+    name: Change Layout? # Display name for the settings panel
+    description: If enabled it is possible to change further parts of the page and the overall layout itself. Furthermore, headers and footers can be added. # Optional description for the settings panel
     type: boolean # See available types above
-    new_section: Additional Information
-  - property: headlineText # property for storing the setting's value in the template's state
-    name: Headline Text # Name appears above setting
-    description: Set the headline for the visualisation or leave it empty. # Description that appears in question mark next to name
-    type: string # Setting type
-    show_if:
-      showText: true
-  - property: subheaderText # property for storing the setting's value in the template's state
-    name: Subheader Text # Name appears above setting
-    description: Set the subheader for the visualisation or leave it empty. # Description that appears in question mark next to name
-    type: string # Setting type
-    show_if:
-      showText: true
-  - property: introText # property for storing the setting's value in the template's state
-    name: Intro Text # Name appears above setting
-    description: Set the intro text for the visualisation or leave it empty. You can include HTML tags! # Description that appears in question mark next to name
-    type: code # Setting type
-    size: large # Make the textare bigger
-    show_if:
-      showText: true
+    new_section: Page Options
 
   - Onboarding
   - property: showOnboarding # Refers to a property in the template's state object
     name: Show Onboarding # Display name for the settings panel
     description: Whether to show the onboarding or not. It uses the default onboarding messages that are auto generated. # Optional description for the settings panel
     type: boolean # See available types above
+
+  - Layout
+  - property: layout
+    import: "@flourish/layout" # The import property, imports a Flourish module settings block
+    show_if: change_layout
   
   # - General Onboarding Settings
   # - property: showOnboarding # Refers to a property in the template's state object

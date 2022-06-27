@@ -1,17 +1,11 @@
-import * as d3 from 'd3';
 import Treemap from './treemap.js';
-import { setUpBasicSettings, setFont } from './interfaceSetup.js';
-import { populateHtml, loadData } from './utils/utils';
+import { loadData } from './utils/utils';
+import initLayout from "@flourish/layout";
 
-const initialValues = {
-  headline: 'Onboarding & Visualization Template',
-  subheader: 'This is a possible subheadline.',
-  intro:
-    'Use this template in order to create your own visualization in vega-lite and use our awesome onbaording from <b>VisAhoi</b>!',
-};
 
 const dataUrls = ['/usaJobsPlan.csv', '/usaFamiliesPlan.csv'];
 let plotlyTreemap = null;
+let layout = null;
 
 export const data = {};
 // If your template includes data tables, use this variable to access the data.
@@ -20,22 +14,12 @@ export const data = {};
 export const state = {
   // The current state of template. You can make some or all of the properties
   // of the state object available to the user as settings in settings.js.
-  headlineText: initialValues.headline,
-  subheaderText: initialValues.subheader,
-  introText: initialValues.intro,
-  showText: false,
-
   fixed_height: false,
-  aspect_ratio: 0.65,
   height: 650,
-  margin_top: 5,
-  margin_left: 5,
-  margin_right: 5,
-  margin_bottom: 5,
+  change_layout: false,
+  layout: {},
 
-  fontChoice: null,
   showOnboarding: false,
-  background_color: '#F4F4F4',
 };
 
 export async function update() {
@@ -48,16 +32,16 @@ export async function update() {
   // ===================
   //    🔥 Basics
   // ===================
-  document.body.style.backgroundColor = state.background_color;
-  d3.select('#textWrapper').classed('hide', !state.showText);
+  
+  // Update the layout
+  layout.update();
 
-  if (state.fontChoice !== null) {
-    setFont(state.fontChoice); // Update the font if picked
+  // Update the height
+  if (state.fixed_height) {
+    layout.setHeight(state.height);
+  } else {
+    layout.setHeight(layout.getDefaultPrimaryHeight());
   }
-
-  populateHtml('#headline', state.headlineText);
-  populateHtml('#subheader', state.subheaderText);
-  populateHtml('#intro', state.introText);
 
   // ===================
   //  📊 Visualization
@@ -67,17 +51,6 @@ export async function update() {
   state.showOnboarding
     ? await plotlyTreemap.treemap()
     : plotlyTreemap.removeOnboarding();
-
-  // Update the height of the visualization
-  if (state.fixed_height) {
-    plotlyTreemap.updatePlotlyLayout({
-      height: state.height,
-    });
-  } else {
-    plotlyTreemap.updatePlotlyLayout({
-      height: window.innerWidth * state.aspect_ratio
-    })
-  }
 }
 
 export async function draw() {
@@ -86,17 +59,13 @@ export async function draw() {
   //    🔥 Basics
   // ===================
 
-  // Flourish.setHeight(window.screen.availHeight * 0.7);  // Set the default height of the flourish visualization to 70% of available screen height
-
-  populateHtml('#headline', initialValues.headline);
-  populateHtml('#subheader', initialValues.subheader);
-  populateHtml('#intro', initialValues.intro);
+  layout = initLayout(state.layout);
 
   // ===================
   //   ⚙️ Settings
   // ===================
+  console.log(layout.getOverlay());
 
-  setUpBasicSettings();
 
   // ===================
   //  📊 Visualization
@@ -104,7 +73,7 @@ export async function draw() {
 
   // Initialize the Treemap
   plotlyTreemap = new Treemap(
-    'vis',
+    'fl-layout-primary',
     await loadData(dataUrls[0]),
     await loadData(dataUrls[1])
   );
