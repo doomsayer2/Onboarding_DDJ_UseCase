@@ -1,7 +1,7 @@
 import Treemap from './treemap.js';
+import initLayout from '@flourish/layout';
 import { loadData } from './utils/utils';
-import initLayout from "@flourish/layout";
-
+import { moveOnboardigBtn } from './ui';
 
 const dataUrls = ['/usaJobsPlan.csv', '/usaFamiliesPlan.csv'];
 let plotlyTreemap = null;
@@ -20,6 +20,8 @@ export const state = {
   layout: {},
 
   showOnboarding: false,
+  rightOffset: 100,
+  bottomOffset: 20
 };
 
 export async function update() {
@@ -32,7 +34,7 @@ export async function update() {
   // ===================
   //    🔥 Basics
   // ===================
-  
+
   // Update the layout
   layout.update();
 
@@ -51,6 +53,11 @@ export async function update() {
   state.showOnboarding
     ? await plotlyTreemap.treemap()
     : plotlyTreemap.removeOnboarding();
+
+  // Move the onboarding button if necessary
+  state.showOnboarding
+    ? moveOnboardigBtn(state.rightOffset, state.bottomOffset)
+    : null;
 }
 
 export async function draw() {
@@ -64,8 +71,7 @@ export async function draw() {
   // ===================
   //   ⚙️ Settings
   // ===================
-  console.log(layout.getOverlay());
-
+  // console.log(layout.getOverlay());
 
   // ===================
   //  📊 Visualization

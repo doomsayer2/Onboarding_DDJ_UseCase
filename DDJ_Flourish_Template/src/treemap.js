@@ -31,6 +31,7 @@ export default class Treemap {
     this.container = container;
     this.jobsData = jobsData;
     this.familiesData = familiesData;
+    this.createdOnboarding = false;
 
     this.graphDiv = document.getElementById(container);
 
@@ -41,14 +42,17 @@ export default class Treemap {
    * The method rerenders the visualization and creates the onboarding for it
    */
   async treemap() {
-    await this.createTreemap();
-
-    // Create the onboarding
-    onboardingUI = await ahoi(
-      EVisualizationType.TREEMAP,
-      chart,
-      Treemap.getAhoiConfig()
-    );
+    if (!this.createdOnboarding) {
+      await this.createTreemap();
+  
+      // Create the onboarding
+      onboardingUI = await ahoi(
+        EVisualizationType.TREEMAP,
+        chart,
+        Treemap.getAhoiConfig()
+      );
+      this.createdOnboarding = true;
+    }
   }
 
   /**
@@ -117,10 +121,13 @@ export default class Treemap {
     chart = await Plotly.react(this.container, data, layout, config); // Plotly.react() is more efficient that Plotly.newPlot() for recreation
   }
 
-  updatePlotlyData() {
-    const data_update = {};
+  updatePlotlyData(data_update) {
+    if (!data_update) {
+      return
+    }
 
-    Plotly.restyle(this.graphDiv, layout_update);
+    Plotly.restyle(this.graphDiv, data_update);                   // Update ploty data
+    onboardingUI?.updateOnboarding(Treemap.getAhoiConfig());      // Update the onboarding
   }
 
   updatePlotlyLayout(layout_update) {
@@ -128,7 +135,8 @@ export default class Treemap {
       return;
     }
 
-    Plotly.relayout(this.graphDiv, layout_update);
+    Plotly.relayout(this.graphDiv, layout_update);                // Update plotly layout
+    onboardingUI?.updateOnboarding(Treemap.getAhoiConfig());      // Update the onboarding
   }
 
   /**
@@ -136,6 +144,8 @@ export default class Treemap {
    */
   removeOnboarding() {
     onboardingUI?.removeOnboarding();
+    
+    this.createdOnboarding = false;
   }
 
   /**

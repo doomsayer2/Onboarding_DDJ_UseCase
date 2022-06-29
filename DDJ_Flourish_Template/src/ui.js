@@ -15,3 +15,9 @@ export const setUpBasicSettings = () => {
     // Set the min height of the textare
     d3.select('#setting-introText').style('height', '180px');
 }
+
+export const moveOnboardigBtn = (right, bottom) => {
+    d3.select('.visahoi-navigation-container')
+        .style('right', right + 'px')
+        .style('bottom', bottom + 'px')
+} 
