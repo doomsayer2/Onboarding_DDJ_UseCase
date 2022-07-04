@@ -1,10 +1,10 @@
 # The 'id' should be a string that uniquely identifies your template
-id: 'visahoi_treemap_fhstp_basic'
+id: 'visahoi_treemap_fhstp_data_change'
 name: Onboarding VisAhoi (Basic)
 description: A template showing the usage of the VisAhoi.js library by using the example of a treemap. The data of the treemap is fixed! The onboarding can be enabled or disabled and is automatically generated based on the data.
 author: FH St. Pölten (Florian Grassinger)
 credits: Wolfgang Aigner (FHStp), Christina Stoiber (FHStp), Dominic Girardi (datavisyn), Daniela Moitzi (datavisyn), Holger Stitz (datavisyn)
-version: 1.0.1
+version: 0.0.9
 
 # This template is compatible with SDK version 3
 sdk_version: 3
@@ -99,19 +99,34 @@ settings:
   #   description: Example
   #   type: string
 
-# data:
-#   # The data section determines how data is made available to your template,
-#   # and the sample data that is used. See the documentation.
-#   - key: label # Property name in the dataset
-#     name: Label # Name to be displayed in the editor
-#     dataset: data # Name of dataset
-#     type: column # Are we selecting a single or multiple columns
-#     column: "sampleData::A" # Which column should be selected 
-#   - key: value
-#     name: Value
-#     dataset: data
-#     type: column
-#     column: "sampleData::B"
+data:
+  # The data section determines how data is made available to your template,
+  # and the sample data that is used. See the documentation.
+  - key: labels # Property name in the dataset
+    name: Labels # Name to be displayed in the editor
+    dataset: data # Name of dataset
+    description: The individual cells of the treemap
+    type: column # Are we selecting a single or multiple columns
+    column: "treemap::A" # Which column should be selected
+  - key: parents # Property name in the dataset
+    name: Parents # Name to be displayed in the editor
+    dataset: data # Name of dataset
+    description: The parent for each cell (omit if it's top level)
+    type: column # Are we selecting a single or multiple columns
+    column: "treemap::B" # Which column should be selected 
+  - key: values
+    name: Values
+    dataset: data
+    description: The value of the current cell
+    type: column
+    column: "treemap::C"
+  - key: colors
+    name: Colors
+    dataset: data
+    description: The color of the current cell
+    type: column
+    column: "treemap::D"
+
 
 tour:
   - text: This template shows two treemaps side by side. They show the tax spendings for the biden administration. In this basic version you can decide to include the onboarding or not.

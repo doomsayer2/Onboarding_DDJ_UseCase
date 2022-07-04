@@ -68,5 +68,5 @@ export const loadData = (dataURL) => {
  */
 export const logger = (msg, bgColor = 'transparent', color = 'white') => {
   const styling = `background-color: ${bgColor}; color: ${color}; font-size: 1.2em; padding: 4px;`;
-  console.log(`%c${msg}`, styling);
+  console.log(`%c${JSON.stringify(msg)}`, styling);
 }

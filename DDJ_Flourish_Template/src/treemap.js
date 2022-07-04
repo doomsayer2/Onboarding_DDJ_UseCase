@@ -7,6 +7,7 @@ import {
   getOnboardingStages,
 } from '../static/lib/bundle.js';
 import * as d3 from 'd3';
+import { logger } from './utils/utils';
 
 // Static variables for onboarding
 let chart = null;
@@ -27,10 +28,9 @@ export default class Treemap {
    * @param {*} jobsData
    * @param {*} familiesData
    */
-  constructor(container, jobsData, familiesData) {
+  constructor(container, data) {
     this.container = container;
-    this.jobsData = jobsData;
-    this.familiesData = familiesData;
+    this.data = data.data;
     this.createdOnboarding = false;
 
     this.graphDiv = document.getElementById(container);
@@ -44,7 +44,7 @@ export default class Treemap {
   async treemap() {
     if (!this.createdOnboarding) {
       await this.createTreemap();
-  
+
       // Create the onboarding
       onboardingUI = await ahoi(
         EVisualizationType.TREEMAP,
@@ -62,27 +62,12 @@ export default class Treemap {
     const data = [
       {
         type: 'treemap',
-        labels: Treemap.unpack(this.jobsData, 'Label'),
-        parents: Treemap.unpack(this.jobsData, 'Parent'),
-        values: Treemap.unpack(this.jobsData, 'Value'),
+        labels: Treemap.unpack(this.data, 'labels'),
+        parents: Treemap.unpack(this.data, 'parents'),
+        values: Treemap.unpack(this.data, 'values'),
         marker: {
-          colors: Treemap.unpack(this.jobsData, 'ColorToned50'),
+          colors: Treemap.unpack(this.data, 'colors'),
         },
-        domain: { x: [0, 0.5] },
-        textinfo: 'label+value',
-        hoverinfo: 'label+value',
-        branchvalues: 'total',
-        outsidetextfont: { size: 20, color: '#222531' },
-      },
-      {
-        type: 'treemap',
-        labels: Treemap.unpack(this.familiesData, 'Label'),
-        parents: Treemap.unpack(this.familiesData, 'Parent'),
-        values: Treemap.unpack(this.familiesData, 'Value'),
-        marker: {
-          colors: Treemap.unpack(this.familiesData, 'ColorToned50'),
-        },
-        domain: { x: [0.5, 1] },
         textinfo: 'label+value',
         hoverinfo: 'label+value',
         branchvalues: 'total',
@@ -90,29 +75,7 @@ export default class Treemap {
       },
     ];
     const layout = {
-      title: {
-        text: `Biden's tax overhaul`,
-      },
-      height: window.innerHeight * 0.9,
-      paper_bgcolor: 'transparent',
-      annotations: [
-        {
-          showarrow: false,
-          text: 'Jobs Plan <span style="color: #c70000;">~2.31T</span>',
-          x: 0.25,
-          xanchor: 'center',
-          y: 1.02,
-          yanchor: 'bottom',
-        },
-        {
-          showarrow: false,
-          text: 'Families Plan <span style="color: #c70000;">~1.9T</span>',
-          x: 0.75,
-          xanchor: 'center',
-          y: 1.02,
-          yanchor: 'bottom',
-        },
-      ],
+      title: 'Treemap'
     };
     const config = {
       responsive: true,
@@ -122,12 +85,10 @@ export default class Treemap {
   }
 
   updatePlotlyData(data_update) {
-    if (!data_update) {
-      return
-    }
+    this.data = data_update;
+    this.createTreemap();
 
-    Plotly.restyle(this.graphDiv, data_update);                   // Update ploty data
-    onboardingUI?.updateOnboarding(Treemap.getAhoiConfig());      // Update the onboarding
+    onboardingUI?.updateOnboarding(Treemap.getAhoiConfig()); // Update the onboarding
   }
 
   updatePlotlyLayout(layout_update) {
@@ -135,8 +96,8 @@ export default class Treemap {
       return;
     }
 
-    Plotly.relayout(this.graphDiv, layout_update);                // Update plotly layout
-    onboardingUI?.updateOnboarding(Treemap.getAhoiConfig());      // Update the onboarding
+    Plotly.relayout(this.graphDiv, layout_update); // Update plotly layout
+    onboardingUI?.updateOnboarding(Treemap.getAhoiConfig()); // Update the onboarding
   }
 
   /**
@@ -144,7 +105,7 @@ export default class Treemap {
    */
   removeOnboarding() {
     onboardingUI?.removeOnboarding();
-    
+
     this.createdOnboarding = false;
   }
 
