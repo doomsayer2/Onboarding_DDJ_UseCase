@@ -65,14 +65,14 @@ settings:
     description: Whether to show the onboarding or not. It uses the default onboarding messages that are auto generated. # Optional description for the settings panel
     type: boolean # See available types above
   - property: rightOffset
-    name: Right Offset (px)
-    description: Change the right offset of the onboarding menu. Also negative numbers are possible!
+    name: X-Axis Offset (px)
+    description: Change the right offset of the onboarding menu along the x-axis. Also negative numbers are possible!
     type: number
     new_section: Position Onboarding Button
     show_if: showOnboarding
   - property: bottomOffset
-    name: Bottom Offset (px)
-    description: Change the bottom offset of the onboarding menu. Also negative numbers are possible!
+    name: Y-Axis Offset (px)
+    description: Change the bottom offset of the onboarding menu along the y-axis. Also negative numbers are possible!
     type: number
     show_if: showOnboarding
 

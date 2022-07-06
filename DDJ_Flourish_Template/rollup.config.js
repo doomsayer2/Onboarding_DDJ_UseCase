@@ -1,5 +1,6 @@
 import nodeResolve from "rollup-plugin-node-resolve";
 import { uglify } from "rollup-plugin-uglify";
+import commonjs from 'rollup-plugin-commonjs';
 
 export default {
   input: "src/index.js",
@@ -10,8 +11,12 @@ export default {
     sourcemap: true,
   },
   plugins: [
-    nodeResolve(),
+    nodeResolve({
+      jsnext: true,
+      main: true
+    }),
     uglify(),
+    commonjs()
   ],
   /* Cyclic dependencies are allowed in ES6, and such imports occur
      in many d3 components, so suppress those rollup warnings. */

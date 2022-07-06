@@ -6,19 +6,9 @@ import {
   createBasicOnboardingStage,
   getOnboardingStages,
 } from '../static/lib/bundle.js';
-import * as d3 from 'd3';
-import { logger } from './utils/utils';
 
 // Static variables for onboarding
 let chart = null;
-let onboardingUI = null;
-
-// Resize logic for the onboaridng
-const debounceResize = _.debounce((event) => {
-  onboardingUI?.updateOnboarding(Treemap.getAhoiConfig());
-}, 250);
-
-window.addEventListener('resize', debounceResize);
 
 export default class Treemap {
   /**
@@ -31,6 +21,8 @@ export default class Treemap {
   constructor(container, data) {
     this.container = container;
     this.data = data.data;
+
+    this.onboardingUI = null;
     this.createdOnboarding = false;
 
     this.graphDiv = document.getElementById(container);
@@ -46,12 +38,19 @@ export default class Treemap {
       await this.createTreemap();
 
       // Create the onboarding
-      onboardingUI = await ahoi(
+      this.onboardingUI = await ahoi(
         EVisualizationType.TREEMAP,
         chart,
         Treemap.getAhoiConfig()
       );
       this.createdOnboarding = true;
+
+      // Resize logic for the onboaridng
+      const debounceResize = _.debounce((event) => {
+        this.onboardingUI?.updateOnboarding(Treemap.getAhoiConfig());
+      }, 250);
+
+      window.addEventListener('resize', debounceResize);
     }
   }
 
@@ -75,7 +74,7 @@ export default class Treemap {
       },
     ];
     const layout = {
-      title: 'Treemap'
+      title: 'Treemap',
     };
     const config = {
       responsive: true,
@@ -88,7 +87,7 @@ export default class Treemap {
     this.data = data_update;
     this.createTreemap();
 
-    onboardingUI?.updateOnboarding(Treemap.getAhoiConfig()); // Update the onboarding
+    this.onboardingUI?.updateOnboarding(Treemap.getAhoiConfig()); // Update the onboarding
   }
 
   updatePlotlyLayout(layout_update) {
@@ -97,14 +96,14 @@ export default class Treemap {
     }
 
     Plotly.relayout(this.graphDiv, layout_update); // Update plotly layout
-    onboardingUI?.updateOnboarding(Treemap.getAhoiConfig()); // Update the onboarding
+    this.onboardingUI?.updateOnboarding(Treemap.getAhoiConfig()); // Update the onboarding
   }
 
   /**
    * The method removes the onboarding if needed
    */
   removeOnboarding() {
-    onboardingUI?.removeOnboarding();
+    this.onboardingUI?.removeOnboarding();
 
     this.createdOnboarding = false;
   }

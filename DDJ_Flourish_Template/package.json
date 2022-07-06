@@ -19,9 +19,11 @@
     "less-plugin-clean-css": "^1.5.1",
     "rollup": "^1.16.2",
     "rollup-plugin-node-resolve": "^5.1.0",
-    "rollup-plugin-uglify": "^6.0.2"
+    "rollup-plugin-uglify": "^6.0.2",
+    "sweetalert2": "^11.4.19"
   },
   "devDependencies": {
-    "flourish": "0.0.2"
+    "flourish": "0.0.2",
+    "rollup-plugin-commonjs": "^10.1.0"
   }
 }

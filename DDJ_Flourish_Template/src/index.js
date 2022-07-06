@@ -1,14 +1,10 @@
 import Treemap from './treemap.js';
 import initLayout from '@flourish/layout';
-import { loadData } from './utils/utils';
-import { moveOnboardigBtn, createStartScreen } from './ui';
+import { moveOnboardigBtn, toggleSettingsMenu, initSettingsMenu } from './ui';
+import { setOnboardingState } from './onboardingDialog';
 
-// import bootstrap from 'bootstrap';
-
-const dataUrls = ['/usaJobsPlan.csv', '/usaFamiliesPlan.csv'];
 let plotlyTreemap = null;
 let layout = null;
-let overlay = null;
 
 export const data = {};
 // If your template includes data tables, use this variable to access the data.
@@ -64,6 +60,14 @@ export async function update() {
   state.showOnboarding
     ? moveOnboardigBtn(state.rightOffset, state.bottomOffset)
     : null;
+
+  // Show the settings menu if we are in onboarding mode
+  state.showOnboarding ? toggleSettingsMenu(true) : toggleSettingsMenu(false);
+
+  // Only show the dialog if we are in onboarding mode
+  state.showOnboarding
+    ? setOnboardingState({ isShown: true })
+    : setOnboardingState({ isShown: false });
 }
 
 export async function draw() {
@@ -78,15 +82,15 @@ export async function draw() {
   //   ⚙️ Settings
   // ===================
 
-  // Create the basic overlay
-  overlay = layout.getOverlay();
-
   // ===================
   //  📊 Visualization
   // ===================
 
   // Initialize the defaultTreemap
   plotlyTreemap = new Treemap('fl-layout-primary', data);
+
+  // Initialize the menu
+  initSettingsMenu(plotlyTreemap);
 
   // ===================
   //   ⚡ Finally ⚡

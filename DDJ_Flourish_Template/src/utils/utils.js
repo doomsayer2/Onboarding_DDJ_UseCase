@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import Swal from 'sweetalert2';
 
 export const populateHtml = (selector, html) => {
   d3.select(selector).html(html);
@@ -69,4 +70,31 @@ export const loadData = (dataURL) => {
 export const logger = (msg, bgColor = 'transparent', color = 'white') => {
   const styling = `background-color: ${bgColor}; color: ${color}; font-size: 1.2em; padding: 4px;`;
   console.log(`%c${JSON.stringify(msg)}`, styling);
+}
+
+/**
+ * Creates a toast message. If it is just called without any parameters it shows a default message of
+ * "Hello World!" which lasts for 3000ms and is at the top-end of the screen with a success icon.
+ * @param {string} msg Message to show in the toast
+ * @param {number} timer Time in ms to show the mssage
+ * @param {string} icon Icon of the toast. Available are: 'success', 'error', 'waring', 'info', 'question'
+ * @param {string} position Position of the toast. Available are: 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom', 'bottom-start', 'bottom-end'
+ */
+export const toast = (msg = 'Hello World!', timer = 3000, icon = 'success', position = 'top-end') => {
+  const Toast = Swal.mixin({
+    toast: true,
+    position,
+    showConfirmButton: false,
+    timer,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  });
+
+  Toast.fire({
+    icon,
+    text: msg
+  });
 }
