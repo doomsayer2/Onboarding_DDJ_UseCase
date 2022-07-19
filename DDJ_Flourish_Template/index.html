@@ -29,9 +29,184 @@
 	<!-- If you want to start with a non-empty document, add elements here -->
 	<!-- Relative links are rewritten to refer to the files in the static directory -->
 
-	<div id="onboardingSettings">
-		<span><strong>Note</strong> The settings menu will be removed once you publish it! It's just for customizing the onboarding.</span>
-		<button id="btnOnboardingSettings" type="button" class="btn btn-light btn-sm"><i class="fa-solid fa-gear"></i></button>
+	<!-- Settings Menu -->
+	<div id="onboardingSettingsBtn">
+		<span><strong>Note</strong> The settings menu will be removed once you publish it! It's just for customizing the
+			onboarding.</span>
+		<button id="btnOnboardingSettings" type="button" class="btn btn-light btn-sm"><i
+				class="fa-solid fa-gear"></i></button>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="onboardingSettings" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="onboardingDialogHeading" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="onboardingDialogHeading">VisAhoi - Customization</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="m-1">
+						<ul class="nav nav-tabs" id="onboardingTab">
+							<li class="nav-item">
+								<a href="#add" class="nav-link active" data-bs-toggle="tab">Add</a>
+							</li>
+							<li class="nav-item">
+								<a href="#edit" class="nav-link" data-bs-toggle="tab">Edit</a>
+							</li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane fade show active" id="add">
+								<!-- ADD Form -->
+								<div class="wrapper">
+									<!-- Stage -->
+									<form id="formStage" novalidate>
+										<div class="row">
+											<h4>Onboarding Stage</h4>
+											<hr class="mt-1 mb-4">
+										</div>
+										<div class="row mb-3">
+											<div class="col-md-6">
+												<label for="addTitle" class="form-label">Title</label>
+												<input type="text" class="form-control" id="addTitle"
+													placeholder="Enter a title..." data-visahoi-name="title" required>
+												<span class="form-text">
+													The title of the stage.
+												</span>
+												<div class="invalid-feedback">
+													A title can not be empty.
+												</div>
+											</div>
+											<div class="col-md-6">
+												<label for="addColor" class="form-label">Color</label>
+												<input type="color" class="form-control form-control-color"
+													id="addColor" placeholder="Enter a color... "
+													data-visahoi-name="backgroundColor" required>
+												<span class="form-text">The color of the stage and it's messages.</span>
+											</div>
+										</div>
+										<div class="row mb-3">
+											<div class="col-md-12">
+												<label for="addIcon" class="form-label">Icon</label>
+												<input type="text" class="form-control" id="addIcon"
+													placeholder="Enter a icon name..." pattern="fa fa-\w[\w-]*"
+													data-visahoi-name="iconClass" required>
+												<span class="form-text">Only FontAwesome icons are available (e.g. "fa
+													fa-thumbs-up"). See: <a href="https://fontawesome.com/v4/icons/"
+														target="_blank" class="link-dark">Icon
+														List</a></span>
+												<div class="invalid-feedback">
+													Not a valid FontAwesome icon. Has to have the format of "fa fa-*".
+												</div>
+											</div>
+										</div>
+										<div class="row">
+
+											<div class="col-12 clearfix">
+												<button id="btnStage" class="btn btn-dark w-25 float-end">Add
+													Stage</button>
+											</div>
+										</div>
+									</form>
+
+									<!-- Message -->
+									<form id="formMessage" novalidate>
+										<div class="row mt-5">
+											<h4>Onboarding Message</h4>
+											<hr class="mt-1 mb-4">
+										</div>
+										<div class="row mb-4">
+											<div class="col-md-12">
+												<label for="addTitleMsg" class="form-label">Title</label>
+												<input type="text" class="form-control" id="addTitleMsg"
+													placeholder="Enter a title..." data-visahoi-name="title" required>
+												<span class="form-text">
+													The title of the message.
+												</span>
+												<div class="invalid-feedback">
+													A title can not be empty.
+												</div>
+											</div>
+										</div>
+										<div class="row mb-4">
+											<div class="col-md-12">
+												<label for="addTextMsg" class="form-label">Text</label>
+												<textarea class="form-control" id="addTextMsg" rows="4"
+													placeholder="Enter your text..." data-visahoi-name="text"
+													required></textarea>
+												<span class="form-text">
+													The content of the message.
+												</span>
+												<div class="invalid-feedback">
+													Please enter a message in the textarea.
+												</div>
+											</div>
+										</div>
+										<div class="row mb-5">
+											<div class="col-md-12">
+												<label for="addSelectMsg" class="form-label">Onboarding Stage</label>
+												<select id="addSelectMsg" class="form-select"
+													data-visahoi-name="onboardingStage" required>
+													<option value="" disabled selected hidden>Choose...</option>
+												</select>
+												<span class="form-text">
+													The onboarding stage it should be attached to.
+												</span>
+												<div class="invalid-feedback">
+													The message can not be empty.
+												</div>
+											</div>
+										</div>
+										<div class="row mb-3">
+											<div class="col-md-3">
+												<label for="addXMsg" class="form-label">Absolute Position (x, y)</label>
+												<div class="input-group">
+													<input type="number" placeholder="X" class="form-control"
+														id="addXMsg" required>
+													<input type="number" placeholder="Y" class="form-control"
+														id="addYMsg" required>
+													<span class="form-text">
+														You can use the picker in order to grab the coordinates.
+													</span>
+													<div class="invalid-feedback">
+														The x and y values have to be provided.
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6 align-self-center">
+												<button id="btnInspect" class="btn btn-outline-dark p-2 rounded-1 mb-2"><i
+														class="fa fa-crosshairs"></i></button>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-12 clearfix">
+												<button id="btnMessage" class="btn btn-dark w-25 float-end">Add
+													Message</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+							<div class="tab-pane fade" id="edit">
+								TBD
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Overlay -->
+	<div id="overlay">
+		<div id="text">
+			<p>Click somewhere to pick a coordinate!</p>
+			<p>Hit <strong>ESC</strong> to cancel!</p>
+		</div>
 	</div>
 </body>
 

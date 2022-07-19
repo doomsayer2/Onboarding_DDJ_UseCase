@@ -34,7 +34,7 @@ export const initSettingsMenu = (treemap = null) => {
  * @param {boolean} hide Whether to hide it or not
  */
 export const toggleSettingsMenu = (hide) => {
-    const settingsMenu = d3.select('#onboardingSettings');
+    const settingsMenu = d3.select('#onboardingSettingsBtn');
 
     hide ? settingsMenu.classed('beGone', false) : settingsMenu.classed('beGone', true);
 }
