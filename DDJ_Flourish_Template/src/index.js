@@ -1,7 +1,7 @@
 import Treemap from './treemap.js';
 import initLayout from '@flourish/layout';
 import { moveOnboardigBtn, toggleSettingsMenu, initSettingsMenu } from './ui';
-import { setOnboardingState } from './onboardingDialog';
+import { setOnboardingState } from './utils/store';
 
 let plotlyTreemap = null;
 let layout = null;
@@ -13,8 +13,8 @@ export const data = {};
 export const state = {
   // The current state of template. You can make some or all of the properties
   // of the state object available to the user as settings in settings.js.
-  fixed_height: true,
-  height: 800,
+  fixed_height: false,
+  height: 650,
   change_layout: false,
   layout: {},
 

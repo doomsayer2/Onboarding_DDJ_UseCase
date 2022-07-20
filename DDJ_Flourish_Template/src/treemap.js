@@ -2,10 +2,8 @@ import {
   EVisualizationType,
   ahoi,
   generateBasicAnnotations,
-  createBasicOnboardingMessage,
-  createBasicOnboardingStage,
-  getOnboardingStages,
 } from '../static/lib/bundle.js';
+import { onboarding  } from './utils/store';
 
 // Static variables for onboarding
 let chart = null;
@@ -47,7 +45,9 @@ export default class Treemap {
 
       // Resize logic for the onboaridng
       const debounceResize = _.debounce((event) => {
-        this.onboardingUI?.updateOnboarding(Treemap.getAhoiConfig());
+        this.onboardingUI?.updateOnboarding({
+          onboardingMessages: onboarding.messages,
+        });
       }, 250);
 
       window.addEventListener('resize', debounceResize);
@@ -120,6 +120,7 @@ export default class Treemap {
 
     // ⚠️ Custom Messages ⚠️
     // ...
+    onboarding.messages = defaultOnboardingMessages;
 
     return {
       onboardingMessages: defaultOnboardingMessages,

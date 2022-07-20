@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
-import { setOnboardingState, attachClickListener } from './onboardingDialog';
+import { attachClickListener } from './onboardingDialog';
+import { setOnboardingState } from './utils/store';
 
 /**
  * Sets the font of the whole page. Provide the name of the font and the url to it.
@@ -26,7 +27,7 @@ export const initSettingsMenu = (treemap = null) => {
 
     toggleSettingsMenu(false);                                  // Hide the whole menu initially
     setOnboardingState({ treemap, settingsBtn });               // Pass the information to the dialog
-    attachClickListener();                  // Attach the click listener for the onboarding menu button
+    attachClickListener();                                      // Attach the click listener for the onboarding menu button
 }
 
 /**

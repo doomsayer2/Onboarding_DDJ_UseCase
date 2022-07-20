@@ -1,20 +1,10 @@
 import { toast } from './utils/utils';
-import * as d3 from 'd3';
 import {
   createBasicOnboardingMessage,
   createBasicOnboardingStage,
   getOnboardingStages,
 } from '../static/lib/bundle.js';
-
-// The store here for all the information
-let onboarding = {
-  isShown: false, // Whether or not the onboarding is shown anyway
-
-  treemap: null, // Reference to the treemap object
-  settingsBtn: null, // Reference to the button as d3 selection which should open the menu
-
-  stages: [], // Keep track of the current stages
-};
+import { onboarding } from './utils/store';
 
 // All the elements of the dialog and others
 let select = null;
@@ -28,6 +18,10 @@ let modal = null;
 // Other things
 let isInitialized = false;
 
+/**
+ * This funciton is used in order to attach the click listener to the button.
+ * It makes sure however everything necessary is there before this is done.
+ */
 export const attachClickListener = () => {
   if (onboarding.treemap !== null && onboarding.settingsBtn !== null) {
     onboarding.settingsBtn.on('click', toggleModal);
@@ -41,10 +35,10 @@ export const attachClickListener = () => {
   }
 };
 
-export const setOnboardingState = (newState) => {
-  onboarding = { ...onboarding, ...newState };
-};
-
+/**
+ * This function opens or closes the dialog. It makes sure that the initialization and event listener binding
+ * is only happening on the first time.
+ */
 function toggleModal() {
   if (!isInitialized) {
     initDialog();
@@ -54,11 +48,11 @@ function toggleModal() {
   }
 }
 
+/**
+ * This function initializes the dialog. It is only done once when it is first created with the onboarding.
+ */
 function initDialog() {
-  /**
-   * 1. Grab references to elements
-   */
-
+  // 1. Grab references to elements
   modalEl = document.getElementById('onboardingSettings');
   select = document.getElementById('addSelectMsg');
   btnInspect = document.getElementById('btnInspect');
@@ -67,23 +61,13 @@ function initDialog() {
   yEl = document.getElementById('addYMsg');
   modal = bootstrap.Modal.getOrCreateInstance(modalEl);
 
-  /**
-   * 2. Fill the dropdown with the stages
-   */
-
+  // 2. Fill the dropdown with the stages
   fillDropdown();
 
-  /**
-   * 3. Add the form validation
-   */
-
+  // 3. Add the form validation
   formValidation();
 
-  /**
-   * 4. Add general listeners
-   */
-
-  // Overlay related
+  // 4. Add general listeners and other
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' || e.key === 'Esc') {
       e.preventDefault();
@@ -112,21 +96,22 @@ function initDialog() {
     overlay.style.display = 'block';
   });
 
-  /**
-   * Show the modal now
-   */
-
+  // 5. Show the modal now
   modal.show();
 }
 
+/**
+ * This function clears the dropdown options in the form first and then populates it with the
+ * current stages that are available in the onboarding.
+ */
 function fillDropdown() {
   // Clear old ones first
   document
     .querySelectorAll('#addSelectMsg option')
     .forEach((option) => option.remove());
 
-  // Grab current ones
-  const stages = getOnboardingStages();
+  const stages = getOnboardingStages(); // Grab current stages
+  onboarding.stages = stages; // Store the stages
 
   stages.forEach((e) => {
     const option = new Option(e.title, e.title);
@@ -134,6 +119,9 @@ function fillDropdown() {
   });
 }
 
+/**
+ * This function initializes the listeners for the form validation
+ */
 function formValidation() {
   const formStage = document.getElementById('formStage');
   const stageBtn = document.getElementById('btnStage');
@@ -162,8 +150,8 @@ function formValidation() {
           iconClass,
           backgroundColor,
         });
-        onboarding.stages.push(newOnboardingStage);   // Keep track of the current stages
-        fillDropdown();   // Fill the dropdown again with new stage
+        onboarding.stages.push(newOnboardingStage); // Keep track of the current stages
+        fillDropdown(); // Fill the dropdown again with new stage
         toast('Success: The stage was added!', 1200);
 
         // Reset the form to previous state
@@ -188,8 +176,15 @@ function formValidation() {
         event.preventDefault();
 
         const elements = formMessage.elements;
-        const msg = getFormVals(elements);
-        console.log('MESSAGE:', msg);
+        const { onboardingStage, ...msg } = getFormVals(elements);
+        msg.anchor = {
+          coords: {
+            x: +xEl.value,
+            y: +yEl.value,
+          },
+        };
+
+        addMsgToStage(msg, onboardingStage);
 
         // Reset the form to previous state
         formMessage.classList.remove('was-validated');
@@ -203,6 +198,7 @@ function formValidation() {
 /**
  * This function extracts all the form values from any element that has a data-visahoi-name attribute.
  * It returns an object whichs keys are the data-visahoi-name attributes and the values of the respective form element.
+ * Also from those who have the data-visahoi-id attribute.
  * @param {*} formElements The elements of which the value should be read
  * @returns An object with the values of the form elements
  */
@@ -215,4 +211,35 @@ function getFormVals(formElements) {
     }
   }
   return obj;
+}
+
+/**
+ * This function adds a message to the given stage in the onboarding interface.
+ * @param {Object} msg To be added to the interface
+ * @param {string} stage To add the message into
+ */
+function addMsgToStage(msg, stage) {
+  if (onboarding.stages.length > 0) {
+    const stageObj = onboarding.stages.filter((e) => (e.title === stage))[0];
+    onboarding.messages.push(createBasicOnboardingMessage({
+      title: msg.title,
+      text: msg.text,
+      onboardingStage: stageObj,
+      anchor: msg.anchor
+    }));
+
+    // Update the onboarding
+    onboarding.treemap.onboardingUI?.updateOnboarding({
+      onboardingMessages: onboarding.messages
+    });  
+
+    toast('Success: The message was added!', 1200);   // Show success message also
+  } else {
+    toast(
+      'There are no stages available. Add a stage first please.',
+      2000,
+      'error',
+      'top-end'
+    );
+  }
 }
