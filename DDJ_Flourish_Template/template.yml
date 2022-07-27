@@ -59,11 +59,13 @@ settings:
     type: boolean # See available types above
     new_section: Page Options
 
-  - Onboarding
   - property: showOnboarding # Refers to a property in the template's state object
     name: Show Onboarding # Display name for the settings panel
-    description: Whether to show the onboarding or not. It uses the default onboarding messages that are auto generated. # Optional description for the settings panel
+    description: This option generates the onboarding and enables further customization. # Optional description for the settings panel
     type: boolean # See available types above
+    new_section: Generate Onboarding
+
+  - Onboarding
   - property: rightOffset
     name: X-Axis Offset (px)
     description: Change the right offset of the onboarding menu along the x-axis. Also negative numbers are possible!
@@ -74,6 +76,12 @@ settings:
     name: Y-Axis Offset (px)
     description: Change the bottom offset of the onboarding menu along the y-axis. Also negative numbers are possible!
     type: number
+    show_if: showOnboarding
+  - property: toggleEditMode # Refers to a property in the template's state object
+    name: Toggle Edit Mode # Display name for the settings panel
+    description: Enable this to edit the messages or stages directly. You can delete them as well. # Optional description for the settings panel
+    type: boolean # See available types above
+    new_section: Onboarding Messages and Stages
     show_if: showOnboarding
 
   - Layout

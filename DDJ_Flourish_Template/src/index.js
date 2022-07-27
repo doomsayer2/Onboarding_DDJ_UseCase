@@ -19,6 +19,7 @@ export const state = {
   layout: {},
 
   showOnboarding: false,
+  toggleEditMode: false,
   rightOffset: 100,
   bottomOffset: 20,
 

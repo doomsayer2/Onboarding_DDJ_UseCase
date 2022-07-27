@@ -3,7 +3,7 @@ import {
   ahoi,
   generateBasicAnnotations,
 } from '../static/lib/bundle.js';
-import { onboarding  } from './utils/store';
+import { onboarding } from './utils/store';
 import { state } from './index';
 
 // Static variables for onboarding
@@ -58,7 +58,7 @@ export default class Treemap {
   /**
    * This method just creates the plotly treemap.
    */
-  async createTreemap(state = {}) {
+  async createTreemap() {
     const data = [
       {
         type: 'treemap',
@@ -74,14 +74,14 @@ export default class Treemap {
         outsidetextfont: { size: 20, color: '#222531' },
       },
     ];
-    const layout = {
-      title: 'Treemap',
-    };
+    // const layout = {
+    //   title: 'Treemap',
+    // };
     const config = {
       responsive: true,
     };
 
-    chart = await Plotly.react(this.container, data, layout, config); // Plotly.react() is more efficient that Plotly.newPlot() for recreation
+    chart = await Plotly.react(this.container, data, config); // Plotly.react() is more efficient that Plotly.newPlot() for recreation
   }
 
   updatePlotlyData(data_update) {
@@ -116,21 +116,17 @@ export default class Treemap {
   static getAhoiConfig() {
     let onboardingMsgs = null;
 
-    if (state.messages.length === 0) {
-      onboardingMsgs = generateBasicAnnotations(
-        EVisualizationType.TREEMAP,
-        chart
-      );
+    onboardingMsgs = generateBasicAnnotations(
+      EVisualizationType.TREEMAP,
+      chart
+    );
 
-      // ⚠️ Custom Messages ⚠️
-      // ...
-      state.messages = onboardingMsgs;
-    } else {
-      onboardingMsgs = state.messages;
-    }
+    // ⚠️ Custom Messages ⚠️
+    // ...
 
     return {
       onboardingMessages: onboardingMsgs,
+      showHelpCloseText: false,
     };
   }
 
