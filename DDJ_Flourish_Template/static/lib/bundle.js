@@ -18,6 +18,11 @@ var EDefaultOnboardingStages;
     EDefaultOnboardingStages["USING"] = "using-the-chart";
     EDefaultOnboardingStages["ANALYZING"] = "analyze-the-chart";
 })(EDefaultOnboardingStages || (EDefaultOnboardingStages = {}));
+var EDefaultOnboardingStageNavigation;
+(function (EDefaultOnboardingStageNavigation) {
+    EDefaultOnboardingStageNavigation["PREVIOUS"] = "previous";
+    EDefaultOnboardingStageNavigation["NEXT"] = "next";
+})(EDefaultOnboardingStageNavigation || (EDefaultOnboardingStageNavigation = {}));
 // TODO: move to right place
 const defaultOnboardingStages = new Map([
     [
@@ -1807,7 +1812,7 @@ NodeFilter.SHOW_TEXT, // Look for text nodes only
             : NodeFilter.FILTER_REJECT; // Not found: reject and continue
     },
 })
-    .nextNode().parentElement;
+    .nextNode()?.parentElement;
 /**
  * Returns the anchor for the requested onboarding specification.
  * Returns undefined if the passed property is undefined.
@@ -1840,136 +1845,149 @@ const getAnchor = (prop, visElement) => {
 const getMarkerDomId = (id) => {
     return `visahoi-marker-${id}`;
 };
+/**
+ * returns the markerId with the visahoi navigation prefix
+ * this id is used for the navigation marker dom element
+ * @param id
+ * @returns
+ */
+const getNavigationMarkerDomId = (id) => {
+    return `visahoi-marker-navigation-visahoi-marker-${id}`;
+};
 
 function generateMessages$5(spec, visElement, ahoiConfig) {
     const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING);
     const interacting = defaultOnboardingStages.get(EDefaultOnboardingStages.USING);
     const messages = [
         {
-            anchor: getAnchor(spec.chartTitle, visElement),
-            requires: ['chartTitle'],
-            text: `The <span class="hT">chart shows the ${spec.chartTitle?.value}.`,
-            title: 'Reading the chart',
-            onboardingStage: reading,
-            marker: {
-                id: "unique-marker-id-1"
-            }
-        },
-        {
             anchor: getAnchor(spec.type, visElement),
-            requires: ['type'],
+            requires: ["type"],
             text: `Each ${spec.type?.value} represents a data item.`,
-            title: 'Reading the chart',
+            title: "Reading the chart",
             onboardingStage: reading,
             marker: {
-                id: "unique-marker-id-2"
-            }
+                id: "unique-marker-id-2",
+            },
         },
         {
             anchor: getAnchor(spec.yAxisTitle, visElement),
-            requires: ['type', 'barLength', 'yAxisTitle', 'xAxisTitle'],
+            requires: ["type", "barLength", "yAxisTitle", "xAxisTitle"],
             text: `The ${spec.barLength?.value} of each ${spec.type?.value} shows e.g., the ${spec.yAxisTitle?.value} (y-axis) for a certain ${spec.xAxisTitle?.value}.`,
-            title: 'Reading the chart',
+            title: "Reading the chart",
             onboardingStage: reading,
             marker: {
-                id: "unique-marker-id-3"
-            }
+                id: "unique-marker-id-3",
+            },
         },
         {
             anchor: getAnchor(spec.xAxisTitle, visElement),
-            requires: ['type', 'xAxisOrientation', 'xAxisTitle'],
+            requires: ["type", "xAxisOrientation", "xAxisTitle"],
             text: `The ${spec.xAxisOrientation?.value} position of each ${spec.type?.value} represents the ${spec.xAxisTitle?.value} (x-axis).`,
-            title: 'Reading the chart',
+            title: "Reading the chart",
             onboardingStage: reading,
             marker: {
-                id: "unique-marker-id-4"
-            }
+                id: "unique-marker-id-4",
+            },
         },
         {
             anchor: getAnchor(spec.yMin, visElement),
-            requires: ['yAxisTitle', 'yMin'],
+            requires: ["yAxisTitle", "yMin"],
             text: `The minimum ${spec.yAxisTitle?.value} is ${spec.yMin?.value}.`,
-            title: 'Interacting with the chart',
+            title: "Interacting with the chart",
             onboardingStage: interacting,
             marker: {
-                id: "unique-marker-id-5"
-            }
+                id: "unique-marker-id-5",
+            },
         },
         {
             anchor: getAnchor(spec.yMax, visElement),
-            requires: ['yAxisTitle', 'yMax'],
+            requires: ["yAxisTitle", "yMax"],
             text: `The <span class="hT">maximum</span> ${spec.yAxisTitle?.value} is ${spec.yMax?.value}.`,
-            title: 'Interacting with the chart',
+            title: "Interacting with the chart",
             onboardingStage: interacting,
             marker: {
-                id: "unique-marker-id-6"
-            }
+                id: "unique-marker-id-6",
+            },
         },
     ];
+    if (spec.chartTitle?.value !== undefined) {
+        messages.unshift({
+            anchor: getAnchor(spec.chartTitle, visElement),
+            requires: ["chartTitle"],
+            text: `The <span class="hT">chart shows the ${spec.chartTitle?.value}.`,
+            title: "Reading the chart",
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-1",
+            },
+        });
+    }
     // Filter for messages where all template variables are available in the spec
     return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
 }
 const barChart = {
-    generateMessages: generateMessages$5
+    generateMessages: generateMessages$5,
 };
 
 function generateMessages$4(spec, visElement) {
     const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING);
     const messages = [
         {
+            anchor: getAnchor(spec.type, visElement),
+            requires: ["type"],
+            text: `The chart Is based on colored ${spec.type?.value} elements.`,
+            title: "Reading the chart",
+            onboardingStage: reading,
+            tooltipPosition: "left",
+            marker: {
+                id: "unique-marker-id-2",
+            },
+        },
+        {
+            anchor: getAnchor(spec.legendTitle, visElement),
+            requires: ["legendTitle"],
+            text: `The legend shows the ${spec.legendTitle?.value} for the chart. The colors range from blue to white and brown.`,
+            title: "Reading the chart",
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-3",
+            },
+        },
+        {
+            anchor: getAnchor(spec.xAxis, visElement),
+            requires: ["xAxis", "yAxis"],
+            text: `The columns show the ${spec.xAxis?.value}, while the rows show the ${spec.yAxis?.value}.`,
+            title: "Reading the chart",
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-4",
+            },
+        },
+    ];
+    if (spec.chartTitle?.value !== undefined) {
+        messages.unshift({
             anchor: getAnchor(spec.chartTitle, visElement),
-            requires: ['chartTitle'],
+            requires: ["chartTitle"],
             text: `The <span class="visahoi-tooltip-hover-text">chart</span> shows the ${spec.chartTitle?.value}.`,
-            title: 'Reading the chart',
+            title: "Reading the chart",
             onboardingStage: reading,
             tooltipPosition: "top",
             marker: {
                 radius: 8,
                 content: "",
-                fontSize: '20px',
-                id: "unique-marker-id-1"
-            }
-        },
-        {
-            anchor: getAnchor(spec.type, visElement),
-            requires: ['type'],
-            text: `The chart Is based on colored ${spec.type?.value} elements.`,
-            title: 'Reading the chart',
-            onboardingStage: reading,
-            tooltipPosition: "left",
-            marker: {
-                id: "unique-marker-id-2"
-            }
-        },
-        {
-            anchor: getAnchor(spec.legendTitle, visElement),
-            requires: ['legendTitle'],
-            text: `The legend shows the ${spec.legendTitle?.value} for the chart. The colors range from blue to white and brown.`,
-            title: 'Reading the chart',
-            onboardingStage: reading,
-            marker: {
-                id: "unique-marker-id-3"
-            }
-        },
-        {
-            anchor: getAnchor(spec.xAxis, visElement),
-            requires: ['xAxis', 'yAxis'],
-            text: `The columns show the ${spec.xAxis?.value}, while the rows show the ${spec.yAxis?.value}.`,
-            title: 'Reading the chart',
-            onboardingStage: reading,
-            marker: {
-                id: "unique-marker-id-4"
-            }
-        },
-    ];
+                fontSize: "20px",
+                id: "unique-marker-id-1",
+            },
+        });
+    }
     // Filter for messages where all template variables are available in the spec
     return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
 }
 const changeMatrix = {
-    generateMessages: generateMessages$4
+    generateMessages: generateMessages$4,
 };
 
-function createColorRect(color = 'white') {
+function createColorRect(color = "white") {
     return `<div class="colorRect" style="background: ${color}"></div>`;
 }
 function generateMessages$3(spec, visElement) {
@@ -1977,82 +1995,84 @@ function generateMessages$3(spec, visElement) {
     const using = defaultOnboardingStages.get(EDefaultOnboardingStages.USING);
     const messages = [
         {
-            anchor: getAnchor(spec.chartTitle, visElement),
-            requires: ['chartTitle'],
-            text: `The chart shows the ${spec.chartTitle?.value}.`,
-            title: 'Reading the chart',
-            onboardingStage: reading,
-            marker: {
-                id: "unique-marker-id-1"
-            }
-        },
-        {
             anchor: getAnchor(spec.type, visElement),
-            requires: ['type'],
+            requires: ["type"],
             text: `The chart is made out of ${spec.type?.value} elements.`,
-            title: 'Reading the chart',
+            title: "Reading the chart",
             onboardingStage: reading,
             marker: {
-                id: "unique-marker-id-2"
-            }
+                id: "unique-marker-id-2",
+            },
         },
         {
             anchor: getAnchor(spec.xAxis, visElement),
-            requires: ['xAxis', 'yAxis'],
+            requires: ["xAxis", "yAxis"],
             text: `The areas illustrate the ${spec.yAxis?.value} (y-axis) over ${spec.xAxis?.value} (x-axis).`,
-            title: 'Reading the chart',
+            title: "Reading the chart",
             onboardingStage: reading,
             marker: {
-                id: "unique-marker-id-3"
-            }
+                id: "unique-marker-id-3",
+            },
         },
         {
             anchor: getAnchor(spec.positiveColor, visElement),
-            requires: ['yAxis', 'positiveColor'],
+            requires: ["yAxis", "positiveColor"],
             text: `Light ${createColorRect(spec.positiveColor?.value)} areas indicate a moderate positive ${spec.yAxis?.value} and dark
         ${createColorRect(spec.positiveColor?.value)} areas a high positive ${spec.yAxis?.value}.`,
-            title: 'Reading the chart',
+            title: "Reading the chart",
             onboardingStage: reading,
             marker: {
-                id: "unique-marker-id-4"
-            }
+                id: "unique-marker-id-4",
+            },
         },
         {
             anchor: getAnchor(spec.negativeColor, visElement),
-            requires: ['yAxis', 'negativeColor'],
+            requires: ["yAxis", "negativeColor"],
             text: `${createColorRect(spec.negativeColor?.value)} areas indicate a very low negative ${spec.yAxis?.value}.`,
-            title: 'Reading the chart',
+            title: "Reading the chart",
             onboardingStage: reading,
             marker: {
-                id: "unique-marker-id-5"
-            }
+                id: "unique-marker-id-5",
+            },
         },
         {
             anchor: spec.yMin?.anchor,
-            requires: ['yAxis', 'yMin'],
+            requires: ["yAxis", "yMin"],
             text: `The <span class="hT">minimum</span> ${spec.yAxis?.value} is ${spec.yMin?.value}.`,
-            title: 'Reading the chart',
+            title: "Reading the chart",
             onboardingStage: using,
             marker: {
-                id: "unique-marker-id-6"
-            }
+                id: "unique-marker-id-6",
+            },
         },
         {
             anchor: spec.yMax?.anchor,
-            requires: ['yAxis', 'yMax'],
+            requires: ["yAxis", "yMax"],
             text: `The <span class="hT">maximum</span> ${spec.yAxis?.value} is ${spec.yMax?.value}.`,
-            title: 'Reading the chart',
+            title: "Reading the chart",
             onboardingStage: using,
             marker: {
-                id: "unique-marker-id-7"
-            }
+                id: "unique-marker-id-7",
+            },
         },
     ];
+    if (spec.chartTitle?.value !== undefined) {
+        messages.unshift({
+            anchor: getAnchor(spec.chartTitle, visElement),
+            requires: ["chartTitle"],
+            text: `The chart shows the ${spec.chartTitle?.value}.`,
+            title: "Reading the chart",
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-1",
+            },
+        });
+    }
     // Filter for messages where all template variables are available in the spec
     return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
 }
 const horizonGraph = {
-    generateMessages: generateMessages$3
+    generateMessages: generateMessages$3,
 };
 
 function generateMessages$2(spec, visElement) {
@@ -2061,71 +2081,73 @@ function generateMessages$2(spec, visElement) {
     const interacting = defaultOnboardingStages.get(EDefaultOnboardingStages.USING);
     const messages = [
         {
-            anchor: getAnchor(spec.chartTitle, visElement),
-            requires: ['chartTitle'],
-            text: `The chart shows the ${spec.chartTitle?.value}.`,
-            title: 'Reading the chart',
-            onboardingStage: reading,
-            marker: {
-                id: "unique-marker-id-1"
-            }
-        },
-        {
             anchor: getAnchor(spec.type, visElement),
-            requires: ['type'],
+            requires: ["type"],
             text: `The chart Is based on colored ${spec.type?.value} elements.`,
-            title: 'Interacting with the chart',
+            title: "Interacting with the chart",
             onboardingStage: interacting,
             marker: {
-                id: "unique-marker-id-2"
-            }
+                id: "unique-marker-id-2",
+            },
         },
         {
             anchor: getAnchor(spec.legendTitle, visElement),
-            requires: ['legendTitle'],
+            requires: ["legendTitle"],
             text: `The legend shows the ${spec.legendTitle?.value} for the chart. The colors range from blue to white and brown.`,
-            title: 'Reading the chart',
+            title: "Reading the chart",
             onboardingStage: reading,
             marker: {
-                id: "unique-marker-id-3"
-            }
+                id: "unique-marker-id-3",
+            },
         },
         {
             anchor: getAnchor(spec.xAxisTitle, visElement),
-            requires: ['xAxisTitle', 'yAxisTitle'],
+            requires: ["xAxisTitle", "yAxisTitle"],
             text: `The columns show the ${spec.xAxis?.value}, while the rows show the ${spec.yAxis?.value}.`,
-            title: 'Reading the chart',
+            title: "Reading the chart",
             onboardingStage: analyzing,
             marker: {
-                id: "unique-marker-id-4"
-            }
+                id: "unique-marker-id-4",
+            },
         },
         {
             anchor: getAnchor(spec.yAxisTitle, visElement),
-            requires: ['yAxisTitle', 'xAxisTitle'],
+            requires: ["yAxisTitle", "xAxisTitle"],
             text: `the ${spec.yAxisTitle?.value} (y-axis) for a certain ${spec.xAxisTitle?.value}.`,
-            title: 'Interacting with the chart',
+            title: "Interacting with the chart",
             onboardingStage: interacting,
             marker: {
-                id: "unique-marker-id-5"
-            }
+                id: "unique-marker-id-5",
+            },
         },
         {
             anchor: getAnchor(spec.maxValue, visElement),
-            requires: ['maxValue'],
+            requires: ["maxValue"],
             text: `The chart Is based on colored ${spec.type?.value} elements.`,
-            title: 'Reading the chart',
+            title: "Reading the chart",
             onboardingStage: reading,
             marker: {
-                id: "unique-marker-id-6"
-            }
-        }
+                id: "unique-marker-id-6",
+            },
+        },
     ];
+    if (spec.chartTitle?.value !== undefined) {
+        messages.unshift({
+            anchor: getAnchor(spec.chartTitle, visElement),
+            requires: ["chartTitle"],
+            text: `The chart shows the ${spec.chartTitle?.value}.`,
+            title: "Reading the chart",
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-1",
+            },
+        });
+    }
     // Filter for messages where all template variables are available in the spec
     return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
 }
 const scatterplot = {
-    generateMessages: generateMessages$2
+    generateMessages: generateMessages$2,
 };
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -5852,7 +5874,7 @@ function get_root_for_style(node) {
 function append_empty_stylesheet(node) {
     const style_element = element('style');
     append_stylesheet(get_root_for_style(node), style_element);
-    return style_element;
+    return style_element.sheet;
 }
 function append_stylesheet(node, style) {
     append(node.head || node, style);
@@ -5881,6 +5903,9 @@ function text(data) {
 function space() {
     return text(' ');
 }
+function empty$1() {
+    return text('');
+}
 function listen(node, event, handler, options) {
     node.addEventListener(event, handler, options);
     return () => node.removeEventListener(event, handler, options);
@@ -5900,15 +5925,22 @@ function set_data(text, data) {
         text.data = data;
 }
 function set_style(node, key, value, important) {
-    node.style.setProperty(key, value, important ? 'important' : '');
+    if (value === null) {
+        node.style.removeProperty(key);
+    }
+    else {
+        node.style.setProperty(key, value, important ? 'important' : '');
+    }
 }
-function custom_event(type, detail, bubbles = false) {
+function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
     const e = document.createEvent('CustomEvent');
-    e.initCustomEvent(type, bubbles, false, detail);
+    e.initCustomEvent(type, bubbles, cancelable, detail);
     return e;
 }
 
-const active_docs = new Set();
+// we need to store the information for multiple documents because a Svelte application could also contain iframes
+// https://github.com/sveltejs/svelte/issues/3624
+const managed_styles = new Map();
 let active = 0;
 // https://github.com/darkskyapp/string-hash/blob/master/index.js
 function hash(str) {
@@ -5917,6 +5949,11 @@ function hash(str) {
     while (i--)
         hash = ((hash << 5) - hash) ^ str.charCodeAt(i);
     return hash >>> 0;
+}
+function create_style_information(doc, node) {
+    const info = { stylesheet: append_empty_stylesheet(node), rules: {} };
+    managed_styles.set(doc, info);
+    return info;
 }
 function create_rule(node, a, b, duration, delay, ease, fn, uid = 0) {
     const step = 16.666 / duration;
@@ -5928,11 +5965,9 @@ function create_rule(node, a, b, duration, delay, ease, fn, uid = 0) {
     const rule = keyframes + `100% {${fn(b, 1 - b)}}\n}`;
     const name = `__svelte_${hash(rule)}_${uid}`;
     const doc = get_root_for_style(node);
-    active_docs.add(doc);
-    const stylesheet = doc.__svelte_stylesheet || (doc.__svelte_stylesheet = append_empty_stylesheet(node).sheet);
-    const current_rules = doc.__svelte_rules || (doc.__svelte_rules = {});
-    if (!current_rules[name]) {
-        current_rules[name] = true;
+    const { stylesheet, rules } = managed_styles.get(doc) || create_style_information(doc, node);
+    if (!rules[name]) {
+        rules[name] = true;
         stylesheet.insertRule(`@keyframes ${name} ${rule}`, stylesheet.cssRules.length);
     }
     const animation = node.style.animation || '';
@@ -5958,14 +5993,14 @@ function clear_rules() {
     raf(() => {
         if (active)
             return;
-        active_docs.forEach(doc => {
-            const stylesheet = doc.__svelte_stylesheet;
+        managed_styles.forEach(info => {
+            const { stylesheet } = info;
             let i = stylesheet.cssRules.length;
             while (i--)
                 stylesheet.deleteRule(i);
-            doc.__svelte_rules = {};
+            info.rules = {};
         });
-        active_docs.clear();
+        managed_styles.clear();
     });
 }
 
@@ -5997,25 +6032,47 @@ function schedule_update() {
         resolved_promise.then(flush);
     }
 }
+function tick() {
+    schedule_update();
+    return resolved_promise;
+}
 function add_render_callback(fn) {
     render_callbacks.push(fn);
 }
-let flushing = false;
+// flush() calls callbacks in this order:
+// 1. All beforeUpdate callbacks, in order: parents before children
+// 2. All bind:this callbacks, in reverse order: children before parents.
+// 3. All afterUpdate callbacks, in order: parents before children. EXCEPT
+//    for afterUpdates called during the initial onMount, which are called in
+//    reverse order: children before parents.
+// Since callbacks might update component values, which could trigger another
+// call to flush(), the following steps guard against this:
+// 1. During beforeUpdate, any updated components will be added to the
+//    dirty_components array and will cause a reentrant call to flush(). Because
+//    the flush index is kept outside the function, the reentrant call will pick
+//    up where the earlier call left off and go through all dirty components. The
+//    current_component value is saved and restored so that the reentrant call will
+//    not interfere with the "parent" flush() call.
+// 2. bind:this callbacks cannot trigger new flush() calls.
+// 3. During afterUpdate, any updated components will NOT have their afterUpdate
+//    callback called a second time; the seen_callbacks set, outside the flush()
+//    function, guarantees this behavior.
 const seen_callbacks = new Set();
+let flushidx = 0; // Do *not* move this inside the flush() function
 function flush() {
-    if (flushing)
-        return;
-    flushing = true;
+    const saved_component = current_component;
     do {
         // first, call beforeUpdate functions
         // and update components
-        for (let i = 0; i < dirty_components.length; i += 1) {
-            const component = dirty_components[i];
+        while (flushidx < dirty_components.length) {
+            const component = dirty_components[flushidx];
+            flushidx++;
             set_current_component(component);
             update(component.$$);
         }
         set_current_component(null);
         dirty_components.length = 0;
+        flushidx = 0;
         while (binding_callbacks.length)
             binding_callbacks.pop()();
         // then, once components are updated, call
@@ -6035,8 +6092,8 @@ function flush() {
         flush_callbacks.pop()();
     }
     update_scheduled = false;
-    flushing = false;
     seen_callbacks.clear();
+    set_current_component(saved_component);
 }
 function update($$) {
     if ($$.fragment !== null) {
@@ -6097,6 +6154,9 @@ function transition_out(block, local, detach, callback) {
             }
         });
         block.o(local);
+    }
+    else if (callback) {
+        callback();
     }
 }
 const null_transition = { duration: 0 };
@@ -6382,25 +6442,30 @@ function writable(value, start = noop) {
     return { set, update, subscribe };
 }
 
-const initializeStoreValue = ((defaultValue) => {
+const initializeStoreValue = (defaultValue) => {
     const { subscribe, set, update } = writable(defaultValue);
     return {
         subscribe,
         set,
         update,
-        reset: () => set(defaultValue)
+        reset: () => set(defaultValue),
     };
-});
+};
 const showOnboarding = initializeStoreValue(false);
 const showOnboardingSteps = initializeStoreValue(false);
 const activeStep = initializeStoreValue(null);
 const onboardingMessages = initializeStoreValue([]);
-const navigationAlignment = initializeStoreValue('column');
+const navigationAlignment = initializeStoreValue("column");
 const onboardingStages = initializeStoreValue([]);
 const activeOnboardingStage = initializeStoreValue(null);
 const activeMarker = initializeStoreValue(null);
+const selectedMarker = initializeStoreValue(null);
 const showBackdrop = initializeStoreValue(true);
 const backdropOpacity = initializeStoreValue(0.15);
+const showOnboardingNavigation = initializeStoreValue(false);
+const previousMarkerId = initializeStoreValue("");
+const markerIndexId = initializeStoreValue(null);
+const showHideCloseText = initializeStoreValue(true);
 const visXPosition = writable(0);
 const visYPosition = writable(0);
 const visHeight = writable(0);
@@ -6414,6 +6479,8 @@ const resetStore = () => {
     onboardingStages.reset();
     activeOnboardingStage.reset();
     activeMarker.reset();
+    selectedMarker.reset();
+    markerIndexId.reset();
 };
 
 function generateMessages$1(spec, visElement) {
@@ -6422,96 +6489,98 @@ function generateMessages$1(spec, visElement) {
     const interacting = defaultOnboardingStages.get(EDefaultOnboardingStages.USING);
     const messages = [
         {
-            anchor: getAnchor(spec.chartTitle, visElement),
-            requires: ['chartTitle'],
-            text: `The chart shows the ${spec.chartTitle?.value}.`,
-            title: 'Reading the chart',
-            onboardingStage: reading,
-            marker: {
-                id: "unique-marker-id-1"
-            }
-        },
-        {
             anchor: getAnchor(spec.desc, visElement),
-            requires: ['desc'],
+            requires: ["desc"],
             text: `The treemap visualization shows the breakdown of hierarchical data level by level.The size of each rectangle represents a quantitative value associated with each element in the hierarchy.`,
-            title: 'Reading the chart',
+            title: "Reading the chart",
             onboardingStage: reading,
             marker: {
-                id: "unique-marker-id-2"
-            }
+                id: "unique-marker-id-2",
+            },
         },
         {
             anchor: getAnchor(spec.subDesc, visElement),
-            requires: ['subDesc'],
+            requires: ["subDesc"],
             text: `The area covered by the whole treemap is subdivided recursively into sub-categories according to their quantitative values, level by level.`,
-            title: 'Reading the chart',
+            title: "Reading the chart",
             onboardingStage: reading,
             marker: {
-                id: "unique-marker-id-3"
-            }
+                id: "unique-marker-id-3",
+            },
         },
         {
             anchor: getAnchor(spec.otherDesc, visElement),
-            requires: ['otherDesc'],
+            requires: ["otherDesc"],
             text: `Items on the bottom level that belong to the same sub-category are visually represented by using the same color.`,
-            title: 'Reading the chart',
+            title: "Reading the chart",
             onboardingStage: reading,
             marker: {
-                id: "unique-marker-id-4"
-            }
+                id: "unique-marker-id-4",
+            },
         },
         {
             anchor: getAnchor(spec.gapDesc, visElement),
-            requires: ['gapDesc'],
+            requires: ["gapDesc"],
             text: `Items within a sub-category are represented by rectangles that are closely packed together with increasingly larger gaps to the neighboring categories.`,
-            title: 'Reading the chart',
+            title: "Reading the chart",
             onboardingStage: reading,
             marker: {
-                id: "unique-marker-id-5"
-            }
+                id: "unique-marker-id-5",
+            },
         },
         {
             anchor: getAnchor(spec.interactingDesc, visElement),
-            requires: ['interactingDesc'],
+            requires: ["interactingDesc"],
             text: `Hover over the rectangles to get the dedicated value of the sub-category and further information.`,
-            title: 'Interacting with the chart',
+            title: "Interacting with the chart",
             onboardingStage: interacting,
             marker: {
-                id: "unique-marker-id-6"
-            }
+                id: "unique-marker-id-6",
+            },
         },
         {
             anchor: getAnchor(spec.maxValueDesc, visElement),
-            requires: ['maxValueDesc', 'maxValue'],
+            requires: ["maxValueDesc", "maxValue"],
             text: `The largest rectangle holds the maximum value in the sub-category. In this sub-category ${spec.maxValue?.value} is the maximum value.`,
-            title: 'Analyzing the chart',
+            title: "Analyzing the chart",
             onboardingStage: analyzing,
             marker: {
-                id: "unique-marker-id-7"
-            }
+                id: "unique-marker-id-7",
+            },
         },
         {
             anchor: getAnchor(spec.minValueDesc, visElement),
-            requires: ['minValueDesc', 'minValue'],
+            requires: ["minValueDesc", "minValue"],
             text: ` The smallest rectangle holds the minimum value in the sub-category. In this sub-category ${spec.minValue?.value} is the minimum value.`,
-            title: 'Analyzing the chart',
+            title: "Analyzing the chart",
             onboardingStage: analyzing,
             marker: {
-                id: "unique-marker-id-8"
-            }
-        }
+                id: "unique-marker-id-8",
+            },
+        },
     ];
+    if (spec.chartTitle?.value !== undefined) {
+        messages.unshift({
+            anchor: getAnchor(spec.chartTitle, visElement),
+            requires: ["chartTitle"],
+            text: `The chart shows the ${spec.chartTitle?.value}.`,
+            title: "Reading the chart",
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-1",
+            },
+        });
+    }
     // Filter for messages where all template variables are available in the spec
     return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
 }
 const treemap = {
-    generateMessages: generateMessages$1
+    generateMessages: generateMessages$1,
 };
 
-/* src\components\OnboardingNavigationItem.svelte generated by Svelte v3.44.1 */
+/* src\components\OnboardingNavigationItem.svelte generated by Svelte v3.49.0 */
 
-function create_fragment$8(ctx) {
+function create_fragment$9(ctx) {
 	let div1;
 	let div0;
 	let i;
@@ -6597,7 +6666,7 @@ function create_fragment$8(ctx) {
 	};
 }
 
-function instance$8($$self, $$props, $$invalidate) {
+function instance$9($$self, $$props, $$invalidate) {
 	let $showOnboardingSteps;
 	let $activeOnboardingStage;
 	let $navigationAlignment;
@@ -6634,16 +6703,16 @@ function instance$8($$self, $$props, $$invalidate) {
 class OnboardingNavigationItem extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$8, create_fragment$8, safe_not_equal, { stage: 0, index: 6 });
+		init(this, options, instance$9, create_fragment$9, safe_not_equal, { stage: 0, index: 6 });
 	}
 }
 
 //overlay class names / ids
 const navigationMainItemDefaultColor = "#eb3461";
 
-/* src\components\OnboardingNavigationMainItem.svelte generated by Svelte v3.44.1 */
+/* src\components\OnboardingNavigationMainItem.svelte generated by Svelte v3.49.0 */
 
-function create_else_block(ctx) {
+function create_else_block_1(ctx) {
 	let span;
 
 	return {
@@ -6660,8 +6729,8 @@ function create_else_block(ctx) {
 	};
 }
 
-// (19:4) {#if $showOnboardingSteps}
-function create_if_block$1(ctx) {
+// (22:4) {#if $showOnboardingSteps}
+function create_if_block_1$1(ctx) {
 	let span;
 
 	return {
@@ -6678,89 +6747,195 @@ function create_if_block$1(ctx) {
 	};
 }
 
-function create_fragment$7(ctx) {
-	let div1;
-	let div0;
-	let t0;
+// (45:2) {:else}
+function create_else_block(ctx) {
 	let span;
-
-	let t1_value = (/*$activeOnboardingStage*/ ctx[0]
-	? /*$activeOnboardingStage*/ ctx[0]?.title
-	: /*$showOnboardingSteps*/ ctx[1] ? "Close" : "Help") + "";
-
-	let t1;
+	let i;
 	let mounted;
 	let dispose;
 
-	function select_block_type(ctx, dirty) {
-		if (/*$showOnboardingSteps*/ ctx[1]) return create_if_block$1;
-		return create_else_block;
-	}
-
-	let current_block_type = select_block_type(ctx);
-	let if_block = current_block_type(ctx);
-
 	return {
 		c() {
-			div1 = element("div");
-			div0 = element("div");
-			if_block.c();
-			t0 = space();
 			span = element("span");
-			t1 = text(t1_value);
-			attr(div0, "class", "visahoi-navigation-item-circle svelte-p2mz9e");
-			set_style(div0, "background-color", /*$activeOnboardingStage*/ ctx[0]?.backgroundColor || navigationMainItemDefaultColor);
-			attr(span, "class", "visahoi-stage-title svelte-p2mz9e");
-			attr(div1, "class", "visahoi-navigation-main-item svelte-p2mz9e");
+			i = element("i");
+			attr(i, "class", "fas fa-solid fa-toggle-off");
+			set_style(i, "width", "20px, height:20px");
+			attr(span, "class", "test-span");
 		},
 		m(target, anchor) {
-			insert(target, div1, anchor);
-			append(div1, div0);
-			if_block.m(div0, null);
-			append(div1, t0);
-			append(div1, span);
-			append(span, t1);
+			insert(target, span, anchor);
+			append(span, i);
 
 			if (!mounted) {
-				dispose = listen(div1, "click", /*handleClick*/ ctx[2]);
+				dispose = [
+					listen(i, "click", /*toggleNavigation*/ ctx[5]),
+					listen(span, "click", /*toggleNavigation*/ ctx[5])
+				];
+
 				mounted = true;
 			}
 		},
-		p(ctx, [dirty]) {
-			if (current_block_type !== (current_block_type = select_block_type(ctx))) {
-				if_block.d(1);
-				if_block = current_block_type(ctx);
-
-				if (if_block) {
-					if_block.c();
-					if_block.m(div0, null);
-				}
-			}
-
-			if (dirty & /*$activeOnboardingStage*/ 1) {
-				set_style(div0, "background-color", /*$activeOnboardingStage*/ ctx[0]?.backgroundColor || navigationMainItemDefaultColor);
-			}
-
-			if (dirty & /*$activeOnboardingStage, $showOnboardingSteps*/ 3 && t1_value !== (t1_value = (/*$activeOnboardingStage*/ ctx[0]
-			? /*$activeOnboardingStage*/ ctx[0]?.title
-			: /*$showOnboardingSteps*/ ctx[1] ? "Close" : "Help") + "")) set_data(t1, t1_value);
-		},
-		i: noop,
-		o: noop,
+		p: noop,
 		d(detaching) {
-			if (detaching) detach(div1);
-			if_block.d();
+			if (detaching) detach(span);
+			mounted = false;
+			run_all(dispose);
+		}
+	};
+}
+
+// (41:2) {#if $showOnboardingNavigation}
+function create_if_block$2(ctx) {
+	let span;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			span = element("span");
+			span.innerHTML = `<i class="fas fa-solid fa-toggle-on"></i>`;
+			attr(span, "class", "test-span");
+		},
+		m(target, anchor) {
+			insert(target, span, anchor);
+
+			if (!mounted) {
+				dispose = listen(span, "click", /*toggleNavigation*/ ctx[5]);
+				mounted = true;
+			}
+		},
+		p: noop,
+		d(detaching) {
+			if (detaching) detach(span);
 			mounted = false;
 			dispose();
 		}
 	};
 }
 
-function instance$7($$self, $$props, $$invalidate) {
+function create_fragment$8(ctx) {
+	let div1;
+	let div0;
+	let t0;
+	let span;
+
+	let t1_value = (/*$activeOnboardingStage*/ ctx[1]
+	? /*$activeOnboardingStage*/ ctx[1]?.title
+	: /*$showOnboardingSteps*/ ctx[2] && /*$showHideCloseText*/ ctx[3]
+		? "Close"
+		: /*$showHideCloseText*/ ctx[3] ? "Help" : "") + "";
+
+	let t1;
+	let t2;
+	let div2;
+	let mounted;
+	let dispose;
+
+	function select_block_type(ctx, dirty) {
+		if (/*$showOnboardingSteps*/ ctx[2]) return create_if_block_1$1;
+		return create_else_block_1;
+	}
+
+	let current_block_type = select_block_type(ctx);
+	let if_block0 = current_block_type(ctx);
+
+	function select_block_type_1(ctx, dirty) {
+		if (/*$showOnboardingNavigation*/ ctx[0]) return create_if_block$2;
+		return create_else_block;
+	}
+
+	let current_block_type_1 = select_block_type_1(ctx);
+	let if_block1 = current_block_type_1(ctx);
+
+	return {
+		c() {
+			div1 = element("div");
+			div0 = element("div");
+			if_block0.c();
+			t0 = space();
+			span = element("span");
+			t1 = text(t1_value);
+			t2 = space();
+			div2 = element("div");
+			if_block1.c();
+			attr(div0, "class", "visahoi-navigation-item-circle svelte-1k7k2ko");
+			set_style(div0, "background-color", /*$activeOnboardingStage*/ ctx[1]?.backgroundColor || navigationMainItemDefaultColor);
+			attr(span, "class", "visahoi-stage-title svelte-1k7k2ko");
+			attr(div1, "class", "visahoi-navigation-main-item svelte-1k7k2ko");
+			attr(div2, "class", "toggle-button svelte-1k7k2ko");
+		},
+		m(target, anchor) {
+			insert(target, div1, anchor);
+			append(div1, div0);
+			if_block0.m(div0, null);
+			append(div1, t0);
+			append(div1, span);
+			append(span, t1);
+			insert(target, t2, anchor);
+			insert(target, div2, anchor);
+			if_block1.m(div2, null);
+
+			if (!mounted) {
+				dispose = listen(div1, "click", /*handleClick*/ ctx[4]);
+				mounted = true;
+			}
+		},
+		p(ctx, [dirty]) {
+			if (current_block_type !== (current_block_type = select_block_type(ctx))) {
+				if_block0.d(1);
+				if_block0 = current_block_type(ctx);
+
+				if (if_block0) {
+					if_block0.c();
+					if_block0.m(div0, null);
+				}
+			}
+
+			if (dirty & /*$activeOnboardingStage*/ 2) {
+				set_style(div0, "background-color", /*$activeOnboardingStage*/ ctx[1]?.backgroundColor || navigationMainItemDefaultColor);
+			}
+
+			if (dirty & /*$activeOnboardingStage, $showOnboardingSteps, $showHideCloseText*/ 14 && t1_value !== (t1_value = (/*$activeOnboardingStage*/ ctx[1]
+			? /*$activeOnboardingStage*/ ctx[1]?.title
+			: /*$showOnboardingSteps*/ ctx[2] && /*$showHideCloseText*/ ctx[3]
+				? "Close"
+				: /*$showHideCloseText*/ ctx[3] ? "Help" : "") + "")) set_data(t1, t1_value);
+
+			if (current_block_type_1 === (current_block_type_1 = select_block_type_1(ctx)) && if_block1) {
+				if_block1.p(ctx, dirty);
+			} else {
+				if_block1.d(1);
+				if_block1 = current_block_type_1(ctx);
+
+				if (if_block1) {
+					if_block1.c();
+					if_block1.m(div2, null);
+				}
+			}
+		},
+		i: noop,
+		o: noop,
+		d(detaching) {
+			if (detaching) detach(div1);
+			if_block0.d();
+			if (detaching) detach(t2);
+			if (detaching) detach(div2);
+			if_block1.d();
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+function instance$8($$self, $$props, $$invalidate) {
+	let $showOnboardingNavigation;
 	let $activeOnboardingStage;
 	let $showOnboardingSteps;
-	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(0, $activeOnboardingStage = $$value));
-	component_subscribe($$self, showOnboardingSteps, $$value => $$invalidate(1, $showOnboardingSteps = $$value));
+	let $showHideCloseText;
+	component_subscribe($$self, showOnboardingNavigation, $$value => $$invalidate(0, $showOnboardingNavigation = $$value));
+	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(1, $activeOnboardingStage = $$value));
+	component_subscribe($$self, showOnboardingSteps, $$value => $$invalidate(2, $showOnboardingSteps = $$value));
+	component_subscribe($$self, showHideCloseText, $$value => $$invalidate(3, $showHideCloseText = $$value));
 
 	const handleClick = () => {
 		if ($activeOnboardingStage) {
@@ -6770,34 +6945,486 @@ function instance$7($$self, $$props, $$invalidate) {
 		}
 	};
 
-	return [$activeOnboardingStage, $showOnboardingSteps, handleClick];
+	const toggleNavigation = () => {
+		showOnboardingNavigation.set(!$showOnboardingNavigation);
+	};
+
+	return [
+		$showOnboardingNavigation,
+		$activeOnboardingStage,
+		$showOnboardingSteps,
+		$showHideCloseText,
+		handleClick,
+		toggleNavigation
+	];
 }
 
 class OnboardingNavigationMainItem extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$7, create_fragment$7, safe_not_equal, {});
+		init(this, options, instance$8, create_fragment$8, safe_not_equal, {});
 	}
 }
 
-/* src\components\OnboardingNavigation.svelte generated by Svelte v3.44.1 */
+/* src\components\NavigationMarker.svelte generated by Svelte v3.49.0 */
+
+function create_fragment$7(ctx) {
+	let div1;
+	let div0;
+	let div0_class_value;
+	let div1_class_value;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			div1 = element("div");
+			div0 = element("div");
+			set_style(div0, "--active-background-color", /*activeBackgroundColor*/ ctx[2] || /*hoverBackgroundColor*/ ctx[3]);
+			set_style(div0, "--background-color", /*activeBackgroundColor*/ ctx[2] || /*backgroundColor*/ ctx[4]);
+			set_style(div0, "--hover-background-color", /*hoverBackgroundColor*/ ctx[3] || /*backgroundColor*/ ctx[4]);
+			attr(div0, "id", "visahoi-marker-navigation-" + getMarkerDomId(/*marker*/ ctx[5].id));
+			attr(div0, "class", div0_class_value = "visahoi-marker-navigation-item-circle " + /*$activeOnboardingStage*/ ctx[1] + " svelte-8ax7to");
+			set_style(div1, "--bottom", /*bottom*/ ctx[0]);
+			attr(div1, "class", div1_class_value = "visahoi-marker-navigation-item " + /*$activeOnboardingStage*/ ctx[1] + " svelte-8ax7to");
+		},
+		m(target, anchor) {
+			insert(target, div1, anchor);
+			append(div1, div0);
+
+			if (!mounted) {
+				dispose = listen(div0, "click", /*handleClick*/ ctx[6]);
+				mounted = true;
+			}
+		},
+		p(ctx, [dirty]) {
+			if (dirty & /*$activeOnboardingStage*/ 2 && div0_class_value !== (div0_class_value = "visahoi-marker-navigation-item-circle " + /*$activeOnboardingStage*/ ctx[1] + " svelte-8ax7to")) {
+				attr(div0, "class", div0_class_value);
+			}
+
+			if (dirty & /*bottom*/ 1) {
+				set_style(div1, "--bottom", /*bottom*/ ctx[0]);
+			}
+
+			if (dirty & /*$activeOnboardingStage*/ 2 && div1_class_value !== (div1_class_value = "visahoi-marker-navigation-item " + /*$activeOnboardingStage*/ ctx[1] + " svelte-8ax7to")) {
+				attr(div1, "class", div1_class_value);
+			}
+		},
+		i: noop,
+		o: noop,
+		d(detaching) {
+			if (detaching) detach(div1);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+function instance$7($$self, $$props, $$invalidate) {
+	let bottom;
+	let getNavSelectedMarkerIndex;
+	let $selectedMarker;
+	let $markInfo;
+	let $activeOnboardingStage;
+	let $activeMarker;
+	let $previousMarkerId;
+	component_subscribe($$self, selectedMarker, $$value => $$invalidate(12, $selectedMarker = $$value));
+	component_subscribe($$self, markerInformation, $$value => $$invalidate(10, $markInfo = $$value));
+	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(1, $activeOnboardingStage = $$value));
+	component_subscribe($$self, activeMarker, $$value => $$invalidate(13, $activeMarker = $$value));
+	component_subscribe($$self, previousMarkerId, $$value => $$invalidate(11, $previousMarkerId = $$value));
+
+	var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+		function adopt(value) {
+			return value instanceof P
+			? value
+			: new P(function (resolve) {
+						resolve(value);
+					});
+		}
+
+		return new (P || (P = Promise))(function (resolve, reject) {
+				function fulfilled(value) {
+					try {
+						step(generator.next(value));
+					} catch(e) {
+						reject(e);
+					}
+				}
+
+				function rejected(value) {
+					try {
+						step(generator["throw"](value));
+					} catch(e) {
+						reject(e);
+					}
+				}
+
+				function step(result) {
+					result.done
+					? resolve(result.value)
+					: adopt(result.value).then(fulfilled, rejected);
+				}
+
+				step((generator = generator.apply(thisArg, _arguments || [])).next());
+			});
+	};
+
+	let { markerInformation: markerInformation$1 } = $$props;
+	let { order } = $$props;
+	const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } = markerInformation$1.message.onboardingStage;
+	const { marker } = markerInformation$1;
+	let arrValue = [];
+
+	/**First navigation marker which belongs to the activeOnboarding stage is selected */
+	$markInfo.map(message => __awaiter(void 0, void 0, void 0, function* () {
+		var _a;
+
+		if (message.message.onboardingStage.title === ($activeOnboardingStage === null || $activeOnboardingStage === void 0
+		? void 0
+		: $activeOnboardingStage.title)) {
+			arrValue.push(message);
+			selectedMarker.set(arrValue[0]);
+
+			activeOnboardingStage.update(v => $selectedMarker === null || $selectedMarker === void 0
+			? void 0
+			: $selectedMarker.message.onboardingStage);
+
+			activeMarker.set($selectedMarker);
+
+			previousMarkerId.set($selectedMarker === null || $selectedMarker === void 0
+			? void 0
+			: $selectedMarker.marker.id);
+
+			yield tick();
+
+			const elementId = getNavigationMarkerDomId($selectedMarker === null || $selectedMarker === void 0
+			? void 0
+			: $selectedMarker.marker.id);
+
+			(_a = document.getElementById(elementId)) === null || _a === void 0
+			? void 0
+			: _a.style.opacity = 1;
+		}
+	}));
+
+	const handleClick = event => {
+		var _a, _b;
+
+		if ($previousMarkerId) {
+			const elementId = getNavigationMarkerDomId($previousMarkerId);
+
+			(_a = document.getElementById(elementId)) === null || _a === void 0
+			? void 0
+			: _a.style.opacity = 0.5;
+		}
+
+		const elementId = event.target.id;
+		selectedMarker.set(markerInformation$1);
+
+		(_b = document.getElementById(elementId)) === null || _b === void 0
+		? void 0
+		: _b.style.opacity = 1;
+
+		previousMarkerId.set(markerInformation$1.marker.id);
+		activeOnboardingStage.update(v => markerInformation$1.message.onboardingStage);
+
+		if ($selectedMarker) {
+			$markInfo.map((marker, i) => {
+				if (marker.marker.id === ($selectedMarker === null || $selectedMarker === void 0
+				? void 0
+				: $selectedMarker.marker.id)) {
+					markerIndexId.set(i);
+				}
+			});
+		}
+
+		if (($activeMarker === null || $activeMarker === void 0
+		? void 0
+		: $activeMarker.marker.id) === marker.id) {
+			// The active marker is closed and navigation marker is not highlighted.
+			// The selectedMarker is set to the initial marker in the activeOnboarding stage.
+			activeMarker.set(null);
+
+			const elementId = document.getElementById(`visahoi-marker-navigation-visahoi-marker-${marker.id}`);
+
+			elementId === null || elementId === void 0
+			? void 0
+			: elementId.style.opacity = 0.5;
+
+			const activeOnboardingStageMarkers = $markInfo.filter(m => m.message.onboardingStage === $activeOnboardingStage);
+			selectedMarker.set(activeOnboardingStageMarkers[0]);
+
+			$markInfo.map((marker, i) => {
+				if (marker.marker.id === ($selectedMarker === null || $selectedMarker === void 0
+				? void 0
+				: $selectedMarker.marker.id)) {
+					markerIndexId.set(i);
+				}
+			});
+		} else {
+			activeMarker.set(markerInformation$1);
+		}
+	};
+
+	$$self.$$set = $$props => {
+		if ('markerInformation' in $$props) $$invalidate(7, markerInformation$1 = $$props.markerInformation);
+		if ('order' in $$props) $$invalidate(8, order = $$props.order);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*order*/ 256) {
+			$$invalidate(0, bottom = order * 35 + 15 + "px");
+		}
+
+		if ($$self.$$.dirty & /*$markInfo, $previousMarkerId*/ 3072) {
+			$$invalidate(9, getNavSelectedMarkerIndex = () => {
+				$markInfo.map((maker, i) => {
+					if (maker.marker.id === $previousMarkerId) {
+						markerIndexId.set(i);
+					}
+				});
+			});
+		}
+
+		if ($$self.$$.dirty & /*getNavSelectedMarkerIndex*/ 512) {
+			getNavSelectedMarkerIndex();
+		}
+	};
+
+	return [
+		bottom,
+		$activeOnboardingStage,
+		activeBackgroundColor,
+		hoverBackgroundColor,
+		backgroundColor,
+		marker,
+		handleClick,
+		markerInformation$1,
+		order,
+		getNavSelectedMarkerIndex,
+		$markInfo,
+		$previousMarkerId
+	];
+}
+
+class NavigationMarker extends SvelteComponent {
+	constructor(options) {
+		super();
+		init(this, options, instance$7, create_fragment$7, safe_not_equal, { markerInformation: 7, order: 8 });
+	}
+}
+
+/* src\components\OnboardingNavigation.svelte generated by Svelte v3.49.0 */
 
 function get_each_context$1(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[4] = list[i];
-	child_ctx[6] = i;
+	child_ctx[15] = list[i];
+	child_ctx[7] = i;
 	return child_ctx;
 }
 
-// (15:2) {#each $onboardingStages.sort((a, b) => a.order - b.order) as stage, index}
+function get_each_context_1(ctx, list, i) {
+	const child_ctx = ctx.slice();
+	child_ctx[17] = list[i];
+	child_ctx[7] = i;
+	return child_ctx;
+}
+
+// (120:4) {#if $activeOnboardingStage && $showOnboardingNavigation}
+function create_if_block_1(ctx) {
+	let each_1_anchor;
+	let current;
+	let each_value_1 = /*$markerInformation*/ ctx[0].sort(func);
+	let each_blocks = [];
+
+	for (let i = 0; i < each_value_1.length; i += 1) {
+		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
+	}
+
+	const out = i => transition_out(each_blocks[i], 1, 1, () => {
+		each_blocks[i] = null;
+	});
+
+	return {
+		c() {
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].c();
+			}
+
+			each_1_anchor = empty$1();
+		},
+		m(target, anchor) {
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].m(target, anchor);
+			}
+
+			insert(target, each_1_anchor, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			if (dirty & /*$markerInformation*/ 1) {
+				each_value_1 = /*$markerInformation*/ ctx[0].sort(func);
+				let i;
+
+				for (i = 0; i < each_value_1.length; i += 1) {
+					const child_ctx = get_each_context_1(ctx, each_value_1, i);
+
+					if (each_blocks[i]) {
+						each_blocks[i].p(child_ctx, dirty);
+						transition_in(each_blocks[i], 1);
+					} else {
+						each_blocks[i] = create_each_block_1(child_ctx);
+						each_blocks[i].c();
+						transition_in(each_blocks[i], 1);
+						each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
+					}
+				}
+
+				group_outros();
+
+				for (i = each_value_1.length; i < each_blocks.length; i += 1) {
+					out(i);
+				}
+
+				check_outros();
+			}
+		},
+		i(local) {
+			if (current) return;
+
+			for (let i = 0; i < each_value_1.length; i += 1) {
+				transition_in(each_blocks[i]);
+			}
+
+			current = true;
+		},
+		o(local) {
+			each_blocks = each_blocks.filter(Boolean);
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				transition_out(each_blocks[i]);
+			}
+
+			current = false;
+		},
+		d(detaching) {
+			destroy_each(each_blocks, detaching);
+			if (detaching) detach(each_1_anchor);
+		}
+	};
+}
+
+// (121:6) {#each $markerInformation.sort( (a, b) => (a.message.onboardingStage.title < b.message.onboardingStage.title ? -1 : a.message.onboardingStage.title > b.message.onboardingStage.title ? 1 : 0) ) as marker, index}
+function create_each_block_1(ctx) {
+	let navigationmarker;
+	let current;
+
+	navigationmarker = new NavigationMarker({
+			props: {
+				markerInformation: /*marker*/ ctx[17],
+				order: /*index*/ ctx[7] + 1
+			}
+		});
+
+	return {
+		c() {
+			create_component(navigationmarker.$$.fragment);
+		},
+		m(target, anchor) {
+			mount_component(navigationmarker, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const navigationmarker_changes = {};
+			if (dirty & /*$markerInformation*/ 1) navigationmarker_changes.markerInformation = /*marker*/ ctx[17];
+			navigationmarker.$set(navigationmarker_changes);
+		},
+		i(local) {
+			if (current) return;
+			transition_in(navigationmarker.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(navigationmarker.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			destroy_component(navigationmarker, detaching);
+		}
+	};
+}
+
+// (126:4) {#if $activeOnboardingStage && $showOnboardingNavigation}
+function create_if_block$1(ctx) {
+	let div0;
+	let span0;
+	let t;
+	let div1;
+	let span1;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			div0 = element("div");
+			span0 = element("span");
+			span0.innerHTML = `<i class="fas fa-chevron-up"></i>`;
+			t = space();
+			div1 = element("div");
+			span1 = element("span");
+			span1.innerHTML = `<i class="fas fa-chevron-down"></i>`;
+			attr(div0, "id", "navigation-next");
+			set_style(div0, "--bottom-height", /*nextHeight*/ ctx[2]);
+			attr(div0, "class", "visahoi-navigation-next svelte-1xcg7mz");
+			attr(div1, "id", "navigation-previous");
+			set_style(div1, "--bottom-height", /*prevHeight*/ ctx[1]);
+			attr(div1, "class", "visahoi-navigation-previous svelte-1xcg7mz");
+		},
+		m(target, anchor) {
+			insert(target, div0, anchor);
+			append(div0, span0);
+			insert(target, t, anchor);
+			insert(target, div1, anchor);
+			append(div1, span1);
+
+			if (!mounted) {
+				dispose = [
+					listen(div0, "click", /*navNext*/ ctx[8]),
+					listen(div1, "click", /*navPrev*/ ctx[9])
+				];
+
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (dirty & /*nextHeight*/ 4) {
+				set_style(div0, "--bottom-height", /*nextHeight*/ ctx[2]);
+			}
+
+			if (dirty & /*prevHeight*/ 2) {
+				set_style(div1, "--bottom-height", /*prevHeight*/ ctx[1]);
+			}
+		},
+		d(detaching) {
+			if (detaching) detach(div0);
+			if (detaching) detach(t);
+			if (detaching) detach(div1);
+			mounted = false;
+			run_all(dispose);
+		}
+	};
+}
+
+// (146:2) {#each $onboardingStages.sort((a, b) => a.order - b.order) as stage, index}
 function create_each_block$1(ctx) {
 	let onboardingnavigationitem;
 	let current;
 
 	onboardingnavigationitem = new OnboardingNavigationItem({
 			props: {
-				stage: /*stage*/ ctx[4],
-				index: /*index*/ ctx[6]
+				stage: /*stage*/ ctx[15],
+				index: /*index*/ ctx[7]
 			}
 		});
 
@@ -6811,7 +7438,7 @@ function create_each_block$1(ctx) {
 		},
 		p(ctx, dirty) {
 			const onboardingnavigationitem_changes = {};
-			if (dirty & /*$onboardingStages*/ 1) onboardingnavigationitem_changes.stage = /*stage*/ ctx[4];
+			if (dirty & /*$onboardingStages*/ 64) onboardingnavigationitem_changes.stage = /*stage*/ ctx[15];
 			onboardingnavigationitem.$set(onboardingnavigationitem_changes);
 		},
 		i(local) {
@@ -6830,11 +7457,16 @@ function create_each_block$1(ctx) {
 }
 
 function create_fragment$6(ctx) {
-	let div;
-	let t;
+	let div1;
+	let div0;
+	let t0;
+	let t1;
+	let t2;
 	let onboardingnavigationmainitem;
 	let current;
-	let each_value = /*$onboardingStages*/ ctx[0].sort(func);
+	let if_block0 = /*$activeOnboardingStage*/ ctx[4] && /*$showOnboardingNavigation*/ ctx[5] && create_if_block_1(ctx);
+	let if_block1 = /*$activeOnboardingStage*/ ctx[4] && /*$showOnboardingNavigation*/ ctx[5] && create_if_block$1(ctx);
+	let each_value = /*$onboardingStages*/ ctx[6].sort(func_1);
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -6849,32 +7481,79 @@ function create_fragment$6(ctx) {
 
 	return {
 		c() {
-			div = element("div");
+			div1 = element("div");
+			div0 = element("div");
+			if (if_block0) if_block0.c();
+			t0 = space();
+			if (if_block1) if_block1.c();
+			t1 = space();
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			t = space();
+			t2 = space();
 			create_component(onboardingnavigationmainitem.$$.fragment);
-			attr(div, "class", "visahoi-navigation-container svelte-1nviagd");
-			set_style(div, "--flexDirection", /*$navigationAlignment*/ ctx[1]);
-			set_style(div, "height", /*navigationHeight*/ ctx[2] + 'px');
+			attr(div0, "class", "visahoi-navigation-marker-container svelte-1xcg7mz");
+			attr(div1, "class", "visahoi-navigation-container svelte-1xcg7mz");
+			set_style(div1, "--flexDirection", /*$navigationAlignment*/ ctx[3]);
+			set_style(div1, "height", "'60px'");
 		},
 		m(target, anchor) {
-			insert(target, div, anchor);
+			insert(target, div1, anchor);
+			append(div1, div0);
+			if (if_block0) if_block0.m(div0, null);
+			append(div0, t0);
+			if (if_block1) if_block1.m(div0, null);
+			append(div1, t1);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].m(div, null);
+				each_blocks[i].m(div1, null);
 			}
 
-			append(div, t);
-			mount_component(onboardingnavigationmainitem, div, null);
+			append(div1, t2);
+			mount_component(onboardingnavigationmainitem, div1, null);
 			current = true;
 		},
 		p(ctx, [dirty]) {
-			if (dirty & /*$onboardingStages*/ 1) {
-				each_value = /*$onboardingStages*/ ctx[0].sort(func);
+			if (/*$activeOnboardingStage*/ ctx[4] && /*$showOnboardingNavigation*/ ctx[5]) {
+				if (if_block0) {
+					if_block0.p(ctx, dirty);
+
+					if (dirty & /*$activeOnboardingStage, $showOnboardingNavigation*/ 48) {
+						transition_in(if_block0, 1);
+					}
+				} else {
+					if_block0 = create_if_block_1(ctx);
+					if_block0.c();
+					transition_in(if_block0, 1);
+					if_block0.m(div0, t0);
+				}
+			} else if (if_block0) {
+				group_outros();
+
+				transition_out(if_block0, 1, 1, () => {
+					if_block0 = null;
+				});
+
+				check_outros();
+			}
+
+			if (/*$activeOnboardingStage*/ ctx[4] && /*$showOnboardingNavigation*/ ctx[5]) {
+				if (if_block1) {
+					if_block1.p(ctx, dirty);
+				} else {
+					if_block1 = create_if_block$1(ctx);
+					if_block1.c();
+					if_block1.m(div0, null);
+				}
+			} else if (if_block1) {
+				if_block1.d(1);
+				if_block1 = null;
+			}
+
+			if (dirty & /*$onboardingStages*/ 64) {
+				each_value = /*$onboardingStages*/ ctx[6].sort(func_1);
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -6887,7 +7566,7 @@ function create_fragment$6(ctx) {
 						each_blocks[i] = create_each_block$1(child_ctx);
 						each_blocks[i].c();
 						transition_in(each_blocks[i], 1);
-						each_blocks[i].m(div, t);
+						each_blocks[i].m(div1, t2);
 					}
 				}
 
@@ -6900,12 +7579,13 @@ function create_fragment$6(ctx) {
 				check_outros();
 			}
 
-			if (!current || dirty & /*$navigationAlignment*/ 2) {
-				set_style(div, "--flexDirection", /*$navigationAlignment*/ ctx[1]);
+			if (!current || dirty & /*$navigationAlignment*/ 8) {
+				set_style(div1, "--flexDirection", /*$navigationAlignment*/ ctx[3]);
 			}
 		},
 		i(local) {
 			if (current) return;
+			transition_in(if_block0);
 
 			for (let i = 0; i < each_value.length; i += 1) {
 				transition_in(each_blocks[i]);
@@ -6915,6 +7595,7 @@ function create_fragment$6(ctx) {
 			current = true;
 		},
 		o(local) {
+			transition_out(if_block0);
 			each_blocks = each_blocks.filter(Boolean);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -6925,37 +7606,326 @@ function create_fragment$6(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			if (detaching) detach(div);
+			if (detaching) detach(div1);
+			if (if_block0) if_block0.d();
+			if (if_block1) if_block1.d();
 			destroy_each(each_blocks, detaching);
 			destroy_component(onboardingnavigationmainitem);
 		}
 	};
 }
 
-const func = (a, b) => a.order - b.order;
+const func = (a, b) => a.message.onboardingStage.title < b.message.onboardingStage.title
+? -1
+: a.message.onboardingStage.title > b.message.onboardingStage.title
+	? 1
+	: 0;
+
+const func_1 = (a, b) => a.order - b.order;
 
 function instance$6($$self, $$props, $$invalidate) {
-	let $onboardingStages;
+	let nextHeight;
+	let prevHeight;
+	let enableDisableNavIcons;
+	let $selectedMarker;
+	let $markerInformation;
+	let $previousMarkerId;
+	let $markerIndexId;
 	let $navigationAlignment;
-	component_subscribe($$self, onboardingStages, $$value => $$invalidate(0, $onboardingStages = $$value));
-	component_subscribe($$self, navigationAlignment, $$value => $$invalidate(1, $navigationAlignment = $$value));
-	let { height } = $$props;
+	let $activeOnboardingStage;
+	let $showOnboardingNavigation;
+	let $onboardingStages;
+	component_subscribe($$self, selectedMarker, $$value => $$invalidate(12, $selectedMarker = $$value));
+	component_subscribe($$self, markerInformation, $$value => $$invalidate(0, $markerInformation = $$value));
+	component_subscribe($$self, previousMarkerId, $$value => $$invalidate(13, $previousMarkerId = $$value));
+	component_subscribe($$self, markerIndexId, $$value => $$invalidate(11, $markerIndexId = $$value));
+	component_subscribe($$self, navigationAlignment, $$value => $$invalidate(3, $navigationAlignment = $$value));
+	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(4, $activeOnboardingStage = $$value));
+	component_subscribe($$self, showOnboardingNavigation, $$value => $$invalidate(5, $showOnboardingNavigation = $$value));
+	component_subscribe($$self, onboardingStages, $$value => $$invalidate(6, $onboardingStages = $$value));
 
-	const navigationHeight = $onboardingStages.length * 100 > height
-	? height
-	: $onboardingStages.length * 100;
+	var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+		function adopt(value) {
+			return value instanceof P
+			? value
+			: new P(function (resolve) {
+						resolve(value);
+					});
+		}
 
-	$$self.$$set = $$props => {
-		if ('height' in $$props) $$invalidate(3, height = $$props.height);
+		return new (P || (P = Promise))(function (resolve, reject) {
+				function fulfilled(value) {
+					try {
+						step(generator.next(value));
+					} catch(e) {
+						reject(e);
+					}
+				}
+
+				function rejected(value) {
+					try {
+						step(generator["throw"](value));
+					} catch(e) {
+						reject(e);
+					}
+				}
+
+				function step(result) {
+					result.done
+					? resolve(result.value)
+					: adopt(result.value).then(fulfilled, rejected);
+				}
+
+				step((generator = generator.apply(thisArg, _arguments || [])).next());
+			});
 	};
 
-	return [$onboardingStages, $navigationAlignment, navigationHeight, height];
+	let index;
+
+	const navNext = () => {
+		var _a, _b;
+
+		if ($previousMarkerId) {
+			const elementId = getNavigationMarkerDomId($previousMarkerId);
+
+			(_a = document.getElementById(elementId)) === null || _a === void 0
+			? void 0
+			: _a.style.opacity = 0.5;
+		}
+
+		const elementId = document.getElementById("navigation-previous");
+
+		elementId === null || elementId === void 0
+		? void 0
+		: elementId.style.pointerEvents = "all";
+
+		elementId === null || elementId === void 0
+		? void 0
+		: elementId.style.opacity = 1;
+
+		if ($selectedMarker) {
+			$markerInformation.map((marker, i) => {
+				if (marker.marker.id === $selectedMarker.marker.id) {
+					$$invalidate(7, index = i + 1);
+
+					if (index + 1 === $markerInformation.length) {
+						const elementId = document.getElementById("navigation-next");
+
+						elementId === null || elementId === void 0
+						? void 0
+						: elementId.style.pointerEvents = "none";
+
+						elementId === null || elementId === void 0
+						? void 0
+						: elementId.style.opacity = 0.5;
+					}
+				}
+			});
+
+			selectedMarker.set($markerInformation[index]);
+
+			activeOnboardingStage.update(v => $selectedMarker === null || $selectedMarker === void 0
+			? void 0
+			: $selectedMarker.message.onboardingStage);
+
+			previousMarkerId.set($selectedMarker === null || $selectedMarker === void 0
+			? void 0
+			: $selectedMarker.marker.id);
+
+			activeMarker.set($selectedMarker);
+
+			const markerId = getMarkerDomId($selectedMarker === null || $selectedMarker === void 0
+			? void 0
+			: $selectedMarker.marker.id);
+
+			const elementId = `visahoi-marker-navigation-${markerId}`;
+
+			(_b = document.getElementById(elementId)) === null || _b === void 0
+			? void 0
+			: _b.style.opacity = 1;
+		}
+	};
+
+	const navPrev = () => {
+		var _a, _b;
+
+		if ($previousMarkerId) {
+			const elementId = getNavigationMarkerDomId($previousMarkerId);
+
+			(_a = document.getElementById(elementId)) === null || _a === void 0
+			? void 0
+			: _a.style.opacity = 0.5;
+		}
+
+		const elementId = document.getElementById("navigation-next");
+
+		elementId === null || elementId === void 0
+		? void 0
+		: elementId.style.pointerEvents = "all";
+
+		elementId === null || elementId === void 0
+		? void 0
+		: elementId.style.opacity = 1;
+
+		if ($selectedMarker) {
+			$markerInformation.map((marker, i) => {
+				if (marker.marker.id === $selectedMarker.marker.id) {
+					$$invalidate(7, index = i - 1);
+
+					if (index === 0) {
+						const elementId = document.getElementById("navigation-previous");
+
+						elementId === null || elementId === void 0
+						? void 0
+						: elementId.style.pointerEvents = "none";
+
+						elementId === null || elementId === void 0
+						? void 0
+						: elementId.style.opacity = 0.5;
+					}
+				}
+			});
+
+			selectedMarker.set($markerInformation[index]);
+
+			activeOnboardingStage.update(v => $selectedMarker === null || $selectedMarker === void 0
+			? void 0
+			: $selectedMarker.message.onboardingStage);
+
+			activeMarker.set($selectedMarker);
+
+			previousMarkerId.set($selectedMarker === null || $selectedMarker === void 0
+			? void 0
+			: $selectedMarker.marker.id);
+
+			const markerId = getMarkerDomId($selectedMarker === null || $selectedMarker === void 0
+			? void 0
+			: $selectedMarker.marker.id);
+
+			if (markerId) {
+				const elementId = `visahoi-marker-navigation-${markerId}`;
+
+				(_b = document.getElementById(elementId)) === null || _b === void 0
+				? void 0
+				: _b.style.opacity = 1;
+			}
+		}
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*$markerInformation*/ 1) {
+			$$invalidate(2, nextHeight = $markerInformation.length * 35 + 75 + "px");
+		}
+
+		if ($$self.$$.dirty & /*$markerInformation*/ 1) {
+			$$invalidate(1, prevHeight = $markerInformation.length * 35 + 50 + "px");
+		}
+
+		if ($$self.$$.dirty & /*$markerIndexId, $markerInformation*/ 2049) {
+			$$invalidate(10, enableDisableNavIcons = () => __awaiter(void 0, void 0, void 0, function* () {
+				switch ($markerIndexId) {
+					case 0:
+						{
+							yield tick();
+							const preElementId = document.getElementById("navigation-previous");
+
+							preElementId === null || preElementId === void 0
+							? void 0
+							: preElementId.style.pointerEvents = "none";
+
+							preElementId === null || preElementId === void 0
+							? void 0
+							: preElementId.style.opacity = 0.5;
+
+							const nextElementId = document.getElementById("navigation-next");
+
+							nextElementId === null || nextElementId === void 0
+							? void 0
+							: nextElementId.style.pointerEvents = "all";
+
+							nextElementId === null || nextElementId === void 0
+							? void 0
+							: nextElementId.style.opacity = 1;
+
+							break;
+						}
+					case $markerInformation.length - 1:
+						{
+							yield tick();
+							const nextElementId = document.getElementById("navigation-next");
+
+							nextElementId === null || nextElementId === void 0
+							? void 0
+							: nextElementId.style.pointerEvents = "none";
+
+							nextElementId === null || nextElementId === void 0
+							? void 0
+							: nextElementId.style.opacity = 0.5;
+
+							const preElementId = document.getElementById("navigation-previous");
+
+							preElementId === null || preElementId === void 0
+							? void 0
+							: preElementId.style.pointerEvents = "all";
+
+							preElementId === null || preElementId === void 0
+							? void 0
+							: preElementId.style.opacity = 1;
+
+							break;
+						}
+					default:
+						{
+							yield tick();
+							const preElementId = document.getElementById("navigation-previous");
+
+							preElementId === null || preElementId === void 0
+							? void 0
+							: preElementId.style.pointerEvents = "all";
+
+							preElementId === null || preElementId === void 0
+							? void 0
+							: preElementId.style.opacity = 1;
+
+							const nextElementId = document.getElementById("navigation-next");
+
+							nextElementId === null || nextElementId === void 0
+							? void 0
+							: nextElementId.style.pointerEvents = "all";
+
+							nextElementId === null || nextElementId === void 0
+							? void 0
+							: nextElementId.style.opacity = 1;
+						}
+				}
+			}));
+		}
+
+		if ($$self.$$.dirty & /*enableDisableNavIcons*/ 1024) {
+			enableDisableNavIcons();
+		}
+	};
+
+	return [
+		$markerInformation,
+		prevHeight,
+		nextHeight,
+		$navigationAlignment,
+		$activeOnboardingStage,
+		$showOnboardingNavigation,
+		$onboardingStages,
+		index,
+		navNext,
+		navPrev,
+		enableDisableNavIcons,
+		$markerIndexId
+	];
 }
 
 class OnboardingNavigation extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$6, create_fragment$6, safe_not_equal, { height: 3 });
+		init(this, options, instance$6, create_fragment$6, safe_not_equal, {});
 	}
 }
 
@@ -6969,7 +7939,7 @@ function fade(node, { delay = 0, duration = 400, easing = identity } = {}) {
     };
 }
 
-/* src\components\Marker.svelte generated by Svelte v3.44.1 */
+/* src\components\Marker.svelte generated by Svelte v3.49.0 */
 
 function create_fragment$5(ctx) {
 	let g;
@@ -6977,16 +7947,18 @@ function create_fragment$5(ctx) {
 	let circle_class_value;
 	let circle_cx_value;
 	let circle_cy_value;
+	let circle_r_value;
 	let text_1;
 
-	let t_value = (typeof /*marker*/ ctx[6]?.content == "string"
-	? /*marker*/ ctx[6].content
+	let t_value = (typeof /*marker*/ ctx[2]?.content == "string"
+	? /*marker*/ ctx[2].content
 	: /*order*/ ctx[1]) + "";
 
 	let t;
 	let text_1_x_value;
 	let text_1_y_value;
 	let text_1_font_size_value;
+	let g_id_value;
 	let mounted;
 	let dispose;
 
@@ -6996,23 +7968,23 @@ function create_fragment$5(ctx) {
 			circle = svg_element("circle");
 			text_1 = svg_element("text");
 			t = text(t_value);
-			set_style(circle, "--active-background-color", /*activeBackgroundColor*/ ctx[3] || /*hoverBackgroundColor*/ ctx[4] || /*backgroundColor*/ ctx[5]);
-			set_style(circle, "--hover-background-color", /*hoverBackgroundColor*/ ctx[4] || /*backgroundColor*/ ctx[5]);
-			set_style(circle, "--backgroundColor", /*backgroundColor*/ ctx[5]);
+			set_style(circle, "--active-background-color", /*activeBackgroundColor*/ ctx[5] || /*hoverBackgroundColor*/ ctx[3] || /*backgroundColor*/ ctx[4]);
+			set_style(circle, "--hover-background-color", /*hoverBackgroundColor*/ ctx[3] || /*backgroundColor*/ ctx[4]);
+			set_style(circle, "--backgroundColor", /*backgroundColor*/ ctx[4]);
 
-			attr(circle, "class", circle_class_value = "" + (null_to_empty(`visahoi-marker ${/*$activeMarker*/ ctx[2]?.marker.id === /*marker*/ ctx[6].id
+			attr(circle, "class", circle_class_value = "" + (null_to_empty(`visahoi-marker ${/*$activeMarker*/ ctx[6]?.marker.id === /*marker*/ ctx[2].id
 			? "active"
 			: ""}`) + " svelte-11rwh99"));
 
 			attr(circle, "cx", circle_cx_value = /*markerInformation*/ ctx[0].anchorPosition.cx);
 			attr(circle, "cy", circle_cy_value = /*markerInformation*/ ctx[0].anchorPosition.cy);
-			attr(circle, "r", /*marker*/ ctx[6]?.radius || 15);
+			attr(circle, "r", circle_r_value = /*marker*/ ctx[2]?.radius || 15);
 			set_style(text_1, "user-select", "none");
 			attr(text_1, "fill", "white");
 			attr(text_1, "x", text_1_x_value = /*markerInformation*/ ctx[0].anchorPosition.x);
 			attr(text_1, "y", text_1_y_value = /*markerInformation*/ ctx[0].anchorPosition.y);
 			attr(text_1, "font-size", text_1_font_size_value = /*markerInformation*/ ctx[0].marker.fontSize);
-			attr(g, "id", getMarkerDomId(/*marker*/ ctx[6].id));
+			attr(g, "id", g_id_value = getMarkerDomId(/*marker*/ ctx[2].id));
 			attr(g, "text-anchor", "middle");
 			attr(g, "class", "svelte-11rwh99");
 		},
@@ -7028,7 +8000,19 @@ function create_fragment$5(ctx) {
 			}
 		},
 		p(ctx, [dirty]) {
-			if (dirty & /*$activeMarker*/ 4 && circle_class_value !== (circle_class_value = "" + (null_to_empty(`visahoi-marker ${/*$activeMarker*/ ctx[2]?.marker.id === /*marker*/ ctx[6].id
+			if (dirty & /*activeBackgroundColor, hoverBackgroundColor, backgroundColor*/ 56) {
+				set_style(circle, "--active-background-color", /*activeBackgroundColor*/ ctx[5] || /*hoverBackgroundColor*/ ctx[3] || /*backgroundColor*/ ctx[4]);
+			}
+
+			if (dirty & /*hoverBackgroundColor, backgroundColor*/ 24) {
+				set_style(circle, "--hover-background-color", /*hoverBackgroundColor*/ ctx[3] || /*backgroundColor*/ ctx[4]);
+			}
+
+			if (dirty & /*backgroundColor*/ 16) {
+				set_style(circle, "--backgroundColor", /*backgroundColor*/ ctx[4]);
+			}
+
+			if (dirty & /*$activeMarker, marker*/ 68 && circle_class_value !== (circle_class_value = "" + (null_to_empty(`visahoi-marker ${/*$activeMarker*/ ctx[6]?.marker.id === /*marker*/ ctx[2].id
 			? "active"
 			: ""}`) + " svelte-11rwh99"))) {
 				attr(circle, "class", circle_class_value);
@@ -7042,8 +8026,12 @@ function create_fragment$5(ctx) {
 				attr(circle, "cy", circle_cy_value);
 			}
 
-			if (dirty & /*order*/ 2 && t_value !== (t_value = (typeof /*marker*/ ctx[6]?.content == "string"
-			? /*marker*/ ctx[6].content
+			if (dirty & /*marker*/ 4 && circle_r_value !== (circle_r_value = /*marker*/ ctx[2]?.radius || 15)) {
+				attr(circle, "r", circle_r_value);
+			}
+
+			if (dirty & /*marker, order*/ 6 && t_value !== (t_value = (typeof /*marker*/ ctx[2]?.content == "string"
+			? /*marker*/ ctx[2].content
 			: /*order*/ ctx[1]) + "")) set_data(t, t_value);
 
 			if (dirty & /*markerInformation*/ 1 && text_1_x_value !== (text_1_x_value = /*markerInformation*/ ctx[0].anchorPosition.x)) {
@@ -7057,6 +8045,10 @@ function create_fragment$5(ctx) {
 			if (dirty & /*markerInformation*/ 1 && text_1_font_size_value !== (text_1_font_size_value = /*markerInformation*/ ctx[0].marker.fontSize)) {
 				attr(text_1, "font-size", text_1_font_size_value);
 			}
+
+			if (dirty & /*marker*/ 4 && g_id_value !== (g_id_value = getMarkerDomId(/*marker*/ ctx[2].id))) {
+				attr(g, "id", g_id_value);
+			}
 		},
 		i: noop,
 		o: noop,
@@ -7069,24 +8061,80 @@ function create_fragment$5(ctx) {
 }
 
 function instance$5($$self, $$props, $$invalidate) {
+	let activeBackgroundColor;
+	let backgroundColor;
+	let hoverBackgroundColor;
+	let marker;
 	let $activeMarker;
-	component_subscribe($$self, activeMarker, $$value => $$invalidate(2, $activeMarker = $$value));
-	let { markerInformation } = $$props;
+	let $markInfo;
+	let $previousMarkerId;
+	let $selectedMarker;
+	let $activeOnboardingStage;
+	component_subscribe($$self, activeMarker, $$value => $$invalidate(6, $activeMarker = $$value));
+	component_subscribe($$self, markerInformation, $$value => $$invalidate(12, $markInfo = $$value));
+	component_subscribe($$self, previousMarkerId, $$value => $$invalidate(13, $previousMarkerId = $$value));
+	component_subscribe($$self, selectedMarker, $$value => $$invalidate(14, $selectedMarker = $$value));
+	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(15, $activeOnboardingStage = $$value));
+	let { markerInformation: markerInformation$1 } = $$props;
 	let { order } = $$props;
-	const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } = markerInformation.message.onboardingStage;
-	const { marker } = markerInformation;
 
 	const handleClick = () => {
 		if (($activeMarker === null || $activeMarker === void 0
 		? void 0
 		: $activeMarker.marker.id) === marker.id) {
+			// The active marker is closed and navigation marker is not highlighted.
+			// The selectedMarker is set to the initial marker in the activeOnboarding stage.
 			activeMarker.set(null);
+
+			const elementId = document.getElementById(`visahoi-marker-navigation-visahoi-marker-${marker.id}`);
+
+			elementId === null || elementId === void 0
+			? void 0
+			: elementId.style.opacity = 0.5;
+
+			const activeOnboardingStageMarkers = $markInfo.filter(m => m.message.onboardingStage === $activeOnboardingStage);
+			selectedMarker.set(activeOnboardingStageMarkers[0]);
+
+			$markInfo.map((marker, i) => {
+				if (marker.marker.id === ($selectedMarker === null || $selectedMarker === void 0
+				? void 0
+				: $selectedMarker.marker.id)) {
+					markerIndexId.set(i);
+				}
+			});
 		} else {
-			activeMarker.set(markerInformation);
+			activeMarker.set(markerInformation$1);
+			const preElementId = document.getElementById(getNavigationMarkerDomId($previousMarkerId));
+
+			preElementId === null || preElementId === void 0
+			? void 0
+			: preElementId.style.opacity = 0.5;
+
+			const elementId = document.getElementById(getNavigationMarkerDomId($activeMarker === null || $activeMarker === void 0
+			? void 0
+			: $activeMarker.marker.id));
+
+			elementId === null || elementId === void 0
+			? void 0
+			: elementId.style.opacity = 1;
+
+			selectedMarker.set($activeMarker);
+
+			previousMarkerId.set($activeMarker === null || $activeMarker === void 0
+			? void 0
+			: $activeMarker.marker.id);
+
+			$markInfo.map((marker, i) => {
+				if (marker.marker.id === ($activeMarker === null || $activeMarker === void 0
+				? void 0
+				: $activeMarker.marker.id)) {
+					markerIndexId.set(i);
+				}
+			});
 		}
 	};
 
-	let { x, y, cx, cy, offset } = markerInformation.anchorPosition;
+	let { x, y, cx, cy, offset } = markerInformation$1.anchorPosition;
 
 	if (offset === null || offset === void 0
 	? void 0
@@ -7137,18 +8185,36 @@ function instance$5($$self, $$props, $$invalidate) {
 	}
 
 	$$self.$$set = $$props => {
-		if ('markerInformation' in $$props) $$invalidate(0, markerInformation = $$props.markerInformation);
+		if ('markerInformation' in $$props) $$invalidate(0, markerInformation$1 = $$props.markerInformation);
 		if ('order' in $$props) $$invalidate(1, order = $$props.order);
 	};
 
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*markerInformation*/ 1) {
+			$$invalidate(5, activeBackgroundColor = markerInformation$1.message.onboardingStage.activeBackgroundColor);
+		}
+
+		if ($$self.$$.dirty & /*markerInformation*/ 1) {
+			$$invalidate(4, backgroundColor = markerInformation$1.message.onboardingStage.backgroundColor);
+		}
+
+		if ($$self.$$.dirty & /*markerInformation*/ 1) {
+			$$invalidate(3, hoverBackgroundColor = markerInformation$1.message.onboardingStage.hoverBackgroundColor);
+		}
+
+		if ($$self.$$.dirty & /*markerInformation*/ 1) {
+			$$invalidate(2, marker = markerInformation$1.marker);
+		}
+	};
+
 	return [
-		markerInformation,
+		markerInformation$1,
 		order,
-		$activeMarker,
-		activeBackgroundColor,
+		marker,
 		hoverBackgroundColor,
 		backgroundColor,
-		marker,
+		activeBackgroundColor,
+		$activeMarker,
 		handleClick
 	];
 }
@@ -7160,7 +8226,7 @@ class Marker extends SvelteComponent {
 	}
 }
 
-/* src\components\Markers.svelte generated by Svelte v3.44.1 */
+/* src\components\Markers.svelte generated by Svelte v3.49.0 */
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
@@ -18929,8 +19995,8 @@ var parser = Parser;
 
 let urlAlphabet =
   'useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict';
-let customAlphabet = (alphabet, size) => {
-  return () => {
+let customAlphabet = (alphabet, defaultSize = 21) => {
+  return (size = defaultSize) => {
     let id = '';
     let i = size;
     while (i--) {
@@ -20900,13 +21966,13 @@ sanitizeHtml.simpleTransform = function(newTagName, newAttribs, merge) {
 
 var sanitizeHtml$1 = sanitizeHtml_1;
 
-/* src\components\Tooltip.svelte generated by Svelte v3.44.1 */
+/* src\components\Tooltip.svelte generated by Svelte v3.49.0 */
 
 function create_fragment$3(ctx) {
 	let div4;
 	let div1;
 	let b;
-	let t0_value = /*$activeMarker*/ ctx[1]?.tooltip.title + "";
+	let t0_value = /*$activeMarker*/ ctx[2]?.tooltip.title + "";
 	let t0;
 	let t1;
 	let div0;
@@ -20941,7 +22007,7 @@ function create_fragment$3(ctx) {
 			attr(div3, "data-popper-arrow", "");
 			attr(div4, "id", /*tooltipId*/ ctx[4]);
 
-			attr(div4, "class", div4_class_value = "visahoi-tooltip " + (/*$activeMarker*/ ctx[1] && /*$activeOnboardingStage*/ ctx[2]
+			attr(div4, "class", div4_class_value = "visahoi-tooltip " + (/*$activeMarker*/ ctx[2] && /*$activeOnboardingStage*/ ctx[1]
 			? ''
 			: 'hidden') + " svelte-17t2ea4");
 
@@ -20966,9 +22032,9 @@ function create_fragment$3(ctx) {
 			}
 		},
 		p(ctx, [dirty]) {
-			if (dirty & /*$activeMarker*/ 2 && t0_value !== (t0_value = /*$activeMarker*/ ctx[1]?.tooltip.title + "")) set_data(t0, t0_value);
+			if (dirty & /*$activeMarker*/ 4 && t0_value !== (t0_value = /*$activeMarker*/ ctx[2]?.tooltip.title + "")) set_data(t0, t0_value);
 			if (dirty & /*activeMarkerInformation*/ 1 && raw_value !== (raw_value = sanitizeHtml$1(/*activeMarkerInformation*/ ctx[0]?.tooltip.text, /*sanitizerOptions*/ ctx[3]) + "")) div2.innerHTML = raw_value;
-			if (dirty & /*$activeMarker, $activeOnboardingStage*/ 6 && div4_class_value !== (div4_class_value = "visahoi-tooltip " + (/*$activeMarker*/ ctx[1] && /*$activeOnboardingStage*/ ctx[2]
+			if (dirty & /*$activeMarker, $activeOnboardingStage*/ 6 && div4_class_value !== (div4_class_value = "visahoi-tooltip " + (/*$activeMarker*/ ctx[2] && /*$activeOnboardingStage*/ ctx[1]
 			? ''
 			: 'hidden') + " svelte-17t2ea4")) {
 				attr(div4, "class", div4_class_value);
@@ -20989,10 +22055,51 @@ function create_fragment$3(ctx) {
 }
 
 function instance$3($$self, $$props, $$invalidate) {
-	let $activeMarker;
+	let $selectedMarker;
+	let $markerInformation;
 	let $activeOnboardingStage;
-	component_subscribe($$self, activeMarker, $$value => $$invalidate(1, $activeMarker = $$value));
-	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(2, $activeOnboardingStage = $$value));
+	let $activeMarker;
+	component_subscribe($$self, selectedMarker, $$value => $$invalidate(8, $selectedMarker = $$value));
+	component_subscribe($$self, markerInformation, $$value => $$invalidate(9, $markerInformation = $$value));
+	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(1, $activeOnboardingStage = $$value));
+	component_subscribe($$self, activeMarker, $$value => $$invalidate(2, $activeMarker = $$value));
+
+	var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
+		function adopt(value) {
+			return value instanceof P
+			? value
+			: new P(function (resolve) {
+						resolve(value);
+					});
+		}
+
+		return new (P || (P = Promise))(function (resolve, reject) {
+				function fulfilled(value) {
+					try {
+						step(generator.next(value));
+					} catch(e) {
+						reject(e);
+					}
+				}
+
+				function rejected(value) {
+					try {
+						step(generator["throw"](value));
+					} catch(e) {
+						reject(e);
+					}
+				}
+
+				function step(result) {
+					result.done
+					? resolve(result.value)
+					: adopt(result.value).then(fulfilled, rejected);
+				}
+
+				step((generator = generator.apply(thisArg, _arguments || [])).next());
+			});
+	};
+
 	let { visElement } = $$props;
 
 	const sanitizerOptions = {
@@ -21005,6 +22112,27 @@ function instance$3($$self, $$props, $$invalidate) {
 	const arrowId = tooltipId + "-arrow";
 
 	const closeTooltip = () => {
+		// The active marker is closed and navigation marker is not highlighted.
+		// The selectedMarker is set to the initial marker in the activeOnboarding stage.
+		const elementId = document.getElementById(`visahoi-marker-navigation-visahoi-marker-${$activeMarker === null || $activeMarker === void 0
+		? void 0
+		: $activeMarker.marker.id}`);
+
+		elementId === null || elementId === void 0
+		? void 0
+		: elementId.style.opacity = 0.5;
+
+		const activeOnboardingStageMarkers = $markerInformation.filter(m => m.message.onboardingStage === $activeOnboardingStage);
+		selectedMarker.set(activeOnboardingStageMarkers[0]);
+
+		$markerInformation.map((marker, i) => {
+			if (marker.marker.id === ($selectedMarker === null || $selectedMarker === void 0
+			? void 0
+			: $selectedMarker.marker.id)) {
+				markerIndexId.set(i);
+			}
+		});
+
 		activeMarker.set(null);
 	};
 
@@ -21014,7 +22142,8 @@ function instance$3($$self, $$props, $$invalidate) {
 		}
 	});
 
-	activeMarker.subscribe(marker => {
+	activeMarker.subscribe(marker => __awaiter(void 0, void 0, void 0, function* () {
+		yield tick();
 		const tooltipElement = document.getElementById(tooltipId);
 		const arrowElement = document.getElementById(arrowId);
 
@@ -21040,7 +22169,7 @@ function instance$3($$self, $$props, $$invalidate) {
 				}); //   },
 			}
 		}
-	});
+	}));
 
 	$$self.$$set = $$props => {
 		if ('visElement' in $$props) $$invalidate(7, visElement = $$props.visElement);
@@ -21048,8 +22177,8 @@ function instance$3($$self, $$props, $$invalidate) {
 
 	return [
 		activeMarkerInformation,
-		$activeMarker,
 		$activeOnboardingStage,
+		$activeMarker,
 		sanitizerOptions,
 		tooltipId,
 		arrowId,
@@ -21065,7 +22194,7 @@ class Tooltip extends SvelteComponent {
 	}
 }
 
-/* src\components\Tooltips.svelte generated by Svelte v3.44.1 */
+/* src\components\Tooltips.svelte generated by Svelte v3.49.0 */
 
 function create_fragment$2(ctx) {
 	let div;
@@ -21125,7 +22254,7 @@ class Tooltips extends SvelteComponent {
 	}
 }
 
-/* src\components\Backdrop.svelte generated by Svelte v3.44.1 */
+/* src\components\Backdrop.svelte generated by Svelte v3.49.0 */
 
 function create_fragment$1(ctx) {
 	let div;
@@ -21302,7 +22431,7 @@ function getMarkerInformation(onboardingMessages) {
     return markerInformation;
 }
 
-/* src\components\OnboardingUI.svelte generated by Svelte v3.44.1 */
+/* src\components\OnboardingUI.svelte generated by Svelte v3.49.0 */
 
 function create_if_block(ctx) {
 	let backdrop;
@@ -21916,6 +23045,9 @@ var lodash_debounce = debounce;
 let onboardingUI;
 const injectOnboarding = (ahoiConfig, visElement, alignment) => {
     onboardingMessages.set(ahoiConfig.onboardingMessages);
+    if (ahoiConfig?.showOnboardingNavigation) {
+        showOnboardingNavigation.set(ahoiConfig?.showOnboardingNavigation);
+    }
     ahoiConfig.onboardingMessages.map((m) => m.onboardingStage.id);
     onboardingStages.set([
         ...new Set(ahoiConfig.onboardingMessages.map((m) => m.onboardingStage)),
@@ -21928,6 +23060,9 @@ const injectOnboarding = (ahoiConfig, visElement, alignment) => {
     if (ahoiConfig?.backdrop?.opacity !== null &&
         ahoiConfig?.backdrop?.opacity !== undefined) {
         backdropOpacity.set(ahoiConfig?.backdrop?.opacity);
+    }
+    if (ahoiConfig?.showHelpCloseText === false) {
+        showHideCloseText.set(ahoiConfig?.showHelpCloseText);
     }
     const ref = { update: () => { } };
     const updateOnboarding = (config) => {
@@ -22000,17 +23135,17 @@ function extractOnboardingSpec$4(chart, coords) {
     const t = barNodesData[0].trace;
     return {
         chartTitle: {
-            value: chart.layout.title.text,
+            value: chart?.layout?.title?.text,
             anchor: {
                 findDomNodeByValue: true,
-                offset: { left: -20, top: 10 }
-            }
+                offset: { left: -20, top: 10 },
+            },
         },
         type: {
             value: t.type,
             anchor: {
-                sel: '.bars > .points > .point:nth-child(4)',
-            }
+                sel: ".bars > .points > .point:nth-child(4)",
+            },
         },
         orientation: {
             value: t.orientation === "v" ? "vertical" : "horizontal",
@@ -22027,14 +23162,14 @@ function extractOnboardingSpec$4(chart, coords) {
         yMin: {
             value: t._extremes.y.min[0].val.toFixed(1),
             anchor: {
-                sel: '.bars > .points > .point:nth-child(2)',
-            }
+                sel: ".bars > .points > .point:nth-child(2)",
+            },
         },
         yMax: {
             value: t._extremes.y.max[0].val.toFixed(1),
             anchor: {
-                sel: '.bars > .points > .point:nth-child(7)',
-            }
+                sel: ".bars > .points > .point:nth-child(7)",
+            },
         },
         xMin: {
             value: t._extremes.x.min[0].val, // 0 = first trace
@@ -22046,16 +23181,16 @@ function extractOnboardingSpec$4(chart, coords) {
             value: chart.layout.xaxis.title.text,
             anchor: {
                 findDomNodeByValue: true,
-                offset: { left: -20, bottom: 10 }
-            }
+                offset: { left: -20, bottom: 10 },
+            },
         },
         yAxisTitle: {
             value: chart.layout.yaxis.title.text,
             anchor: {
-                sel: '.infolayer .ytitle',
-                offset: { top: -25, right: 10 }
-            }
-        }
+                sel: ".infolayer .ytitle",
+                offset: { top: -25, right: 10 },
+            },
+        },
         // xAxisLabel (e.g. 01, 02, …)
         // yAxisLabel (e.g. -5, 0, 5, ...)
         // Title (Average Temperature in Oslo)
@@ -22067,27 +23202,27 @@ function barChartFactory(chart, coords, visElementId) {
 }
 
 function extractOnboardingSpec$3(chart, coords) {
-    const heatmapData = Array.from(chart.querySelectorAll(".hm"))[0].__data__;
+    const heatmapData = (Array.from(chart.querySelectorAll(".hm"))[0]).__data__;
     const t = heatmapData[0].trace;
     return {
         chartTitle: {
-            value: chart.layout.title.text,
+            value: chart?.layout?.title?.text,
             anchor: {
                 findDomNodeByValue: true,
-                offset: { left: -20, top: 10 }
-            }
+                offset: { left: -20, top: 10 },
+            },
         },
         type: {
             value: t.type,
             anchor: {
-                sel: '.heatmaplayer > .hm > image'
-            }
+                sel: ".heatmaplayer > .hm > image",
+            },
         },
         legendTitle: {
             value: t.colorbar.title.text,
             anchor: {
-                sel: '.infolayer > .colorbar',
-                offset: { top: -10 }
+                sel: ".infolayer > .colorbar",
+                offset: { top: -10 },
             },
         },
         yMin: {
@@ -22106,14 +23241,14 @@ function extractOnboardingSpec$3(chart, coords) {
             value: chart.layout.xaxis.title.text,
             anchor: {
                 findDomNodeByValue: true,
-                offset: { left: -20 }
-            }
+                offset: { left: -20 },
+            },
         },
         yAxis: {
             value: chart.layout.yaxis.title.text,
             anchor: {
-                sel: '.infolayer .ytitle'
-            }
+                sel: ".infolayer .ytitle",
+            },
         },
         // xAxisLabel (e.g. 01, 02, …)
         // yAxisLabel (e.g. -5, 0, 5, ...)
@@ -22131,21 +23266,33 @@ function extractOnboardingSpec$2(chart, coords) {
     const areaNodes = traceNodes[0].querySelectorAll("path.js-fill");
     const areaNodesData = Array.from(areaNodes).map((point) => point.__data__);
     const t = areaNodesData[0][0].trace;
+    if (t === undefined || t === null) {
+        console.error("Error: The trace is null or undefined, therefore not all onboarding messages can be shown.");
+        return {
+            chartTitle: {
+                value: chart?.layout?.title?.text,
+                anchor: {
+                    findDomNodeByValue: true,
+                    offset: { left: -20, top: 10 },
+                },
+            },
+        };
+    }
     return {
         chartTitle: {
-            value: chart.layout.title.text,
+            value: chart?.layout?.title?.text,
             anchor: {
                 findDomNodeByValue: true,
-                offset: { left: -20, top: 10 }
-            }
+                offset: { left: -20, top: 10 },
+            },
         },
         type: {
             value: "area",
             anchor: {
                 coords: {
-                    x: (t._polygons[0].xmax / 2),
+                    x: t._polygons[0].xmax / 2,
                     y: t._polygons[0].ymax,
-                }
+                },
             },
         },
         // yMin: {
@@ -22164,16 +23311,16 @@ function extractOnboardingSpec$2(chart, coords) {
             value: chart.layout.xaxis.title.text,
             anchor: {
                 coords: {
-                    x: (t._polygons[0].xmax / 3 * 2),
-                    y: (t._polygons[0].ymax / 3 * 2),
-                }
-            }
+                    x: (t._polygons[0].xmax / 3) * 2,
+                    y: (t._polygons[0].ymax / 3) * 2,
+                },
+            },
         },
         yAxis: {
             value: chart.layout.yaxis.title.text,
             anchor: {
-                sel: '.infolayer .ytitle',
-            }
+                sel: ".infolayer .ytitle",
+            },
         },
         // xAxisLabel (e.g. 01, 02, …)
         // yAxisLabel (e.g. -5, 0, 5, ...)
@@ -22204,39 +23351,39 @@ function extractOnboardingSpec$1(chart, coords) {
     const maxY = yVals[maxXIndex];
     return {
         chartTitle: {
-            value: chart.layout.title.text,
+            value: chart?.layout?.title?.text,
             anchor: {
                 findDomNodeByValue: true,
-                offset: { left: -20, top: 10 }
-            }
+                offset: { left: -20, top: 10 },
+            },
         },
         type: {
             value: t.type,
             anchor: {
-                sel: '.points > .point:nth-child(4)'
-            }
+                sel: ".points > .point:nth-child(4)",
+            },
         },
         xAxisTitle: {
             value: chart.layout.xaxis.title.text,
             anchor: {
-                sel: '.infolayer .xtitle',
-                offset: { left: -20 }
-            }
+                sel: ".infolayer .xtitle",
+                offset: { left: -20 },
+            },
         },
         yAxisTitle: {
             value: chart.layout.yaxis.title.text,
             anchor: {
-                sel: '.infolayer .ytitle',
-                offset: { top: -25 }
-            }
+                sel: ".infolayer .ytitle",
+                offset: { top: -25 },
+            },
         },
         maxValue: {
             value: maxX,
             anchor: {
                 coords: { x: maxX, y: maxY },
-                offset: { left: 25 }
-            }
-        }
+                offset: { left: 25 },
+            },
+        },
     };
 }
 function scatterplotFactory(chart, coords, visElementId) {
@@ -22250,13 +23397,13 @@ function extractOnboardingSpec(chart, coords) {
     let childArr = [];
     let maxIndex;
     let minIndex;
-    let maxLabel = '';
-    let minLabel = '';
-    let parentLabel = '';
+    let maxLabel = "";
+    let minLabel = "";
+    let parentLabel = "";
     // set the parent for getting the max and min values of the sub-category
     chart.data.map((d) => {
         if (d.parents.length > 1) {
-            if (d.parents[0] === '' && d.parents.length > 2) {
+            if (d.parents[0] === "" && d.parents.length > 2) {
                 parentLabel = d.parents[1];
             }
             else {
@@ -22275,8 +23422,7 @@ function extractOnboardingSpec(chart, coords) {
             if (indexArr) {
                 indexArr.map((d) => {
                     if (d === id) {
-                        childArr.push({ value: value,
-                            index: id });
+                        childArr.push({ value: value, index: id });
                         valArr.push(value);
                     }
                 });
@@ -22303,68 +23449,76 @@ function extractOnboardingSpec(chart, coords) {
     }));
     return {
         chartTitle: {
-            value: chart.layout.title.text,
+            value: chart?.layout?.title?.text,
             anchor: {
                 findDomNodeByValue: true,
-                offset: { left: -20, top: 10 }
-            }
+                offset: { left: -20, top: 10 },
+            },
         },
         desc: {
             value: chart.data[0].labels[0],
             anchor: {
                 findDomNodeByValue: true,
-                offset: { left: -20, top: 20 }
-            }
+                offset: { left: -20, top: 20 },
+            },
         },
         subDesc: {
             // value: chart.data[0].labels[17],
-            value: (chart.data[0].labels[1]) ? chart.data[0].labels[1] : chart.data[0].labels[0],
+            value: chart.data[0].labels[1]
+                ? chart.data[0].labels[1]
+                : chart.data[0].labels[0],
             anchor: {
                 findDomNodeByValue: true,
-                offset: { left: -40, top: -30 }
-            }
+                offset: { left: -40, top: -30 },
+            },
         },
         gapDesc: {
-            value: (chart.data[0].labels[3]) ? chart.data[0].labels[3] : chart.data[0].labels[0],
+            value: chart.data[0].labels[3]
+                ? chart.data[0].labels[3]
+                : chart.data[0].labels[0],
             anchor: {
                 findDomNodeByValue: true,
-                offset: { left: -40, top: -60 }
-            }
+                offset: { left: -40, top: -60 },
+            },
         },
         otherDesc: {
-            value: (chart.data[0].labels[2]) ? chart.data[0].labels[2] : chart.data[0].labels[1] ? chart.data[0].labels[1] : chart.data[0].labels[0],
+            value: chart.data[0].labels[2]
+                ? chart.data[0].labels[2]
+                : chart.data[0].labels[1]
+                    ? chart.data[0].labels[1]
+                    : chart.data[0].labels[0],
             anchor: {
                 findDomNodeByValue: true,
-                offset: { left: -80, top: -30 }
-            }
+                offset: { left: -80, top: -30 },
+            },
         },
         interactingDesc: {
             value: chart.data[0].labels[0],
             anchor: {
                 findDomNodeByValue: true,
-                offset: { left: -20, top: -30 }
-            }
+                offset: { left: -20, top: -30 },
+            },
         },
         maxValueDesc: {
             value: maxLabel,
             anchor: {
                 findDomNodeByValue: true,
-                offset: { left: -20, top: -30 }
-            }
+                offset: { left: -20, top: -30 },
+            },
         },
         minValueDesc: {
             value: minLabel,
             anchor: {
                 findDomNodeByValue: true,
-                offset: { left: -20, top: -20 }
-            }
+                offset: { left: -20, top: -20 },
+            },
         },
         maxValue: {
             value: maxVal,
         },
         minValue: {
-            value: minVal
-        }
+            value: minVal,
+        },
     };
 }
 function treemapFactory(chart, coords, visElementId) {
@@ -22383,7 +23537,7 @@ const generateBasicAnnotations = (visType, chart) => {
     const visElement = chart;
     if (chart === null) {
         console.error("Chart cannot be null");
-        return null;
+        return [];
     }
     // TODO: coords
     const chartTitlePosition = chart._fullLayout._dfltTitle;

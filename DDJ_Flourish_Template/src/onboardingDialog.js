@@ -5,6 +5,7 @@ import {
   getOnboardingStages,
 } from '../static/lib/bundle.js';
 import { onboarding } from './utils/store';
+import { state, data } from './index';
 
 // All the elements of the dialog and others
 let select = null;
@@ -111,7 +112,7 @@ function fillDropdown() {
     .forEach((option) => option.remove());
 
   const stages = getOnboardingStages(); // Grab current stages
-  onboarding.stages = stages; // Store the stages
+  state.stages = [...stages]; // Store the stages
 
   stages.forEach((e) => {
     const option = new Option(e.title, e.title);
@@ -150,7 +151,7 @@ function formValidation() {
           iconClass,
           backgroundColor,
         });
-        onboarding.stages.push(newOnboardingStage); // Keep track of the current stages
+        state.stages.push(newOnboardingStage); // Keep track of the current stages
         fillDropdown(); // Fill the dropdown again with new stage
         toast('Success: The stage was added!', 1200);
 
@@ -219,18 +220,20 @@ function getFormVals(formElements) {
  * @param {string} stage To add the message into
  */
 function addMsgToStage(msg, stage) {
-  if (onboarding.stages.length > 0) {
-    const stageObj = onboarding.stages.filter((e) => (e.title === stage))[0];
-    onboarding.messages.push(createBasicOnboardingMessage({
+  if (state.stages.length > 0) {
+    const stageObj = state.stages.filter((e) => (e.title === stage))[0];
+    state.messages.push(createBasicOnboardingMessage({
       title: msg.title,
       text: msg.text,
       onboardingStage: stageObj,
       anchor: msg.anchor
     }));
 
+    data.onboardingStages = state.stages;
+
     // Update the onboarding
     onboarding.treemap.onboardingUI?.updateOnboarding({
-      onboardingMessages: onboarding.messages
+      onboardingMessages: state.messages
     });  
 
     toast('Success: The message was added!', 1200);   // Show success message also

@@ -21,6 +21,9 @@ export const state = {
   showOnboarding: false,
   rightOffset: 100,
   bottomOffset: 20,
+
+  messages: [],
+  stages: []
 };
 
 export async function update() {
@@ -68,6 +71,9 @@ export async function update() {
   state.showOnboarding
     ? setOnboardingState({ isShown: true })
     : setOnboardingState({ isShown: false });
+
+  console.log('THE STATE at ' + new Date().toTimeString() + ': ', state);
+  console.log('DATA: ', data);
 }
 
 export async function draw() {

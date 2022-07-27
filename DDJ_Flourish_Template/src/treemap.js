@@ -4,6 +4,7 @@ import {
   generateBasicAnnotations,
 } from '../static/lib/bundle.js';
 import { onboarding  } from './utils/store';
+import { state } from './index';
 
 // Static variables for onboarding
 let chart = null;
@@ -46,7 +47,7 @@ export default class Treemap {
       // Resize logic for the onboaridng
       const debounceResize = _.debounce((event) => {
         this.onboardingUI?.updateOnboarding({
-          onboardingMessages: onboarding.messages,
+          onboardingMessages: state.messages,
         });
       }, 250);
 
@@ -113,17 +114,23 @@ export default class Treemap {
    * @returns The configuration object for the visahoi library
    */
   static getAhoiConfig() {
-    const defaultOnboardingMessages = generateBasicAnnotations(
-      EVisualizationType.TREEMAP,
-      chart
-    );
+    let onboardingMsgs = null;
 
-    // ⚠️ Custom Messages ⚠️
-    // ...
-    onboarding.messages = defaultOnboardingMessages;
+    if (state.messages.length === 0) {
+      onboardingMsgs = generateBasicAnnotations(
+        EVisualizationType.TREEMAP,
+        chart
+      );
+
+      // ⚠️ Custom Messages ⚠️
+      // ...
+      state.messages = onboardingMsgs;
+    } else {
+      onboardingMsgs = state.messages;
+    }
 
     return {
-      onboardingMessages: defaultOnboardingMessages,
+      onboardingMessages: onboardingMsgs,
     };
   }
 
