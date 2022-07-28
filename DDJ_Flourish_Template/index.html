@@ -47,13 +47,15 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<div class="m-1">
+					<div id="specialTab" class="m-1">
 						<ul class="nav nav-tabs" id="onboardingTab">
 							<li class="nav-item">
-								<a href="#add" class="nav-link active" data-bs-toggle="tab">Add</a>
+								<a href="#add" class="nav-link active" data-bs-toggle="tab"><i
+										class="fa-solid fa-plus"></i> Add</a>
 							</li>
 							<li class="nav-item">
-								<a href="#edit" class="nav-link" data-bs-toggle="tab">Edit</a>
+								<a href="#edit" class="nav-link" data-bs-toggle="tab"><i
+										class="fa-solid fa-pen-to-square"></i> Edit</a>
 							</li>
 						</ul>
 						<div class="tab-content">
@@ -63,8 +65,9 @@
 									<!-- Stage -->
 									<form id="formStage" novalidate>
 										<div class="row">
-											<h4>Onboarding Stage</h4>
-											<hr class="mt-1 mb-4">
+											<h4><i class="fa-solid fa-thumbtack fa-rotate-by fa-2xs"
+													style="--fa-rotate-angle: -45deg;"></i> Onboarding Stage</h4>
+											<hr class="mt-1 mb-4 customDivider">
 										</div>
 										<div class="row mb-3">
 											<div class="col-md-6">
@@ -113,8 +116,9 @@
 									<!-- Message -->
 									<form id="formMessage" novalidate>
 										<div class="row mt-5">
-											<h4>Onboarding Message</h4>
-											<hr class="mt-1 mb-4">
+											<h4><i class="fa-solid fa-thumbtack fa-rotate-by fa-2xs"
+													style="--fa-rotate-angle: -45deg;"></i> Onboarding Message</h4>
+											<hr class="mt-1 mb-4 customDivider">
 										</div>
 										<div class="row mb-4">
 											<div class="col-md-12">
@@ -166,17 +170,17 @@
 														id="addXMsg" required>
 													<input type="number" placeholder="Y" class="form-control"
 														id="addYMsg" required>
-													<span class="form-text">
-														You can use the picker in order to grab the coordinates.
-													</span>
 													<div class="invalid-feedback">
 														The x and y values have to be provided.
 													</div>
 												</div>
 											</div>
-											<div class="col-md-6 align-self-center">
-												<button id="btnInspect" class="btn btn-outline-dark p-2 rounded-1 mb-2"><i
+											<div class="col-md-6" style="margin-top: 30px;">
+												<button id="btnInspect" class="btn btn-outline-dark p-2 rounded-1"><i
 														class="fa fa-crosshairs"></i></button>
+												<span class="form-text" style="margin-left: 10px;">
+													You can use the picker in order to grab the coordinates.
+												</span>
 											</div>
 										</div>
 										<div class="row">
