@@ -2,10 +2,9 @@ import { toast } from './utils/utils';
 import {
   createBasicOnboardingMessage,
   createBasicOnboardingStage,
-  getOnboardingStages,
 } from '../static/lib/bundle.js';
 import { onboarding } from './utils/store';
-import { state, data } from './index';
+import { state } from './index';
 
 // All the elements of the dialog and others
 let select = null;
@@ -111,10 +110,7 @@ function fillDropdown() {
     .querySelectorAll('#addSelectMsg option')
     .forEach((option) => option.remove());
 
-  const stages = getOnboardingStages(); // Grab current stages
-  state.stages = [...stages]; // Store the stages
-
-  stages.forEach((e) => {
+  state.stages.forEach((e) => {
     const option = new Option(e.title, e.title);
     select.add(option, undefined);
   });
@@ -151,7 +147,7 @@ function formValidation() {
           iconClass,
           backgroundColor,
         });
-        state.stages.push(newOnboardingStage); // Keep track of the current stages
+        state.stages = [...state.stages, newOnboardingStage]
         fillDropdown(); // Fill the dropdown again with new stage
         toast('Success: The stage was added!', 1200);
 
@@ -221,22 +217,22 @@ function getFormVals(formElements) {
  */
 function addMsgToStage(msg, stage) {
   if (state.stages.length > 0) {
-    const stageObj = state.stages.filter((e) => (e.title === stage))[0];
-    state.messages.push(createBasicOnboardingMessage({
-      title: msg.title,
-      text: msg.text,
-      onboardingStage: stageObj,
-      anchor: msg.anchor
-    }));
-
-    data.onboardingStages = state.stages;
+    const stageObj = state.stages.filter((e) => e.title === stage)[0];
+    state.messages.push(
+      createBasicOnboardingMessage({
+        title: msg.title,
+        text: msg.text,
+        onboardingStage: stageObj,
+        anchor: msg.anchor,
+      })
+    );
 
     // Update the onboarding
     onboarding.treemap.onboardingUI?.updateOnboarding({
       onboardingMessages: state.messages
-    });  
+    });
 
-    toast('Success: The message was added!', 1200);   // Show success message also
+    toast('Success: The message was added!', 1200); // Show success message also
   } else {
     toast(
       'There are no stages available. Add a stage first please.',

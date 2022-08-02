@@ -14,6 +14,27 @@ export const loadData = (dataURL) => {
 };
 
 /**
+ * This method creates a unique id for the given element in the given namespace if necessary.
+ * Default is "visahoi". So an example would be "#isahoi-e333271d-f596-45cb-9c0f-aa2a7a14520e".
+ * If the elment has already an ID it is returned by the method as we don't need to create a new one.
+ * @param {*} el To attach the id to
+ * @param {*} nameSpace To add to the id. Defaults to "visahoi"
+ * @returns The newly created id selector string
+ */
+export const giveElUniqueId = (el, nameSpace = 'visahoi') => {
+  const checkID = d3.select(el).attr('id');
+
+  if (checkID) {
+    return `#${checkID}`;
+  } else {
+    const uuid4 = `${nameSpace}-${uuidv4()}`;
+    d3.select(el).attr('id', uuid4);
+
+    return `#${uuid4}`;
+  }
+}
+
+/**
  * This is just used to show the current environment of Flourish in the console.
  */
  export const showEnvironment = () => {

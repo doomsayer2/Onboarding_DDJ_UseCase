@@ -24,7 +24,9 @@ export const state = {
   bottomOffset: 20,
 
   messages: [],
-  stages: []
+  stages: [],
+  messagesStore: "DON'T USE!",
+  stagesStore: "DON'T USE!"
 };
 
 export async function update() {
@@ -65,8 +67,10 @@ export async function update() {
     ? moveOnboardigBtn(state.rightOffset, state.bottomOffset)
     : null;
 
-  // Show the settings menu if we are in onboarding mode
-  state.showOnboarding ? toggleSettingsMenu(true) : toggleSettingsMenu(false);
+  // Show the settings menu if we are in onboarding mode and its not live
+  if (!(Flourish.environment === 'live' || Flourish.environment === 'preview')) {
+    state.showOnboarding ? toggleSettingsMenu(true) : toggleSettingsMenu(false);
+  }
 
   // Only show the dialog if we are in onboarding mode
   state.showOnboarding
@@ -74,7 +78,6 @@ export async function update() {
     : setOnboardingState({ isShown: false });
 
   console.log('THE STATE at ' + new Date().toTimeString() + ': ', state);
-  console.log('DATA: ', data);
 }
 
 export async function draw() {
@@ -88,6 +91,9 @@ export async function draw() {
   // ===================
   //   ⚙️ Settings
   // ===================
+  Flourish.environment === 'live' || Flourish.environment === 'preview'
+    ? toggleSettingsMenu(false)
+    : null;
 
   // ===================
   //  📊 Visualization

@@ -32,12 +32,12 @@ export const initSettingsMenu = (treemap = null) => {
 
 /**
  * Toogles the onboarding additional menu.
- * @param {boolean} hide Whether to hide it or not
+ * @param {boolean} show Whether to show it or not
  */
-export const toggleSettingsMenu = (hide) => {
+export const toggleSettingsMenu = (show) => {
     const settingsMenu = d3.select('#onboardingSettingsBtn');
 
-    hide ? settingsMenu.classed('beGone', false) : settingsMenu.classed('beGone', true);
+    show ? settingsMenu.classed('beGone', false) : settingsMenu.classed('beGone', true);
 }
 
 /**

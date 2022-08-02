@@ -2,12 +2,15 @@ import {
   EVisualizationType,
   ahoi,
   generateBasicAnnotations,
+  getOnboardingStages,
 } from '../static/lib/bundle.js';
-import { onboarding } from './utils/store';
 import { state } from './index';
+import { giveElUniqueId } from './utils/utils';
+import { getCssSelector } from 'css-selector-generator';
 
 // Static variables for onboarding
 let chart = null;
+let defaultMsgs = null;
 
 export default class Treemap {
   /**
@@ -74,14 +77,13 @@ export default class Treemap {
         outsidetextfont: { size: 20, color: '#222531' },
       },
     ];
-    // const layout = {
-    //   title: 'Treemap',
-    // };
+    const layout = {};
     const config = {
       responsive: true,
     };
 
-    chart = await Plotly.react(this.container, data, config); // Plotly.react() is more efficient that Plotly.newPlot() for recreation
+    chart = await Plotly.react(this.container, data, layout, config); // Plotly.react() is more efficient that Plotly.newPlot() for recreation
+    chart.on('plotly_treemapclick', () => false);   // Disable the zooming of the tiles
   }
 
   updatePlotlyData(data_update) {
@@ -114,20 +116,36 @@ export default class Treemap {
    * @returns The configuration object for the visahoi library
    */
   static getAhoiConfig() {
-    let onboardingMsgs = null;
+    if (state.messages.length === 0) {
+      let defaultOnboardingMessages = generateBasicAnnotations(
+        EVisualizationType.TREEMAP,
+        chart
+      );
 
-    onboardingMsgs = generateBasicAnnotations(
-      EVisualizationType.TREEMAP,
-      chart
-    );
+      defaultOnboardingMessages.forEach((el) => {
+        if (el.anchor.hasOwnProperty('element')) {
+          el.anchor.sel = getCssSelector(el.anchor.element);
+          delete el.anchor.element;
+        }
+      });
 
-    // ⚠️ Custom Messages ⚠️
-    // ...
+      // ⚠️ Custom Messages ⚠️
+      // ...
+      defaultMsgs = structuredClone(defaultOnboardingMessages);
 
-    return {
-      onboardingMessages: onboardingMsgs,
-      showHelpCloseText: false,
-    };
+      // Save the current onboarding
+      Treemap.saveOnboarding();
+
+      return {
+        onboardingMessages: defaultOnboardingMessages,
+        showHelpCloseText: false,
+      };
+    } else {
+      return {
+        onboardingMessages: state.messages,
+        showHelpCloseText: false,
+      };
+    }
   }
 
   /**
@@ -139,5 +157,10 @@ export default class Treemap {
    */
   static unpack(rows, key) {
     return rows.map((row) => row[key]);
+  }
+
+  static saveOnboarding() {
+    state.messages = defaultMsgs;
+    state.stages = getOnboardingStages();
   }
 }
