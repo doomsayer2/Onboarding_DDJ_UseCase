@@ -1,7 +1,7 @@
 import Treemap from './treemap.js';
 import initLayout from '@flourish/layout';
 import { moveOnboardigBtn, toggleSettingsMenu, initSettingsMenu } from './ui';
-import { setOnboardingState } from './utils/store';
+import Swal from 'sweetalert2';
 
 let plotlyTreemap = null;
 let layout = null;
@@ -13,7 +13,7 @@ export const data = {};
 export const state = {
   // The current state of template. You can make some or all of the properties
   // of the state object available to the user as settings in settings.js.
-  fixed_height: false,
+  fixed_height: true,
   height: 650,
   change_layout: false,
   layout: {},
@@ -25,8 +25,8 @@ export const state = {
 
   messages: [],
   stages: [],
-  messagesStore: "DON'T USE!",
-  stagesStore: "DON'T USE!"
+  messagesStore: "",
+  stagesStore: ""
 };
 
 export async function update() {
@@ -69,13 +69,13 @@ export async function update() {
 
   // Show the settings menu if we are in onboarding mode and its not live
   if (!(Flourish.environment === 'live' || Flourish.environment === 'preview')) {
-    state.showOnboarding ? toggleSettingsMenu(true) : toggleSettingsMenu(false);
+    state.toggleEditMode ? toggleSettingsMenu(true) : toggleSettingsMenu(false);
   }
 
   // Only show the dialog if we are in onboarding mode
   state.showOnboarding
-    ? setOnboardingState({ isShown: true })
-    : setOnboardingState({ isShown: false });
+    ? null
+    : cleanState();
 
   console.log('THE STATE at ' + new Date().toTimeString() + ': ', state);
 }
@@ -110,4 +110,15 @@ export async function draw() {
   // ===================
   // Always call the update() after the initial draw
   update();
+}
+
+
+/**
+ * HELPERS
+ */
+const cleanState = () => {
+  if (state.messages.length > 0 && state.stages.length > 0) {
+    state.messages = [];
+    state.stages = [];
+  }
 }

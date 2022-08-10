@@ -5,7 +5,6 @@ import {
   getOnboardingStages,
 } from '../static/lib/bundle.js';
 import { state } from './index';
-import { giveElUniqueId } from './utils/utils';
 import { getCssSelector } from 'css-selector-generator';
 
 // Static variables for onboarding

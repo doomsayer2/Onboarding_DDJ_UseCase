@@ -120,6 +120,21 @@
 													style="--fa-rotate-angle: -45deg;"></i> Onboarding Message</h4>
 											<hr class="mt-1 mb-4 customDivider">
 										</div>
+										<div class="row mb-3">
+											<div class="col-md-12">
+												<label for="addSelectMsg" class="form-label">Onboarding Stage</label>
+												<select id="addSelectMsg" class="form-select"
+													data-visahoi-name="onboardingStage" required>
+													<option value="" disabled selected hidden>Choose...</option>
+												</select>
+												<span class="form-text">
+													The onboarding stage it should be attached to.
+												</span>
+												<div class="invalid-feedback">
+													The message can not be empty.
+												</div>
+											</div>
+										</div>
 										<div class="row mb-4">
 											<div class="col-md-12">
 												<label for="addTitleMsg" class="form-label">Title</label>
@@ -144,21 +159,6 @@
 												</span>
 												<div class="invalid-feedback">
 													Please enter a message in the textarea.
-												</div>
-											</div>
-										</div>
-										<div class="row mb-5">
-											<div class="col-md-12">
-												<label for="addSelectMsg" class="form-label">Onboarding Stage</label>
-												<select id="addSelectMsg" class="form-select"
-													data-visahoi-name="onboardingStage" required>
-													<option value="" disabled selected hidden>Choose...</option>
-												</select>
-												<span class="form-text">
-													The onboarding stage it should be attached to.
-												</span>
-												<div class="invalid-feedback">
-													The message can not be empty.
 												</div>
 											</div>
 										</div>
@@ -193,7 +193,14 @@
 								</div>
 							</div>
 							<div class="tab-pane fade" id="edit">
-								TBD
+								<div class="wrapper">
+									<h4>Features WIP:</h4>
+									<ul>
+										<li><mark>Reoder Stages</mark> - in menu their apperance</li>
+										<li><strong>Maybe</strong> change Stage color and/or icon</li>
+										<li><strong>Maybe</strong> delete stages</li>
+									</ul>
+								</div>
 							</div>
 						</div>
 					</div>

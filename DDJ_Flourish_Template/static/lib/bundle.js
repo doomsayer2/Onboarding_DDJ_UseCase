@@ -8,6 +8,7 @@ var EVisualizationType;
     EVisualizationType["HORIZON_GRAPH"] = "horizon-graph";
     EVisualizationType["SCATTERPLOT"] = "scatterplot";
     EVisualizationType["TREEMAP"] = "treemap";
+    EVisualizationType["HEATMAP"] = "heatmap";
 })(EVisualizationType || (EVisualizationType = {}));
 const isOnboardingElementAnchor = (element) => {
     return element.element !== undefined;
@@ -1855,7 +1856,7 @@ const getNavigationMarkerDomId = (id) => {
     return `visahoi-marker-navigation-visahoi-marker-${id}`;
 };
 
-function generateMessages$5(spec, visElement, ahoiConfig) {
+function generateMessages$6(spec, visElement, ahoiConfig) {
     const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING);
     const interacting = defaultOnboardingStages.get(EDefaultOnboardingStages.USING);
     const messages = [
@@ -1926,10 +1927,10 @@ function generateMessages$5(spec, visElement, ahoiConfig) {
     return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
 }
 const barChart = {
-    generateMessages: generateMessages$5,
+    generateMessages: generateMessages$6,
 };
 
-function generateMessages$4(spec, visElement) {
+function generateMessages$5(spec, visElement) {
     const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING);
     const messages = [
         {
@@ -1984,13 +1985,13 @@ function generateMessages$4(spec, visElement) {
     return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
 }
 const changeMatrix = {
-    generateMessages: generateMessages$4,
+    generateMessages: generateMessages$5,
 };
 
 function createColorRect(color = "white") {
     return `<div class="colorRect" style="background: ${color}"></div>`;
 }
-function generateMessages$3(spec, visElement) {
+function generateMessages$4(spec, visElement) {
     const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING);
     const using = defaultOnboardingStages.get(EDefaultOnboardingStages.USING);
     const messages = [
@@ -2072,10 +2073,10 @@ function generateMessages$3(spec, visElement) {
     return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
 }
 const horizonGraph = {
-    generateMessages: generateMessages$3,
+    generateMessages: generateMessages$4,
 };
 
-function generateMessages$2(spec, visElement) {
+function generateMessages$3(spec, visElement) {
     const analyzing = defaultOnboardingStages.get(EDefaultOnboardingStages.ANALYZING);
     const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING);
     const interacting = defaultOnboardingStages.get(EDefaultOnboardingStages.USING);
@@ -2147,7 +2148,866 @@ function generateMessages$2(spec, visElement) {
     return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
 }
 const scatterplot = {
+    generateMessages: generateMessages$3,
+};
+
+function noop() { }
+const identity = x => x;
+function run(fn) {
+    return fn();
+}
+function blank_object() {
+    return Object.create(null);
+}
+function run_all(fns) {
+    fns.forEach(run);
+}
+function is_function(thing) {
+    return typeof thing === 'function';
+}
+function safe_not_equal(a, b) {
+    return a != a ? b == b : a !== b || ((a && typeof a === 'object') || typeof a === 'function');
+}
+function is_empty(obj) {
+    return Object.keys(obj).length === 0;
+}
+function subscribe(store, ...callbacks) {
+    if (store == null) {
+        return noop;
+    }
+    const unsub = store.subscribe(...callbacks);
+    return unsub.unsubscribe ? () => unsub.unsubscribe() : unsub;
+}
+function get_store_value(store) {
+    let value;
+    subscribe(store, _ => value = _)();
+    return value;
+}
+function component_subscribe(component, store, callback) {
+    component.$$.on_destroy.push(subscribe(store, callback));
+}
+function null_to_empty(value) {
+    return value == null ? '' : value;
+}
+
+const is_client = typeof window !== 'undefined';
+let now$1 = is_client
+    ? () => window.performance.now()
+    : () => Date.now();
+let raf = is_client ? cb => requestAnimationFrame(cb) : noop;
+
+const tasks = new Set();
+function run_tasks(now) {
+    tasks.forEach(task => {
+        if (!task.c(now)) {
+            tasks.delete(task);
+            task.f();
+        }
+    });
+    if (tasks.size !== 0)
+        raf(run_tasks);
+}
+/**
+ * Creates a new task that runs on each raf frame
+ * until it returns a falsy value or is aborted
+ */
+function loop(callback) {
+    let task;
+    if (tasks.size === 0)
+        raf(run_tasks);
+    return {
+        promise: new Promise(fulfill => {
+            tasks.add(task = { c: callback, f: fulfill });
+        }),
+        abort() {
+            tasks.delete(task);
+        }
+    };
+}
+function append(target, node) {
+    target.appendChild(node);
+}
+function get_root_for_style(node) {
+    if (!node)
+        return document;
+    const root = node.getRootNode ? node.getRootNode() : node.ownerDocument;
+    if (root && root.host) {
+        return root;
+    }
+    return node.ownerDocument;
+}
+function append_empty_stylesheet(node) {
+    const style_element = element('style');
+    append_stylesheet(get_root_for_style(node), style_element);
+    return style_element.sheet;
+}
+function append_stylesheet(node, style) {
+    append(node.head || node, style);
+}
+function insert(target, node, anchor) {
+    target.insertBefore(node, anchor || null);
+}
+function detach(node) {
+    node.parentNode.removeChild(node);
+}
+function destroy_each(iterations, detaching) {
+    for (let i = 0; i < iterations.length; i += 1) {
+        if (iterations[i])
+            iterations[i].d(detaching);
+    }
+}
+function element(name) {
+    return document.createElement(name);
+}
+function svg_element(name) {
+    return document.createElementNS('http://www.w3.org/2000/svg', name);
+}
+function text(data) {
+    return document.createTextNode(data);
+}
+function space() {
+    return text(' ');
+}
+function empty$1() {
+    return text('');
+}
+function listen(node, event, handler, options) {
+    node.addEventListener(event, handler, options);
+    return () => node.removeEventListener(event, handler, options);
+}
+function attr(node, attribute, value) {
+    if (value == null)
+        node.removeAttribute(attribute);
+    else if (node.getAttribute(attribute) !== value)
+        node.setAttribute(attribute, value);
+}
+function children(element) {
+    return Array.from(element.childNodes);
+}
+function set_data(text, data) {
+    data = '' + data;
+    if (text.wholeText !== data)
+        text.data = data;
+}
+function set_input_value(input, value) {
+    input.value = value == null ? '' : value;
+}
+function set_style(node, key, value, important) {
+    if (value === null) {
+        node.style.removeProperty(key);
+    }
+    else {
+        node.style.setProperty(key, value, important ? 'important' : '');
+    }
+}
+function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
+    const e = document.createEvent('CustomEvent');
+    e.initCustomEvent(type, bubbles, cancelable, detail);
+    return e;
+}
+
+// we need to store the information for multiple documents because a Svelte application could also contain iframes
+// https://github.com/sveltejs/svelte/issues/3624
+const managed_styles = new Map();
+let active = 0;
+// https://github.com/darkskyapp/string-hash/blob/master/index.js
+function hash(str) {
+    let hash = 5381;
+    let i = str.length;
+    while (i--)
+        hash = ((hash << 5) - hash) ^ str.charCodeAt(i);
+    return hash >>> 0;
+}
+function create_style_information(doc, node) {
+    const info = { stylesheet: append_empty_stylesheet(node), rules: {} };
+    managed_styles.set(doc, info);
+    return info;
+}
+function create_rule(node, a, b, duration, delay, ease, fn, uid = 0) {
+    const step = 16.666 / duration;
+    let keyframes = '{\n';
+    for (let p = 0; p <= 1; p += step) {
+        const t = a + (b - a) * ease(p);
+        keyframes += p * 100 + `%{${fn(t, 1 - t)}}\n`;
+    }
+    const rule = keyframes + `100% {${fn(b, 1 - b)}}\n}`;
+    const name = `__svelte_${hash(rule)}_${uid}`;
+    const doc = get_root_for_style(node);
+    const { stylesheet, rules } = managed_styles.get(doc) || create_style_information(doc, node);
+    if (!rules[name]) {
+        rules[name] = true;
+        stylesheet.insertRule(`@keyframes ${name} ${rule}`, stylesheet.cssRules.length);
+    }
+    const animation = node.style.animation || '';
+    node.style.animation = `${animation ? `${animation}, ` : ''}${name} ${duration}ms linear ${delay}ms 1 both`;
+    active += 1;
+    return name;
+}
+function delete_rule(node, name) {
+    const previous = (node.style.animation || '').split(', ');
+    const next = previous.filter(name
+        ? anim => anim.indexOf(name) < 0 // remove specific animation
+        : anim => anim.indexOf('__svelte') === -1 // remove all Svelte animations
+    );
+    const deleted = previous.length - next.length;
+    if (deleted) {
+        node.style.animation = next.join(', ');
+        active -= deleted;
+        if (!active)
+            clear_rules();
+    }
+}
+function clear_rules() {
+    raf(() => {
+        if (active)
+            return;
+        managed_styles.forEach(info => {
+            const { stylesheet } = info;
+            let i = stylesheet.cssRules.length;
+            while (i--)
+                stylesheet.deleteRule(i);
+            info.rules = {};
+        });
+        managed_styles.clear();
+    });
+}
+
+let current_component;
+function set_current_component(component) {
+    current_component = component;
+}
+function get_current_component() {
+    if (!current_component)
+        throw new Error('Function called outside component initialization');
+    return current_component;
+}
+function onMount(fn) {
+    get_current_component().$$.on_mount.push(fn);
+}
+function onDestroy(fn) {
+    get_current_component().$$.on_destroy.push(fn);
+}
+
+const dirty_components = [];
+const binding_callbacks = [];
+const render_callbacks = [];
+const flush_callbacks = [];
+const resolved_promise = Promise.resolve();
+let update_scheduled = false;
+function schedule_update() {
+    if (!update_scheduled) {
+        update_scheduled = true;
+        resolved_promise.then(flush);
+    }
+}
+function tick() {
+    schedule_update();
+    return resolved_promise;
+}
+function add_render_callback(fn) {
+    render_callbacks.push(fn);
+}
+// flush() calls callbacks in this order:
+// 1. All beforeUpdate callbacks, in order: parents before children
+// 2. All bind:this callbacks, in reverse order: children before parents.
+// 3. All afterUpdate callbacks, in order: parents before children. EXCEPT
+//    for afterUpdates called during the initial onMount, which are called in
+//    reverse order: children before parents.
+// Since callbacks might update component values, which could trigger another
+// call to flush(), the following steps guard against this:
+// 1. During beforeUpdate, any updated components will be added to the
+//    dirty_components array and will cause a reentrant call to flush(). Because
+//    the flush index is kept outside the function, the reentrant call will pick
+//    up where the earlier call left off and go through all dirty components. The
+//    current_component value is saved and restored so that the reentrant call will
+//    not interfere with the "parent" flush() call.
+// 2. bind:this callbacks cannot trigger new flush() calls.
+// 3. During afterUpdate, any updated components will NOT have their afterUpdate
+//    callback called a second time; the seen_callbacks set, outside the flush()
+//    function, guarantees this behavior.
+const seen_callbacks = new Set();
+let flushidx = 0; // Do *not* move this inside the flush() function
+function flush() {
+    const saved_component = current_component;
+    do {
+        // first, call beforeUpdate functions
+        // and update components
+        while (flushidx < dirty_components.length) {
+            const component = dirty_components[flushidx];
+            flushidx++;
+            set_current_component(component);
+            update(component.$$);
+        }
+        set_current_component(null);
+        dirty_components.length = 0;
+        flushidx = 0;
+        while (binding_callbacks.length)
+            binding_callbacks.pop()();
+        // then, once components are updated, call
+        // afterUpdate functions. This may cause
+        // subsequent updates...
+        for (let i = 0; i < render_callbacks.length; i += 1) {
+            const callback = render_callbacks[i];
+            if (!seen_callbacks.has(callback)) {
+                // ...so guard against infinite loops
+                seen_callbacks.add(callback);
+                callback();
+            }
+        }
+        render_callbacks.length = 0;
+    } while (dirty_components.length);
+    while (flush_callbacks.length) {
+        flush_callbacks.pop()();
+    }
+    update_scheduled = false;
+    seen_callbacks.clear();
+    set_current_component(saved_component);
+}
+function update($$) {
+    if ($$.fragment !== null) {
+        $$.update();
+        run_all($$.before_update);
+        const dirty = $$.dirty;
+        $$.dirty = [-1];
+        $$.fragment && $$.fragment.p($$.ctx, dirty);
+        $$.after_update.forEach(add_render_callback);
+    }
+}
+
+let promise;
+function wait() {
+    if (!promise) {
+        promise = Promise.resolve();
+        promise.then(() => {
+            promise = null;
+        });
+    }
+    return promise;
+}
+function dispatch(node, direction, kind) {
+    node.dispatchEvent(custom_event(`${direction ? 'intro' : 'outro'}${kind}`));
+}
+const outroing = new Set();
+let outros;
+function group_outros() {
+    outros = {
+        r: 0,
+        c: [],
+        p: outros // parent group
+    };
+}
+function check_outros() {
+    if (!outros.r) {
+        run_all(outros.c);
+    }
+    outros = outros.p;
+}
+function transition_in(block, local) {
+    if (block && block.i) {
+        outroing.delete(block);
+        block.i(local);
+    }
+}
+function transition_out(block, local, detach, callback) {
+    if (block && block.o) {
+        if (outroing.has(block))
+            return;
+        outroing.add(block);
+        outros.c.push(() => {
+            outroing.delete(block);
+            if (callback) {
+                if (detach)
+                    block.d(1);
+                callback();
+            }
+        });
+        block.o(local);
+    }
+    else if (callback) {
+        callback();
+    }
+}
+const null_transition = { duration: 0 };
+function create_bidirectional_transition(node, fn, params, intro) {
+    let config = fn(node, params);
+    let t = intro ? 0 : 1;
+    let running_program = null;
+    let pending_program = null;
+    let animation_name = null;
+    function clear_animation() {
+        if (animation_name)
+            delete_rule(node, animation_name);
+    }
+    function init(program, duration) {
+        const d = (program.b - t);
+        duration *= Math.abs(d);
+        return {
+            a: t,
+            b: program.b,
+            d,
+            duration,
+            start: program.start,
+            end: program.start + duration,
+            group: program.group
+        };
+    }
+    function go(b) {
+        const { delay = 0, duration = 300, easing = identity, tick = noop, css } = config || null_transition;
+        const program = {
+            start: now$1() + delay,
+            b
+        };
+        if (!b) {
+            // @ts-ignore todo: improve typings
+            program.group = outros;
+            outros.r += 1;
+        }
+        if (running_program || pending_program) {
+            pending_program = program;
+        }
+        else {
+            // if this is an intro, and there's a delay, we need to do
+            // an initial tick and/or apply CSS animation immediately
+            if (css) {
+                clear_animation();
+                animation_name = create_rule(node, t, b, duration, delay, easing, css);
+            }
+            if (b)
+                tick(0, 1);
+            running_program = init(program, duration);
+            add_render_callback(() => dispatch(node, b, 'start'));
+            loop(now => {
+                if (pending_program && now > pending_program.start) {
+                    running_program = init(pending_program, duration);
+                    pending_program = null;
+                    dispatch(node, running_program.b, 'start');
+                    if (css) {
+                        clear_animation();
+                        animation_name = create_rule(node, t, running_program.b, running_program.duration, 0, easing, config.css);
+                    }
+                }
+                if (running_program) {
+                    if (now >= running_program.end) {
+                        tick(t = running_program.b, 1 - t);
+                        dispatch(node, running_program.b, 'end');
+                        if (!pending_program) {
+                            // we're done
+                            if (running_program.b) {
+                                // intro — we can tidy up immediately
+                                clear_animation();
+                            }
+                            else {
+                                // outro — needs to be coordinated
+                                if (!--running_program.group.r)
+                                    run_all(running_program.group.c);
+                            }
+                        }
+                        running_program = null;
+                    }
+                    else if (now >= running_program.start) {
+                        const p = now - running_program.start;
+                        t = running_program.a + running_program.d * easing(p / running_program.duration);
+                        tick(t, 1 - t);
+                    }
+                }
+                return !!(running_program || pending_program);
+            });
+        }
+    }
+    return {
+        run(b) {
+            if (is_function(config)) {
+                wait().then(() => {
+                    // @ts-ignore
+                    config = config();
+                    go(b);
+                });
+            }
+            else {
+                go(b);
+            }
+        },
+        end() {
+            clear_animation();
+            running_program = pending_program = null;
+        }
+    };
+}
+function create_component(block) {
+    block && block.c();
+}
+function mount_component(component, target, anchor, customElement) {
+    const { fragment, on_mount, on_destroy, after_update } = component.$$;
+    fragment && fragment.m(target, anchor);
+    if (!customElement) {
+        // onMount happens before the initial afterUpdate
+        add_render_callback(() => {
+            const new_on_destroy = on_mount.map(run).filter(is_function);
+            if (on_destroy) {
+                on_destroy.push(...new_on_destroy);
+            }
+            else {
+                // Edge case - component was destroyed immediately,
+                // most likely as a result of a binding initialising
+                run_all(new_on_destroy);
+            }
+            component.$$.on_mount = [];
+        });
+    }
+    after_update.forEach(add_render_callback);
+}
+function destroy_component(component, detaching) {
+    const $$ = component.$$;
+    if ($$.fragment !== null) {
+        run_all($$.on_destroy);
+        $$.fragment && $$.fragment.d(detaching);
+        // TODO null out other refs, including component.$$ (but need to
+        // preserve final state?)
+        $$.on_destroy = $$.fragment = null;
+        $$.ctx = [];
+    }
+}
+function make_dirty(component, i) {
+    if (component.$$.dirty[0] === -1) {
+        dirty_components.push(component);
+        schedule_update();
+        component.$$.dirty.fill(0);
+    }
+    component.$$.dirty[(i / 31) | 0] |= (1 << (i % 31));
+}
+function init(component, options, instance, create_fragment, not_equal, props, append_styles, dirty = [-1]) {
+    const parent_component = current_component;
+    set_current_component(component);
+    const $$ = component.$$ = {
+        fragment: null,
+        ctx: null,
+        // state
+        props,
+        update: noop,
+        not_equal,
+        bound: blank_object(),
+        // lifecycle
+        on_mount: [],
+        on_destroy: [],
+        on_disconnect: [],
+        before_update: [],
+        after_update: [],
+        context: new Map(options.context || (parent_component ? parent_component.$$.context : [])),
+        // everything else
+        callbacks: blank_object(),
+        dirty,
+        skip_bound: false,
+        root: options.target || parent_component.$$.root
+    };
+    append_styles && append_styles($$.root);
+    let ready = false;
+    $$.ctx = instance
+        ? instance(component, options.props || {}, (i, ret, ...rest) => {
+            const value = rest.length ? rest[0] : ret;
+            if ($$.ctx && not_equal($$.ctx[i], $$.ctx[i] = value)) {
+                if (!$$.skip_bound && $$.bound[i])
+                    $$.bound[i](value);
+                if (ready)
+                    make_dirty(component, i);
+            }
+            return ret;
+        })
+        : [];
+    $$.update();
+    ready = true;
+    run_all($$.before_update);
+    // `false` as a special case of no DOM component
+    $$.fragment = create_fragment ? create_fragment($$.ctx) : false;
+    if (options.target) {
+        if (options.hydrate) {
+            const nodes = children(options.target);
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            $$.fragment && $$.fragment.l(nodes);
+            nodes.forEach(detach);
+        }
+        else {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            $$.fragment && $$.fragment.c();
+        }
+        if (options.intro)
+            transition_in(component.$$.fragment);
+        mount_component(component, options.target, options.anchor, options.customElement);
+        flush();
+    }
+    set_current_component(parent_component);
+}
+/**
+ * Base class for Svelte components. Used when dev=false.
+ */
+class SvelteComponent {
+    $destroy() {
+        destroy_component(this, 1);
+        this.$destroy = noop;
+    }
+    $on(type, callback) {
+        const callbacks = (this.$$.callbacks[type] || (this.$$.callbacks[type] = []));
+        callbacks.push(callback);
+        return () => {
+            const index = callbacks.indexOf(callback);
+            if (index !== -1)
+                callbacks.splice(index, 1);
+        };
+    }
+    $set($$props) {
+        if (this.$$set && !is_empty($$props)) {
+            this.$$.skip_bound = true;
+            this.$$set($$props);
+            this.$$.skip_bound = false;
+        }
+    }
+}
+
+const subscriber_queue = [];
+/**
+ * Create a `Writable` store that allows both updating and reading by subscription.
+ * @param {*=}value initial value
+ * @param {StartStopNotifier=}start start and stop notifications for subscriptions
+ */
+function writable(value, start = noop) {
+    let stop;
+    const subscribers = new Set();
+    function set(new_value) {
+        if (safe_not_equal(value, new_value)) {
+            value = new_value;
+            if (stop) { // store is ready
+                const run_queue = !subscriber_queue.length;
+                for (const subscriber of subscribers) {
+                    subscriber[1]();
+                    subscriber_queue.push(subscriber, value);
+                }
+                if (run_queue) {
+                    for (let i = 0; i < subscriber_queue.length; i += 2) {
+                        subscriber_queue[i][0](subscriber_queue[i + 1]);
+                    }
+                    subscriber_queue.length = 0;
+                }
+            }
+        }
+    }
+    function update(fn) {
+        set(fn(value));
+    }
+    function subscribe(run, invalidate = noop) {
+        const subscriber = [run, invalidate];
+        subscribers.add(subscriber);
+        if (subscribers.size === 1) {
+            stop = start(set) || noop;
+        }
+        run(value);
+        return () => {
+            subscribers.delete(subscriber);
+            if (subscribers.size === 0) {
+                stop();
+                stop = null;
+            }
+        };
+    }
+    return { set, update, subscribe };
+}
+
+const initializeStoreValue = (defaultValue) => {
+    const { subscribe, set, update } = writable(defaultValue);
+    return {
+        subscribe,
+        set,
+        update,
+        reset: () => set(defaultValue),
+    };
+};
+const showOnboarding = initializeStoreValue(false);
+const showOnboardingSteps = initializeStoreValue(false);
+const activeStep = initializeStoreValue(null);
+const onboardingMessages = initializeStoreValue([]);
+const navigationAlignment = initializeStoreValue("column");
+const onboardingStages = initializeStoreValue([]);
+const activeOnboardingStage = initializeStoreValue(null);
+const activeMarker = initializeStoreValue(null);
+const selectedMarker = initializeStoreValue(null);
+const showBackdrop = initializeStoreValue(true);
+const backdropOpacity = initializeStoreValue(0.15);
+const showOnboardingNavigation = initializeStoreValue(false);
+const previousMarkerId = initializeStoreValue("");
+const markerIndexId = initializeStoreValue(null);
+const showHideCloseText = initializeStoreValue(true);
+const isEditModeActive = initializeStoreValue(false);
+const visXPosition = writable(0);
+const visYPosition = writable(0);
+const visHeight = writable(0);
+const visWidth = writable(0);
+const markerInformation = writable([]);
+const resetStore = () => {
+    showOnboarding.reset();
+    activeStep.reset();
+    onboardingMessages.reset();
+    navigationAlignment.reset();
+    onboardingStages.reset();
+    activeOnboardingStage.reset();
+    activeMarker.reset();
+    selectedMarker.reset();
+    markerIndexId.reset();
+};
+
+function generateMessages$2(spec, visElement) {
+    const analyzing = defaultOnboardingStages.get(EDefaultOnboardingStages.ANALYZING);
+    const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING);
+    const interacting = defaultOnboardingStages.get(EDefaultOnboardingStages.USING);
+    const messages = [
+        {
+            anchor: getAnchor(spec.desc, visElement),
+            requires: ["desc"],
+            text: `The treemap visualization shows the breakdown of hierarchical data level by level.The size of each rectangle represents a quantitative value associated with each element in the hierarchy.`,
+            title: "Reading the chart",
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-2",
+            },
+        },
+        {
+            anchor: getAnchor(spec.subDesc, visElement),
+            requires: ["subDesc"],
+            text: `The area covered by the whole treemap is subdivided recursively into sub-categories according to their quantitative values, level by level.`,
+            title: "Reading the chart",
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-3",
+            },
+        },
+        {
+            anchor: getAnchor(spec.otherDesc, visElement),
+            requires: ["otherDesc"],
+            text: `Items on the bottom level that belong to the same sub-category are visually represented by using the same color.`,
+            title: "Reading the chart",
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-4",
+            },
+        },
+        {
+            anchor: getAnchor(spec.gapDesc, visElement),
+            requires: ["gapDesc"],
+            text: `Items within a sub-category are represented by rectangles that are closely packed together with increasingly larger gaps to the neighboring categories.`,
+            title: "Reading the chart",
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-5",
+            },
+        },
+        {
+            anchor: getAnchor(spec.interactingDesc, visElement),
+            requires: ["interactingDesc"],
+            text: `Hover over the rectangles to get the dedicated value of the sub-category and further information.`,
+            title: "Interacting with the chart",
+            onboardingStage: interacting,
+            marker: {
+                id: "unique-marker-id-6",
+            },
+        },
+        {
+            anchor: getAnchor(spec.maxValueDesc, visElement),
+            requires: ["maxValueDesc", "maxValue"],
+            text: `The largest rectangle holds the maximum value in the sub-category. In this sub-category ${spec.maxValue?.value} is the maximum value.`,
+            title: "Analyzing the chart",
+            onboardingStage: analyzing,
+            marker: {
+                id: "unique-marker-id-7",
+            },
+        },
+        {
+            anchor: getAnchor(spec.minValueDesc, visElement),
+            requires: ["minValueDesc", "minValue"],
+            text: ` The smallest rectangle holds the minimum value in the sub-category. In this sub-category ${spec.minValue?.value} is the minimum value.`,
+            title: "Analyzing the chart",
+            onboardingStage: analyzing,
+            marker: {
+                id: "unique-marker-id-8",
+            },
+        },
+    ];
+    if (spec.chartTitle?.value !== undefined) {
+        messages.unshift({
+            anchor: getAnchor(spec.chartTitle, visElement),
+            requires: ["chartTitle"],
+            text: `The chart shows the ${spec.chartTitle?.value}.`,
+            title: "Reading the chart",
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-1",
+            },
+        });
+    }
+    // Filter for messages where all template variables are available in the spec
+    return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
+}
+const treemap = {
     generateMessages: generateMessages$2,
+};
+
+function generateMessages$1(spec, visElement) {
+    const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING);
+    const interacting = defaultOnboardingStages.get(EDefaultOnboardingStages.USING);
+    console.log("check-4");
+    const messages = [
+        {
+            anchor: getAnchor(spec.chartTitle, visElement),
+            requires: ["chartTitle"],
+            text: `The chart shows the ${spec.chartTitle?.value}.`,
+            title: "Reading the chart",
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-1",
+            },
+        },
+        {
+            anchor: getAnchor(spec.heatmapDescription, visElement),
+            requires: ["heatmapDescription"],
+            text: "It is based on colored cells.",
+            title: "Reading the chart",
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-2",
+            },
+        },
+        {
+            anchor: getAnchor(spec.legendDescription, visElement),
+            requires: ["legendDescription"],
+            text: "A deep red color indicates a high temperature whereas a deep blue color indicates a low temperature. Medium values are visualized by a neutral light gray.",
+            title: "Reading the chart",
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-3",
+            },
+        },
+        {
+            anchor: getAnchor(spec.axisDescription, visElement),
+            requires: ["xAxis", "yAxis"],
+            text: `${spec.yAxis?.value} is plotted in rows and the ${spec.xAxis?.value} in columns.`,
+            title: "Reading the chart",
+            onboardingStage: reading,
+            marker: {
+                id: "unique-marker-id-4",
+            },
+        },
+        {
+            anchor: getAnchor(spec.hoverDescription, visElement),
+            requires: ["hoverDescription"],
+            text: "Hover over the chart to get the dedicated value for each cell.",
+            title: "Interacting with the chart",
+            onboardingStage: interacting,
+            marker: {
+                id: "unique-marker-id-5",
+            },
+        },
+    ];
+    // Filter for messages where all template variables are available in the spec
+    return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
+}
+const heatmap = {
+    generateMessages: generateMessages$1,
 };
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -5786,798 +6646,6 @@ function createCommonjsModule(fn) {
 
 }());
 
-function noop() { }
-const identity = x => x;
-function run(fn) {
-    return fn();
-}
-function blank_object() {
-    return Object.create(null);
-}
-function run_all(fns) {
-    fns.forEach(run);
-}
-function is_function(thing) {
-    return typeof thing === 'function';
-}
-function safe_not_equal(a, b) {
-    return a != a ? b == b : a !== b || ((a && typeof a === 'object') || typeof a === 'function');
-}
-function is_empty(obj) {
-    return Object.keys(obj).length === 0;
-}
-function subscribe(store, ...callbacks) {
-    if (store == null) {
-        return noop;
-    }
-    const unsub = store.subscribe(...callbacks);
-    return unsub.unsubscribe ? () => unsub.unsubscribe() : unsub;
-}
-function get_store_value(store) {
-    let value;
-    subscribe(store, _ => value = _)();
-    return value;
-}
-function component_subscribe(component, store, callback) {
-    component.$$.on_destroy.push(subscribe(store, callback));
-}
-function null_to_empty(value) {
-    return value == null ? '' : value;
-}
-
-const is_client = typeof window !== 'undefined';
-let now$1 = is_client
-    ? () => window.performance.now()
-    : () => Date.now();
-let raf = is_client ? cb => requestAnimationFrame(cb) : noop;
-
-const tasks = new Set();
-function run_tasks(now) {
-    tasks.forEach(task => {
-        if (!task.c(now)) {
-            tasks.delete(task);
-            task.f();
-        }
-    });
-    if (tasks.size !== 0)
-        raf(run_tasks);
-}
-/**
- * Creates a new task that runs on each raf frame
- * until it returns a falsy value or is aborted
- */
-function loop(callback) {
-    let task;
-    if (tasks.size === 0)
-        raf(run_tasks);
-    return {
-        promise: new Promise(fulfill => {
-            tasks.add(task = { c: callback, f: fulfill });
-        }),
-        abort() {
-            tasks.delete(task);
-        }
-    };
-}
-function append(target, node) {
-    target.appendChild(node);
-}
-function get_root_for_style(node) {
-    if (!node)
-        return document;
-    const root = node.getRootNode ? node.getRootNode() : node.ownerDocument;
-    if (root && root.host) {
-        return root;
-    }
-    return node.ownerDocument;
-}
-function append_empty_stylesheet(node) {
-    const style_element = element('style');
-    append_stylesheet(get_root_for_style(node), style_element);
-    return style_element.sheet;
-}
-function append_stylesheet(node, style) {
-    append(node.head || node, style);
-}
-function insert(target, node, anchor) {
-    target.insertBefore(node, anchor || null);
-}
-function detach(node) {
-    node.parentNode.removeChild(node);
-}
-function destroy_each(iterations, detaching) {
-    for (let i = 0; i < iterations.length; i += 1) {
-        if (iterations[i])
-            iterations[i].d(detaching);
-    }
-}
-function element(name) {
-    return document.createElement(name);
-}
-function svg_element(name) {
-    return document.createElementNS('http://www.w3.org/2000/svg', name);
-}
-function text(data) {
-    return document.createTextNode(data);
-}
-function space() {
-    return text(' ');
-}
-function empty$1() {
-    return text('');
-}
-function listen(node, event, handler, options) {
-    node.addEventListener(event, handler, options);
-    return () => node.removeEventListener(event, handler, options);
-}
-function attr(node, attribute, value) {
-    if (value == null)
-        node.removeAttribute(attribute);
-    else if (node.getAttribute(attribute) !== value)
-        node.setAttribute(attribute, value);
-}
-function children(element) {
-    return Array.from(element.childNodes);
-}
-function set_data(text, data) {
-    data = '' + data;
-    if (text.wholeText !== data)
-        text.data = data;
-}
-function set_style(node, key, value, important) {
-    if (value === null) {
-        node.style.removeProperty(key);
-    }
-    else {
-        node.style.setProperty(key, value, important ? 'important' : '');
-    }
-}
-function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
-    const e = document.createEvent('CustomEvent');
-    e.initCustomEvent(type, bubbles, cancelable, detail);
-    return e;
-}
-
-// we need to store the information for multiple documents because a Svelte application could also contain iframes
-// https://github.com/sveltejs/svelte/issues/3624
-const managed_styles = new Map();
-let active = 0;
-// https://github.com/darkskyapp/string-hash/blob/master/index.js
-function hash(str) {
-    let hash = 5381;
-    let i = str.length;
-    while (i--)
-        hash = ((hash << 5) - hash) ^ str.charCodeAt(i);
-    return hash >>> 0;
-}
-function create_style_information(doc, node) {
-    const info = { stylesheet: append_empty_stylesheet(node), rules: {} };
-    managed_styles.set(doc, info);
-    return info;
-}
-function create_rule(node, a, b, duration, delay, ease, fn, uid = 0) {
-    const step = 16.666 / duration;
-    let keyframes = '{\n';
-    for (let p = 0; p <= 1; p += step) {
-        const t = a + (b - a) * ease(p);
-        keyframes += p * 100 + `%{${fn(t, 1 - t)}}\n`;
-    }
-    const rule = keyframes + `100% {${fn(b, 1 - b)}}\n}`;
-    const name = `__svelte_${hash(rule)}_${uid}`;
-    const doc = get_root_for_style(node);
-    const { stylesheet, rules } = managed_styles.get(doc) || create_style_information(doc, node);
-    if (!rules[name]) {
-        rules[name] = true;
-        stylesheet.insertRule(`@keyframes ${name} ${rule}`, stylesheet.cssRules.length);
-    }
-    const animation = node.style.animation || '';
-    node.style.animation = `${animation ? `${animation}, ` : ''}${name} ${duration}ms linear ${delay}ms 1 both`;
-    active += 1;
-    return name;
-}
-function delete_rule(node, name) {
-    const previous = (node.style.animation || '').split(', ');
-    const next = previous.filter(name
-        ? anim => anim.indexOf(name) < 0 // remove specific animation
-        : anim => anim.indexOf('__svelte') === -1 // remove all Svelte animations
-    );
-    const deleted = previous.length - next.length;
-    if (deleted) {
-        node.style.animation = next.join(', ');
-        active -= deleted;
-        if (!active)
-            clear_rules();
-    }
-}
-function clear_rules() {
-    raf(() => {
-        if (active)
-            return;
-        managed_styles.forEach(info => {
-            const { stylesheet } = info;
-            let i = stylesheet.cssRules.length;
-            while (i--)
-                stylesheet.deleteRule(i);
-            info.rules = {};
-        });
-        managed_styles.clear();
-    });
-}
-
-let current_component;
-function set_current_component(component) {
-    current_component = component;
-}
-function get_current_component() {
-    if (!current_component)
-        throw new Error('Function called outside component initialization');
-    return current_component;
-}
-function onMount(fn) {
-    get_current_component().$$.on_mount.push(fn);
-}
-function onDestroy(fn) {
-    get_current_component().$$.on_destroy.push(fn);
-}
-
-const dirty_components = [];
-const binding_callbacks = [];
-const render_callbacks = [];
-const flush_callbacks = [];
-const resolved_promise = Promise.resolve();
-let update_scheduled = false;
-function schedule_update() {
-    if (!update_scheduled) {
-        update_scheduled = true;
-        resolved_promise.then(flush);
-    }
-}
-function tick() {
-    schedule_update();
-    return resolved_promise;
-}
-function add_render_callback(fn) {
-    render_callbacks.push(fn);
-}
-// flush() calls callbacks in this order:
-// 1. All beforeUpdate callbacks, in order: parents before children
-// 2. All bind:this callbacks, in reverse order: children before parents.
-// 3. All afterUpdate callbacks, in order: parents before children. EXCEPT
-//    for afterUpdates called during the initial onMount, which are called in
-//    reverse order: children before parents.
-// Since callbacks might update component values, which could trigger another
-// call to flush(), the following steps guard against this:
-// 1. During beforeUpdate, any updated components will be added to the
-//    dirty_components array and will cause a reentrant call to flush(). Because
-//    the flush index is kept outside the function, the reentrant call will pick
-//    up where the earlier call left off and go through all dirty components. The
-//    current_component value is saved and restored so that the reentrant call will
-//    not interfere with the "parent" flush() call.
-// 2. bind:this callbacks cannot trigger new flush() calls.
-// 3. During afterUpdate, any updated components will NOT have their afterUpdate
-//    callback called a second time; the seen_callbacks set, outside the flush()
-//    function, guarantees this behavior.
-const seen_callbacks = new Set();
-let flushidx = 0; // Do *not* move this inside the flush() function
-function flush() {
-    const saved_component = current_component;
-    do {
-        // first, call beforeUpdate functions
-        // and update components
-        while (flushidx < dirty_components.length) {
-            const component = dirty_components[flushidx];
-            flushidx++;
-            set_current_component(component);
-            update(component.$$);
-        }
-        set_current_component(null);
-        dirty_components.length = 0;
-        flushidx = 0;
-        while (binding_callbacks.length)
-            binding_callbacks.pop()();
-        // then, once components are updated, call
-        // afterUpdate functions. This may cause
-        // subsequent updates...
-        for (let i = 0; i < render_callbacks.length; i += 1) {
-            const callback = render_callbacks[i];
-            if (!seen_callbacks.has(callback)) {
-                // ...so guard against infinite loops
-                seen_callbacks.add(callback);
-                callback();
-            }
-        }
-        render_callbacks.length = 0;
-    } while (dirty_components.length);
-    while (flush_callbacks.length) {
-        flush_callbacks.pop()();
-    }
-    update_scheduled = false;
-    seen_callbacks.clear();
-    set_current_component(saved_component);
-}
-function update($$) {
-    if ($$.fragment !== null) {
-        $$.update();
-        run_all($$.before_update);
-        const dirty = $$.dirty;
-        $$.dirty = [-1];
-        $$.fragment && $$.fragment.p($$.ctx, dirty);
-        $$.after_update.forEach(add_render_callback);
-    }
-}
-
-let promise;
-function wait() {
-    if (!promise) {
-        promise = Promise.resolve();
-        promise.then(() => {
-            promise = null;
-        });
-    }
-    return promise;
-}
-function dispatch(node, direction, kind) {
-    node.dispatchEvent(custom_event(`${direction ? 'intro' : 'outro'}${kind}`));
-}
-const outroing = new Set();
-let outros;
-function group_outros() {
-    outros = {
-        r: 0,
-        c: [],
-        p: outros // parent group
-    };
-}
-function check_outros() {
-    if (!outros.r) {
-        run_all(outros.c);
-    }
-    outros = outros.p;
-}
-function transition_in(block, local) {
-    if (block && block.i) {
-        outroing.delete(block);
-        block.i(local);
-    }
-}
-function transition_out(block, local, detach, callback) {
-    if (block && block.o) {
-        if (outroing.has(block))
-            return;
-        outroing.add(block);
-        outros.c.push(() => {
-            outroing.delete(block);
-            if (callback) {
-                if (detach)
-                    block.d(1);
-                callback();
-            }
-        });
-        block.o(local);
-    }
-    else if (callback) {
-        callback();
-    }
-}
-const null_transition = { duration: 0 };
-function create_bidirectional_transition(node, fn, params, intro) {
-    let config = fn(node, params);
-    let t = intro ? 0 : 1;
-    let running_program = null;
-    let pending_program = null;
-    let animation_name = null;
-    function clear_animation() {
-        if (animation_name)
-            delete_rule(node, animation_name);
-    }
-    function init(program, duration) {
-        const d = (program.b - t);
-        duration *= Math.abs(d);
-        return {
-            a: t,
-            b: program.b,
-            d,
-            duration,
-            start: program.start,
-            end: program.start + duration,
-            group: program.group
-        };
-    }
-    function go(b) {
-        const { delay = 0, duration = 300, easing = identity, tick = noop, css } = config || null_transition;
-        const program = {
-            start: now$1() + delay,
-            b
-        };
-        if (!b) {
-            // @ts-ignore todo: improve typings
-            program.group = outros;
-            outros.r += 1;
-        }
-        if (running_program || pending_program) {
-            pending_program = program;
-        }
-        else {
-            // if this is an intro, and there's a delay, we need to do
-            // an initial tick and/or apply CSS animation immediately
-            if (css) {
-                clear_animation();
-                animation_name = create_rule(node, t, b, duration, delay, easing, css);
-            }
-            if (b)
-                tick(0, 1);
-            running_program = init(program, duration);
-            add_render_callback(() => dispatch(node, b, 'start'));
-            loop(now => {
-                if (pending_program && now > pending_program.start) {
-                    running_program = init(pending_program, duration);
-                    pending_program = null;
-                    dispatch(node, running_program.b, 'start');
-                    if (css) {
-                        clear_animation();
-                        animation_name = create_rule(node, t, running_program.b, running_program.duration, 0, easing, config.css);
-                    }
-                }
-                if (running_program) {
-                    if (now >= running_program.end) {
-                        tick(t = running_program.b, 1 - t);
-                        dispatch(node, running_program.b, 'end');
-                        if (!pending_program) {
-                            // we're done
-                            if (running_program.b) {
-                                // intro — we can tidy up immediately
-                                clear_animation();
-                            }
-                            else {
-                                // outro — needs to be coordinated
-                                if (!--running_program.group.r)
-                                    run_all(running_program.group.c);
-                            }
-                        }
-                        running_program = null;
-                    }
-                    else if (now >= running_program.start) {
-                        const p = now - running_program.start;
-                        t = running_program.a + running_program.d * easing(p / running_program.duration);
-                        tick(t, 1 - t);
-                    }
-                }
-                return !!(running_program || pending_program);
-            });
-        }
-    }
-    return {
-        run(b) {
-            if (is_function(config)) {
-                wait().then(() => {
-                    // @ts-ignore
-                    config = config();
-                    go(b);
-                });
-            }
-            else {
-                go(b);
-            }
-        },
-        end() {
-            clear_animation();
-            running_program = pending_program = null;
-        }
-    };
-}
-function create_component(block) {
-    block && block.c();
-}
-function mount_component(component, target, anchor, customElement) {
-    const { fragment, on_mount, on_destroy, after_update } = component.$$;
-    fragment && fragment.m(target, anchor);
-    if (!customElement) {
-        // onMount happens before the initial afterUpdate
-        add_render_callback(() => {
-            const new_on_destroy = on_mount.map(run).filter(is_function);
-            if (on_destroy) {
-                on_destroy.push(...new_on_destroy);
-            }
-            else {
-                // Edge case - component was destroyed immediately,
-                // most likely as a result of a binding initialising
-                run_all(new_on_destroy);
-            }
-            component.$$.on_mount = [];
-        });
-    }
-    after_update.forEach(add_render_callback);
-}
-function destroy_component(component, detaching) {
-    const $$ = component.$$;
-    if ($$.fragment !== null) {
-        run_all($$.on_destroy);
-        $$.fragment && $$.fragment.d(detaching);
-        // TODO null out other refs, including component.$$ (but need to
-        // preserve final state?)
-        $$.on_destroy = $$.fragment = null;
-        $$.ctx = [];
-    }
-}
-function make_dirty(component, i) {
-    if (component.$$.dirty[0] === -1) {
-        dirty_components.push(component);
-        schedule_update();
-        component.$$.dirty.fill(0);
-    }
-    component.$$.dirty[(i / 31) | 0] |= (1 << (i % 31));
-}
-function init(component, options, instance, create_fragment, not_equal, props, append_styles, dirty = [-1]) {
-    const parent_component = current_component;
-    set_current_component(component);
-    const $$ = component.$$ = {
-        fragment: null,
-        ctx: null,
-        // state
-        props,
-        update: noop,
-        not_equal,
-        bound: blank_object(),
-        // lifecycle
-        on_mount: [],
-        on_destroy: [],
-        on_disconnect: [],
-        before_update: [],
-        after_update: [],
-        context: new Map(options.context || (parent_component ? parent_component.$$.context : [])),
-        // everything else
-        callbacks: blank_object(),
-        dirty,
-        skip_bound: false,
-        root: options.target || parent_component.$$.root
-    };
-    append_styles && append_styles($$.root);
-    let ready = false;
-    $$.ctx = instance
-        ? instance(component, options.props || {}, (i, ret, ...rest) => {
-            const value = rest.length ? rest[0] : ret;
-            if ($$.ctx && not_equal($$.ctx[i], $$.ctx[i] = value)) {
-                if (!$$.skip_bound && $$.bound[i])
-                    $$.bound[i](value);
-                if (ready)
-                    make_dirty(component, i);
-            }
-            return ret;
-        })
-        : [];
-    $$.update();
-    ready = true;
-    run_all($$.before_update);
-    // `false` as a special case of no DOM component
-    $$.fragment = create_fragment ? create_fragment($$.ctx) : false;
-    if (options.target) {
-        if (options.hydrate) {
-            const nodes = children(options.target);
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            $$.fragment && $$.fragment.l(nodes);
-            nodes.forEach(detach);
-        }
-        else {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            $$.fragment && $$.fragment.c();
-        }
-        if (options.intro)
-            transition_in(component.$$.fragment);
-        mount_component(component, options.target, options.anchor, options.customElement);
-        flush();
-    }
-    set_current_component(parent_component);
-}
-/**
- * Base class for Svelte components. Used when dev=false.
- */
-class SvelteComponent {
-    $destroy() {
-        destroy_component(this, 1);
-        this.$destroy = noop;
-    }
-    $on(type, callback) {
-        const callbacks = (this.$$.callbacks[type] || (this.$$.callbacks[type] = []));
-        callbacks.push(callback);
-        return () => {
-            const index = callbacks.indexOf(callback);
-            if (index !== -1)
-                callbacks.splice(index, 1);
-        };
-    }
-    $set($$props) {
-        if (this.$$set && !is_empty($$props)) {
-            this.$$.skip_bound = true;
-            this.$$set($$props);
-            this.$$.skip_bound = false;
-        }
-    }
-}
-
-const subscriber_queue = [];
-/**
- * Create a `Writable` store that allows both updating and reading by subscription.
- * @param {*=}value initial value
- * @param {StartStopNotifier=}start start and stop notifications for subscriptions
- */
-function writable(value, start = noop) {
-    let stop;
-    const subscribers = new Set();
-    function set(new_value) {
-        if (safe_not_equal(value, new_value)) {
-            value = new_value;
-            if (stop) { // store is ready
-                const run_queue = !subscriber_queue.length;
-                for (const subscriber of subscribers) {
-                    subscriber[1]();
-                    subscriber_queue.push(subscriber, value);
-                }
-                if (run_queue) {
-                    for (let i = 0; i < subscriber_queue.length; i += 2) {
-                        subscriber_queue[i][0](subscriber_queue[i + 1]);
-                    }
-                    subscriber_queue.length = 0;
-                }
-            }
-        }
-    }
-    function update(fn) {
-        set(fn(value));
-    }
-    function subscribe(run, invalidate = noop) {
-        const subscriber = [run, invalidate];
-        subscribers.add(subscriber);
-        if (subscribers.size === 1) {
-            stop = start(set) || noop;
-        }
-        run(value);
-        return () => {
-            subscribers.delete(subscriber);
-            if (subscribers.size === 0) {
-                stop();
-                stop = null;
-            }
-        };
-    }
-    return { set, update, subscribe };
-}
-
-const initializeStoreValue = (defaultValue) => {
-    const { subscribe, set, update } = writable(defaultValue);
-    return {
-        subscribe,
-        set,
-        update,
-        reset: () => set(defaultValue),
-    };
-};
-const showOnboarding = initializeStoreValue(false);
-const showOnboardingSteps = initializeStoreValue(false);
-const activeStep = initializeStoreValue(null);
-const onboardingMessages = initializeStoreValue([]);
-const navigationAlignment = initializeStoreValue("column");
-const onboardingStages = initializeStoreValue([]);
-const activeOnboardingStage = initializeStoreValue(null);
-const activeMarker = initializeStoreValue(null);
-const selectedMarker = initializeStoreValue(null);
-const showBackdrop = initializeStoreValue(true);
-const backdropOpacity = initializeStoreValue(0.15);
-const showOnboardingNavigation = initializeStoreValue(false);
-const previousMarkerId = initializeStoreValue("");
-const markerIndexId = initializeStoreValue(null);
-const showHideCloseText = initializeStoreValue(true);
-const visXPosition = writable(0);
-const visYPosition = writable(0);
-const visHeight = writable(0);
-const visWidth = writable(0);
-const markerInformation = writable([]);
-const resetStore = () => {
-    showOnboarding.reset();
-    activeStep.reset();
-    onboardingMessages.reset();
-    navigationAlignment.reset();
-    onboardingStages.reset();
-    activeOnboardingStage.reset();
-    activeMarker.reset();
-    selectedMarker.reset();
-    markerIndexId.reset();
-};
-
-function generateMessages$1(spec, visElement) {
-    const analyzing = defaultOnboardingStages.get(EDefaultOnboardingStages.ANALYZING);
-    const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING);
-    const interacting = defaultOnboardingStages.get(EDefaultOnboardingStages.USING);
-    const messages = [
-        {
-            anchor: getAnchor(spec.desc, visElement),
-            requires: ["desc"],
-            text: `The treemap visualization shows the breakdown of hierarchical data level by level.The size of each rectangle represents a quantitative value associated with each element in the hierarchy.`,
-            title: "Reading the chart",
-            onboardingStage: reading,
-            marker: {
-                id: "unique-marker-id-2",
-            },
-        },
-        {
-            anchor: getAnchor(spec.subDesc, visElement),
-            requires: ["subDesc"],
-            text: `The area covered by the whole treemap is subdivided recursively into sub-categories according to their quantitative values, level by level.`,
-            title: "Reading the chart",
-            onboardingStage: reading,
-            marker: {
-                id: "unique-marker-id-3",
-            },
-        },
-        {
-            anchor: getAnchor(spec.otherDesc, visElement),
-            requires: ["otherDesc"],
-            text: `Items on the bottom level that belong to the same sub-category are visually represented by using the same color.`,
-            title: "Reading the chart",
-            onboardingStage: reading,
-            marker: {
-                id: "unique-marker-id-4",
-            },
-        },
-        {
-            anchor: getAnchor(spec.gapDesc, visElement),
-            requires: ["gapDesc"],
-            text: `Items within a sub-category are represented by rectangles that are closely packed together with increasingly larger gaps to the neighboring categories.`,
-            title: "Reading the chart",
-            onboardingStage: reading,
-            marker: {
-                id: "unique-marker-id-5",
-            },
-        },
-        {
-            anchor: getAnchor(spec.interactingDesc, visElement),
-            requires: ["interactingDesc"],
-            text: `Hover over the rectangles to get the dedicated value of the sub-category and further information.`,
-            title: "Interacting with the chart",
-            onboardingStage: interacting,
-            marker: {
-                id: "unique-marker-id-6",
-            },
-        },
-        {
-            anchor: getAnchor(spec.maxValueDesc, visElement),
-            requires: ["maxValueDesc", "maxValue"],
-            text: `The largest rectangle holds the maximum value in the sub-category. In this sub-category ${spec.maxValue?.value} is the maximum value.`,
-            title: "Analyzing the chart",
-            onboardingStage: analyzing,
-            marker: {
-                id: "unique-marker-id-7",
-            },
-        },
-        {
-            anchor: getAnchor(spec.minValueDesc, visElement),
-            requires: ["minValueDesc", "minValue"],
-            text: ` The smallest rectangle holds the minimum value in the sub-category. In this sub-category ${spec.minValue?.value} is the minimum value.`,
-            title: "Analyzing the chart",
-            onboardingStage: analyzing,
-            marker: {
-                id: "unique-marker-id-8",
-            },
-        },
-    ];
-    if (spec.chartTitle?.value !== undefined) {
-        messages.unshift({
-            anchor: getAnchor(spec.chartTitle, visElement),
-            requires: ["chartTitle"],
-            text: `The chart shows the ${spec.chartTitle?.value}.`,
-            title: "Reading the chart",
-            onboardingStage: reading,
-            marker: {
-                id: "unique-marker-id-1",
-            },
-        });
-    }
-    // Filter for messages where all template variables are available in the spec
-    return messages.filter((message) => message.requires.every((tplVars) => spec[tplVars]));
-}
-const treemap = {
-    generateMessages: generateMessages$1,
-};
-
 /* src\components\OnboardingNavigationItem.svelte generated by Svelte v3.49.0 */
 
 function create_fragment$9(ctx) {
@@ -6610,7 +6678,7 @@ function create_fragment$9(ctx) {
 			attr(span, "class", "visahoi-stage-title svelte-15kr85e");
 			set_style(div1, "--background-color", /*stage*/ ctx[0].backgroundColor);
 			set_style(div1, "--hover-background-color", /*stage*/ ctx[0].hoverBackgroundColor || /*stage*/ ctx[0].backgroundColor);
-			set_style(div1, "--bottom", /*bottom*/ ctx[5]);
+			set_style(div1, "--bottom", /*bottom*/ ctx[4]);
 
 			attr(div1, "class", div1_class_value = "visahoi-navigation-item " + (!/*$showOnboardingSteps*/ ctx[1] || /*$activeOnboardingStage*/ ctx[2]
 			? 'removed'
@@ -6627,7 +6695,7 @@ function create_fragment$9(ctx) {
 			append(span, t1);
 
 			if (!mounted) {
-				dispose = listen(div1, "click", /*handleClick*/ ctx[4]);
+				dispose = listen(div1, "click", /*handleClick*/ ctx[5]);
 				mounted = true;
 			}
 		},
@@ -6675,14 +6743,13 @@ function instance$9($$self, $$props, $$invalidate) {
 	component_subscribe($$self, navigationAlignment, $$value => $$invalidate(3, $navigationAlignment = $$value));
 	let { stage } = $$props;
 	let { index } = $$props;
+	const bottom = (index + 1) * 75 + "px";
 
 	const handleClick = () => {
 		activeOnboardingStage.update(v => (v === null || v === void 0 ? void 0 : v.id) === stage.id
 		? null
 		: stage);
 	};
-
-	const bottom = (index + 1) * 75 + "px";
 
 	$$self.$$set = $$props => {
 		if ('stage' in $$props) $$invalidate(0, stage = $$props.stage);
@@ -6694,8 +6761,8 @@ function instance$9($$self, $$props, $$invalidate) {
 		$showOnboardingSteps,
 		$activeOnboardingStage,
 		$navigationAlignment,
-		handleClick,
 		bottom,
+		handleClick,
 		index
 	];
 }
@@ -6712,7 +6779,7 @@ const navigationMainItemDefaultColor = "#eb3461";
 
 /* src\components\OnboardingNavigationMainItem.svelte generated by Svelte v3.49.0 */
 
-function create_else_block_1(ctx) {
+function create_else_block_1$1(ctx) {
 	let span;
 
 	return {
@@ -6729,8 +6796,8 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (22:4) {#if $showOnboardingSteps}
-function create_if_block_1$1(ctx) {
+// (42:4) {#if $showOnboardingSteps}
+function create_if_block_2$1(ctx) {
 	let span;
 
 	return {
@@ -6747,8 +6814,37 @@ function create_if_block_1$1(ctx) {
 	};
 }
 
-// (45:2) {:else}
-function create_else_block(ctx) {
+// (48:4) {#if $activeOnboardingStage && $isEditModeActive}
+function create_if_block_1$2(ctx) {
+	let div;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			div = element("div");
+			div.innerHTML = `<i class="fas fa-trash svelte-19bz78m"></i>`;
+			attr(div, "class", "visahoi-delete-stage svelte-19bz78m");
+		},
+		m(target, anchor) {
+			insert(target, div, anchor);
+
+			if (!mounted) {
+				dispose = listen(div, "click", /*deleteOnboardingStage*/ ctx[9]);
+				mounted = true;
+			}
+		},
+		p: noop,
+		d(detaching) {
+			if (detaching) detach(div);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+// (79:2) {:else}
+function create_else_block$1(ctx) {
 	let span;
 	let i;
 	let mounted;
@@ -6760,7 +6856,6 @@ function create_else_block(ctx) {
 			i = element("i");
 			attr(i, "class", "fas fa-solid fa-toggle-off");
 			set_style(i, "width", "20px, height:20px");
-			attr(span, "class", "test-span");
 		},
 		m(target, anchor) {
 			insert(target, span, anchor);
@@ -6768,8 +6863,8 @@ function create_else_block(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(i, "click", /*toggleNavigation*/ ctx[5]),
-					listen(span, "click", /*toggleNavigation*/ ctx[5])
+					listen(i, "click", /*toggleNavigation*/ ctx[7]),
+					listen(span, "click", /*toggleNavigation*/ ctx[7])
 				];
 
 				mounted = true;
@@ -6784,8 +6879,8 @@ function create_else_block(ctx) {
 	};
 }
 
-// (41:2) {#if $showOnboardingNavigation}
-function create_if_block$2(ctx) {
+// (75:2) {#if $showOnboardingNavigation}
+function create_if_block$3(ctx) {
 	let span;
 	let mounted;
 	let dispose;
@@ -6794,13 +6889,12 @@ function create_if_block$2(ctx) {
 		c() {
 			span = element("span");
 			span.innerHTML = `<i class="fas fa-solid fa-toggle-on"></i>`;
-			attr(span, "class", "test-span");
 		},
 		m(target, anchor) {
 			insert(target, span, anchor);
 
 			if (!mounted) {
-				dispose = listen(span, "click", /*toggleNavigation*/ ctx[5]);
+				dispose = listen(span, "click", /*toggleNavigation*/ ctx[7]);
 				mounted = true;
 			}
 		},
@@ -6817,35 +6911,41 @@ function create_fragment$8(ctx) {
 	let div1;
 	let div0;
 	let t0;
+	let t1;
 	let span;
 
-	let t1_value = (/*$activeOnboardingStage*/ ctx[1]
-	? /*$activeOnboardingStage*/ ctx[1]?.title
-	: /*$showOnboardingSteps*/ ctx[2] && /*$showHideCloseText*/ ctx[3]
+	let t2_value = (/*$activeOnboardingStage*/ ctx[2]
+	? /*$activeOnboardingStage*/ ctx[2]?.title
+	: /*$showOnboardingSteps*/ ctx[4] && /*$showHideCloseText*/ ctx[5]
 		? "Close"
-		: /*$showHideCloseText*/ ctx[3] ? "Help" : "") + "";
+		: /*$showHideCloseText*/ ctx[5] ? "Help" : "") + "";
 
-	let t1;
 	let t2;
+	let t3;
 	let div2;
+	let button;
+	let t4;
+	let t5;
+	let div3;
 	let mounted;
 	let dispose;
 
 	function select_block_type(ctx, dirty) {
-		if (/*$showOnboardingSteps*/ ctx[2]) return create_if_block_1$1;
-		return create_else_block_1;
+		if (/*$showOnboardingSteps*/ ctx[4]) return create_if_block_2$1;
+		return create_else_block_1$1;
 	}
 
 	let current_block_type = select_block_type(ctx);
 	let if_block0 = current_block_type(ctx);
+	let if_block1 = /*$activeOnboardingStage*/ ctx[2] && /*$isEditModeActive*/ ctx[0] && create_if_block_1$2(ctx);
 
 	function select_block_type_1(ctx, dirty) {
-		if (/*$showOnboardingNavigation*/ ctx[0]) return create_if_block$2;
-		return create_else_block;
+		if (/*$showOnboardingNavigation*/ ctx[3]) return create_if_block$3;
+		return create_else_block$1;
 	}
 
 	let current_block_type_1 = select_block_type_1(ctx);
-	let if_block1 = current_block_type_1(ctx);
+	let if_block2 = current_block_type_1(ctx);
 
 	return {
 		c() {
@@ -6853,30 +6953,49 @@ function create_fragment$8(ctx) {
 			div0 = element("div");
 			if_block0.c();
 			t0 = space();
+			if (if_block1) if_block1.c();
+			t1 = space();
 			span = element("span");
-			t1 = text(t1_value);
-			t2 = space();
+			t2 = text(t2_value);
+			t3 = space();
 			div2 = element("div");
-			if_block1.c();
-			attr(div0, "class", "visahoi-navigation-item-circle svelte-1k7k2ko");
-			set_style(div0, "background-color", /*$activeOnboardingStage*/ ctx[1]?.backgroundColor || navigationMainItemDefaultColor);
-			attr(span, "class", "visahoi-stage-title svelte-1k7k2ko");
-			attr(div1, "class", "visahoi-navigation-main-item svelte-1k7k2ko");
-			attr(div2, "class", "toggle-button svelte-1k7k2ko");
+			button = element("button");
+			t4 = text(/*buttonLabel*/ ctx[1]);
+			t5 = space();
+			div3 = element("div");
+			if_block2.c();
+			attr(div0, "class", "visahoi-navigation-item-circle svelte-19bz78m");
+			set_style(div0, "background-color", /*$activeOnboardingStage*/ ctx[2]?.backgroundColor || navigationMainItemDefaultColor);
+			attr(span, "class", "visahoi-stage-title svelte-19bz78m");
+			attr(div1, "class", "visahoi-navigation-main-item svelte-19bz78m");
+			set_style(button, "background-color", /*$activeOnboardingStage*/ ctx[2]?.backgroundColor || navigationMainItemDefaultColor);
+			attr(button, "class", "svelte-19bz78m");
+			attr(div2, "class", "visahoi-edit-mode-button svelte-19bz78m");
+			attr(div3, "class", "toggle-button svelte-19bz78m");
 		},
 		m(target, anchor) {
 			insert(target, div1, anchor);
 			append(div1, div0);
 			if_block0.m(div0, null);
-			append(div1, t0);
+			append(div0, t0);
+			if (if_block1) if_block1.m(div0, null);
+			append(div1, t1);
 			append(div1, span);
-			append(span, t1);
-			insert(target, t2, anchor);
+			append(span, t2);
+			insert(target, t3, anchor);
 			insert(target, div2, anchor);
-			if_block1.m(div2, null);
+			append(div2, button);
+			append(button, t4);
+			insert(target, t5, anchor);
+			insert(target, div3, anchor);
+			if_block2.m(div3, null);
 
 			if (!mounted) {
-				dispose = listen(div1, "click", /*handleClick*/ ctx[4]);
+				dispose = [
+					listen(div1, "click", /*handleClick*/ ctx[6]),
+					listen(button, "click", /*toggleEditMode*/ ctx[8])
+				];
+
 				mounted = true;
 			}
 		},
@@ -6887,29 +7006,48 @@ function create_fragment$8(ctx) {
 
 				if (if_block0) {
 					if_block0.c();
-					if_block0.m(div0, null);
+					if_block0.m(div0, t0);
 				}
 			}
 
-			if (dirty & /*$activeOnboardingStage*/ 2) {
-				set_style(div0, "background-color", /*$activeOnboardingStage*/ ctx[1]?.backgroundColor || navigationMainItemDefaultColor);
+			if (/*$activeOnboardingStage*/ ctx[2] && /*$isEditModeActive*/ ctx[0]) {
+				if (if_block1) {
+					if_block1.p(ctx, dirty);
+				} else {
+					if_block1 = create_if_block_1$2(ctx);
+					if_block1.c();
+					if_block1.m(div0, null);
+				}
+			} else if (if_block1) {
+				if_block1.d(1);
+				if_block1 = null;
 			}
 
-			if (dirty & /*$activeOnboardingStage, $showOnboardingSteps, $showHideCloseText*/ 14 && t1_value !== (t1_value = (/*$activeOnboardingStage*/ ctx[1]
-			? /*$activeOnboardingStage*/ ctx[1]?.title
-			: /*$showOnboardingSteps*/ ctx[2] && /*$showHideCloseText*/ ctx[3]
+			if (dirty & /*$activeOnboardingStage*/ 4) {
+				set_style(div0, "background-color", /*$activeOnboardingStage*/ ctx[2]?.backgroundColor || navigationMainItemDefaultColor);
+			}
+
+			if (dirty & /*$activeOnboardingStage, $showOnboardingSteps, $showHideCloseText*/ 52 && t2_value !== (t2_value = (/*$activeOnboardingStage*/ ctx[2]
+			? /*$activeOnboardingStage*/ ctx[2]?.title
+			: /*$showOnboardingSteps*/ ctx[4] && /*$showHideCloseText*/ ctx[5]
 				? "Close"
-				: /*$showHideCloseText*/ ctx[3] ? "Help" : "") + "")) set_data(t1, t1_value);
+				: /*$showHideCloseText*/ ctx[5] ? "Help" : "") + "")) set_data(t2, t2_value);
 
-			if (current_block_type_1 === (current_block_type_1 = select_block_type_1(ctx)) && if_block1) {
-				if_block1.p(ctx, dirty);
+			if (dirty & /*buttonLabel*/ 2) set_data(t4, /*buttonLabel*/ ctx[1]);
+
+			if (dirty & /*$activeOnboardingStage*/ 4) {
+				set_style(button, "background-color", /*$activeOnboardingStage*/ ctx[2]?.backgroundColor || navigationMainItemDefaultColor);
+			}
+
+			if (current_block_type_1 === (current_block_type_1 = select_block_type_1(ctx)) && if_block2) {
+				if_block2.p(ctx, dirty);
 			} else {
-				if_block1.d(1);
-				if_block1 = current_block_type_1(ctx);
+				if_block2.d(1);
+				if_block2 = current_block_type_1(ctx);
 
-				if (if_block1) {
-					if_block1.c();
-					if_block1.m(div2, null);
+				if (if_block2) {
+					if_block2.c();
+					if_block2.m(div3, null);
 				}
 			}
 		},
@@ -6918,24 +7056,34 @@ function create_fragment$8(ctx) {
 		d(detaching) {
 			if (detaching) detach(div1);
 			if_block0.d();
-			if (detaching) detach(t2);
+			if (if_block1) if_block1.d();
+			if (detaching) detach(t3);
 			if (detaching) detach(div2);
-			if_block1.d();
+			if (detaching) detach(t5);
+			if (detaching) detach(div3);
+			if_block2.d();
 			mounted = false;
-			dispose();
+			run_all(dispose);
 		}
 	};
 }
 
 function instance$8($$self, $$props, $$invalidate) {
-	let $showOnboardingNavigation;
+	let buttonLabel;
+	let $onboardingStages;
 	let $activeOnboardingStage;
+	let $markerInformation;
+	let $isEditModeActive;
+	let $showOnboardingNavigation;
 	let $showOnboardingSteps;
 	let $showHideCloseText;
-	component_subscribe($$self, showOnboardingNavigation, $$value => $$invalidate(0, $showOnboardingNavigation = $$value));
-	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(1, $activeOnboardingStage = $$value));
-	component_subscribe($$self, showOnboardingSteps, $$value => $$invalidate(2, $showOnboardingSteps = $$value));
-	component_subscribe($$self, showHideCloseText, $$value => $$invalidate(3, $showHideCloseText = $$value));
+	component_subscribe($$self, onboardingStages, $$value => $$invalidate(10, $onboardingStages = $$value));
+	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(2, $activeOnboardingStage = $$value));
+	component_subscribe($$self, markerInformation, $$value => $$invalidate(11, $markerInformation = $$value));
+	component_subscribe($$self, isEditModeActive, $$value => $$invalidate(0, $isEditModeActive = $$value));
+	component_subscribe($$self, showOnboardingNavigation, $$value => $$invalidate(3, $showOnboardingNavigation = $$value));
+	component_subscribe($$self, showOnboardingSteps, $$value => $$invalidate(4, $showOnboardingSteps = $$value));
+	component_subscribe($$self, showHideCloseText, $$value => $$invalidate(5, $showHideCloseText = $$value));
 
 	const handleClick = () => {
 		if ($activeOnboardingStage) {
@@ -6949,13 +7097,52 @@ function instance$8($$self, $$props, $$invalidate) {
 		showOnboardingNavigation.set(!$showOnboardingNavigation);
 	};
 
+	const toggleEditMode = () => {
+		isEditModeActive.set(!$isEditModeActive);
+	};
+
+	const deleteOnboardingStage = () => {
+		const tempOnboardingStages = $onboardingStages;
+
+		// The stage is removed from the array
+		tempOnboardingStages.map((onboardingStage, i) => {
+			if (onboardingStage.id === ($activeOnboardingStage === null || $activeOnboardingStage === void 0
+			? void 0
+			: $activeOnboardingStage.id)) {
+				tempOnboardingStages.splice(i, 1);
+			}
+
+			// The onboarding messages for the stage is filtered out
+			const tempMarkerInformation = $markerInformation.filter(m => m.message.onboardingStage.id !== ($activeOnboardingStage === null || $activeOnboardingStage === void 0
+			? void 0
+			: $activeOnboardingStage.id));
+
+			markerInformation.set(tempMarkerInformation);
+			onboardingStages.set(tempOnboardingStages);
+
+			if ($onboardingStages.length === 0) {
+				console.error("No onboarding stages are available. It seems that all onboarding stages have been deleted.");
+			}
+		});
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*$isEditModeActive*/ 1) {
+			$$invalidate(1, buttonLabel = $isEditModeActive ? "Exit edit mode" : "Enter edit mode");
+		}
+	};
+
 	return [
-		$showOnboardingNavigation,
+		$isEditModeActive,
+		buttonLabel,
 		$activeOnboardingStage,
+		$showOnboardingNavigation,
 		$showOnboardingSteps,
 		$showHideCloseText,
 		handleClick,
-		toggleNavigation
+		toggleNavigation,
+		toggleEditMode,
+		deleteOnboardingStage
 	];
 }
 
@@ -7232,7 +7419,7 @@ function get_each_context_1(ctx, list, i) {
 }
 
 // (120:4) {#if $activeOnboardingStage && $showOnboardingNavigation}
-function create_if_block_1(ctx) {
+function create_if_block_1$1(ctx) {
 	let each_1_anchor;
 	let current;
 	let each_value_1 = /*$markerInformation*/ ctx[0].sort(func);
@@ -7356,7 +7543,7 @@ function create_each_block_1(ctx) {
 }
 
 // (126:4) {#if $activeOnboardingStage && $showOnboardingNavigation}
-function create_if_block$1(ctx) {
+function create_if_block$2(ctx) {
 	let div0;
 	let span0;
 	let t;
@@ -7464,8 +7651,8 @@ function create_fragment$6(ctx) {
 	let t2;
 	let onboardingnavigationmainitem;
 	let current;
-	let if_block0 = /*$activeOnboardingStage*/ ctx[4] && /*$showOnboardingNavigation*/ ctx[5] && create_if_block_1(ctx);
-	let if_block1 = /*$activeOnboardingStage*/ ctx[4] && /*$showOnboardingNavigation*/ ctx[5] && create_if_block$1(ctx);
+	let if_block0 = /*$activeOnboardingStage*/ ctx[4] && /*$showOnboardingNavigation*/ ctx[5] && create_if_block_1$1(ctx);
+	let if_block1 = /*$activeOnboardingStage*/ ctx[4] && /*$showOnboardingNavigation*/ ctx[5] && create_if_block$2(ctx);
 	let each_value = /*$onboardingStages*/ ctx[6].sort(func_1);
 	let each_blocks = [];
 
@@ -7524,7 +7711,7 @@ function create_fragment$6(ctx) {
 						transition_in(if_block0, 1);
 					}
 				} else {
-					if_block0 = create_if_block_1(ctx);
+					if_block0 = create_if_block_1$1(ctx);
 					if_block0.c();
 					transition_in(if_block0, 1);
 					if_block0.m(div0, t0);
@@ -7543,7 +7730,7 @@ function create_fragment$6(ctx) {
 				if (if_block1) {
 					if_block1.p(ctx, dirty);
 				} else {
-					if_block1 = create_if_block$1(ctx);
+					if_block1 = create_if_block$2(ctx);
 					if_block1.c();
 					if_block1.m(div0, null);
 				}
@@ -21968,86 +22155,417 @@ var sanitizeHtml$1 = sanitizeHtml_1;
 
 /* src\components\Tooltip.svelte generated by Svelte v3.49.0 */
 
-function create_fragment$3(ctx) {
-	let div4;
-	let div1;
+function create_else_block_2(ctx) {
 	let b;
-	let t0_value = /*$activeMarker*/ ctx[2]?.tooltip.title + "";
-	let t0;
-	let t1;
-	let div0;
-	let t2;
-	let div2;
-	let raw_value = sanitizeHtml$1(/*activeMarkerInformation*/ ctx[0]?.tooltip.text, /*sanitizerOptions*/ ctx[3]) + "";
-	let t3;
-	let div3;
-	let div4_class_value;
+	let t_value = /*$activeMarker*/ ctx[4]?.tooltip.title + "";
+	let t;
+
+	return {
+		c() {
+			b = element("b");
+			t = text(t_value);
+			attr(b, "class", "svelte-k8nzd4");
+		},
+		m(target, anchor) {
+			insert(target, b, anchor);
+			append(b, t);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*$activeMarker*/ 16 && t_value !== (t_value = /*$activeMarker*/ ctx[4]?.tooltip.title + "")) set_data(t, t_value);
+		},
+		d(detaching) {
+			if (detaching) detach(b);
+		}
+	};
+}
+
+// (138:6) {#if editTooltip}
+function create_if_block_4(ctx) {
+	let input;
 	let mounted;
 	let dispose;
 
 	return {
 		c() {
-			div4 = element("div");
-			div1 = element("div");
-			b = element("b");
-			t0 = text(t0_value);
-			t1 = space();
-			div0 = element("div");
-			div0.innerHTML = `<i class="fas fa-times"></i>`;
-			t2 = space();
-			div2 = element("div");
-			t3 = space();
-			div3 = element("div");
-			attr(b, "class", "svelte-17t2ea4");
-			attr(div0, "class", "visahoi-close-tooltip svelte-17t2ea4");
-			attr(div1, "class", "visahoi-tooltip-title svelte-17t2ea4");
-			attr(div2, "class", "visahoi-tooltip-content svelte-17t2ea4");
-			attr(div3, "id", /*arrowId*/ ctx[5]);
-			attr(div3, "class", "visahoi-popperjs-arrow svelte-17t2ea4");
-			attr(div3, "data-popper-arrow", "");
-			attr(div4, "id", /*tooltipId*/ ctx[4]);
-
-			attr(div4, "class", div4_class_value = "visahoi-tooltip " + (/*$activeMarker*/ ctx[2] && /*$activeOnboardingStage*/ ctx[1]
-			? ''
-			: 'hidden') + " svelte-17t2ea4");
-
-			set_style(div4, "--stage-color", /*activeMarkerInformation*/ ctx[0]?.message.onboardingStage.backgroundColor);
+			input = element("input");
+			attr(input, "class", "visahoi-edit-title svelte-k8nzd4");
+			attr(input, "type", "text");
 		},
 		m(target, anchor) {
-			insert(target, div4, anchor);
-			append(div4, div1);
-			append(div1, b);
-			append(b, t0);
-			append(div1, t1);
-			append(div1, div0);
-			append(div4, t2);
-			append(div4, div2);
-			div2.innerHTML = raw_value;
-			append(div4, t3);
-			append(div4, div3);
+			insert(target, input, anchor);
+			set_input_value(input, /*tempTitle*/ ctx[0]);
 
 			if (!mounted) {
-				dispose = listen(div0, "click", /*closeTooltip*/ ctx[6]);
+				dispose = listen(input, "input", /*input_input_handler*/ ctx[14]);
 				mounted = true;
 			}
 		},
-		p(ctx, [dirty]) {
-			if (dirty & /*$activeMarker*/ 4 && t0_value !== (t0_value = /*$activeMarker*/ ctx[2]?.tooltip.title + "")) set_data(t0, t0_value);
-			if (dirty & /*activeMarkerInformation*/ 1 && raw_value !== (raw_value = sanitizeHtml$1(/*activeMarkerInformation*/ ctx[0]?.tooltip.text, /*sanitizerOptions*/ ctx[3]) + "")) div2.innerHTML = raw_value;
-			if (dirty & /*$activeMarker, $activeOnboardingStage*/ 6 && div4_class_value !== (div4_class_value = "visahoi-tooltip " + (/*$activeMarker*/ ctx[2] && /*$activeOnboardingStage*/ ctx[1]
+		p(ctx, dirty) {
+			if (dirty & /*tempTitle*/ 1 && input.value !== /*tempTitle*/ ctx[0]) {
+				set_input_value(input, /*tempTitle*/ ctx[0]);
+			}
+		},
+		d(detaching) {
+			if (detaching) detach(input);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+// (148:6) {#if $isEditModeActive && !editTooltip}
+function create_if_block_3(ctx) {
+	let div0;
+	let t;
+	let div1;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			div0 = element("div");
+			div0.innerHTML = `<span style="font-size: 13px"><i class="fas fa-pen" title="Edit"></i></span>`;
+			t = space();
+			div1 = element("div");
+			div1.innerHTML = `<span style="font-size: 13px"><i class="fas fa-trash" title="Delete"></i></span>`;
+			attr(div0, "class", "visahoi-edit-tooltip svelte-k8nzd4");
+			attr(div1, "class", "visahoi-delete-tooltip svelte-k8nzd4");
+		},
+		m(target, anchor) {
+			insert(target, div0, anchor);
+			insert(target, t, anchor);
+			insert(target, div1, anchor);
+
+			if (!mounted) {
+				dispose = [
+					listen(div0, "click", /*click_handler*/ ctx[15]),
+					listen(div1, "click", /*deleteOnboardingMessage*/ ctx[12])
+				];
+
+				mounted = true;
+			}
+		},
+		p: noop,
+		d(detaching) {
+			if (detaching) detach(div0);
+			if (detaching) detach(t);
+			if (detaching) detach(div1);
+			mounted = false;
+			run_all(dispose);
+		}
+	};
+}
+
+// (168:6) {#if editTooltip}
+function create_if_block_2(ctx) {
+	let div;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			div = element("div");
+			div.innerHTML = `<span style="font-size: 13px"><i class="fas fa-check" title="Save"></i></span>`;
+			attr(div, "class", "visahoi-save-changes svelte-k8nzd4");
+		},
+		m(target, anchor) {
+			insert(target, div, anchor);
+
+			if (!mounted) {
+				dispose = listen(div, "click", /*saveChanges*/ ctx[11]);
+				mounted = true;
+			}
+		},
+		p: noop,
+		d(detaching) {
+			if (detaching) detach(div);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+// (188:8) {:else}
+function create_else_block_1(ctx) {
+	let span;
+
+	return {
+		c() {
+			span = element("span");
+			span.innerHTML = `<i class="fas fa-times" title="Close"></i>`;
+			set_style(span, "font-size", "13px");
+		},
+		m(target, anchor) {
+			insert(target, span, anchor);
+		},
+		d(detaching) {
+			if (detaching) detach(span);
+		}
+	};
+}
+
+// (184:8) {#if editTooltip}
+function create_if_block_1(ctx) {
+	let span;
+
+	return {
+		c() {
+			span = element("span");
+			span.innerHTML = `<i class="fas fa-times" title="Cancel"></i>`;
+			set_style(span, "font-size", "13px");
+		},
+		m(target, anchor) {
+			insert(target, span, anchor);
+		},
+		d(detaching) {
+			if (detaching) detach(span);
+		}
+	};
+}
+
+// (199:2) {:else}
+function create_else_block(ctx) {
+	let div;
+	let raw_value = sanitizeHtml$1(/*activeMarkerInformation*/ ctx[3]?.tooltip.text, /*sanitizerOptions*/ ctx[7]) + "";
+
+	return {
+		c() {
+			div = element("div");
+			attr(div, "class", "visahoi-tooltip-content svelte-k8nzd4");
+		},
+		m(target, anchor) {
+			insert(target, div, anchor);
+			div.innerHTML = raw_value;
+		},
+		p(ctx, dirty) {
+			if (dirty & /*activeMarkerInformation*/ 8 && raw_value !== (raw_value = sanitizeHtml$1(/*activeMarkerInformation*/ ctx[3]?.tooltip.text, /*sanitizerOptions*/ ctx[7]) + "")) div.innerHTML = raw_value;		},
+		d(detaching) {
+			if (detaching) detach(div);
+		}
+	};
+}
+
+// (197:2) {#if editTooltip}
+function create_if_block$1(ctx) {
+	let textarea;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			textarea = element("textarea");
+			attr(textarea, "class", "visahoi-tooltip-textarea svelte-k8nzd4");
+			attr(textarea, "rows", "4");
+		},
+		m(target, anchor) {
+			insert(target, textarea, anchor);
+			set_input_value(textarea, /*tempText*/ ctx[1]);
+
+			if (!mounted) {
+				dispose = listen(textarea, "input", /*textarea_input_handler*/ ctx[17]);
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (dirty & /*tempText*/ 2) {
+				set_input_value(textarea, /*tempText*/ ctx[1]);
+			}
+		},
+		d(detaching) {
+			if (detaching) detach(textarea);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+function create_fragment$3(ctx) {
+	let div5;
+	let div3;
+	let div0;
+	let t0;
+	let div2;
+	let t1;
+	let t2;
+	let div1;
+	let t3;
+	let t4;
+	let div4;
+	let div5_class_value;
+	let mounted;
+	let dispose;
+
+	function select_block_type(ctx, dirty) {
+		if (/*editTooltip*/ ctx[2]) return create_if_block_4;
+		return create_else_block_2;
+	}
+
+	let current_block_type = select_block_type(ctx);
+	let if_block0 = current_block_type(ctx);
+	let if_block1 = /*$isEditModeActive*/ ctx[6] && !/*editTooltip*/ ctx[2] && create_if_block_3(ctx);
+	let if_block2 = /*editTooltip*/ ctx[2] && create_if_block_2(ctx);
+
+	function select_block_type_1(ctx, dirty) {
+		if (/*editTooltip*/ ctx[2]) return create_if_block_1;
+		return create_else_block_1;
+	}
+
+	let current_block_type_1 = select_block_type_1(ctx);
+	let if_block3 = current_block_type_1(ctx);
+
+	function select_block_type_2(ctx, dirty) {
+		if (/*editTooltip*/ ctx[2]) return create_if_block$1;
+		return create_else_block;
+	}
+
+	let current_block_type_2 = select_block_type_2(ctx);
+	let if_block4 = current_block_type_2(ctx);
+
+	return {
+		c() {
+			div5 = element("div");
+			div3 = element("div");
+			div0 = element("div");
+			if_block0.c();
+			t0 = space();
+			div2 = element("div");
+			if (if_block1) if_block1.c();
+			t1 = space();
+			if (if_block2) if_block2.c();
+			t2 = space();
+			div1 = element("div");
+			if_block3.c();
+			t3 = space();
+			if_block4.c();
+			t4 = space();
+			div4 = element("div");
+			attr(div0, "class", "visahoi-tooltip-title svelte-k8nzd4");
+			attr(div1, "class", "visahoi-close-tooltip svelte-k8nzd4");
+			attr(div2, "class", "visahoi-header-icons svelte-k8nzd4");
+			attr(div3, "class", "visahoi-tooltip-header svelte-k8nzd4");
+			attr(div4, "id", /*arrowId*/ ctx[9]);
+			attr(div4, "class", "visahoi-popperjs-arrow svelte-k8nzd4");
+			attr(div4, "data-popper-arrow", "");
+			attr(div5, "id", /*tooltipId*/ ctx[8]);
+
+			attr(div5, "class", div5_class_value = "visahoi-tooltip " + (/*$activeMarker*/ ctx[4] && /*$activeOnboardingStage*/ ctx[5]
 			? ''
-			: 'hidden') + " svelte-17t2ea4")) {
-				attr(div4, "class", div4_class_value);
+			: 'hidden') + " svelte-k8nzd4");
+
+			set_style(div5, "--stage-color", /*activeMarkerInformation*/ ctx[3]?.message.onboardingStage.backgroundColor);
+		},
+		m(target, anchor) {
+			insert(target, div5, anchor);
+			append(div5, div3);
+			append(div3, div0);
+			if_block0.m(div0, null);
+			append(div3, t0);
+			append(div3, div2);
+			if (if_block1) if_block1.m(div2, null);
+			append(div2, t1);
+			if (if_block2) if_block2.m(div2, null);
+			append(div2, t2);
+			append(div2, div1);
+			if_block3.m(div1, null);
+			append(div5, t3);
+			if_block4.m(div5, null);
+			append(div5, t4);
+			append(div5, div4);
+
+			if (!mounted) {
+				dispose = listen(div1, "click", function () {
+					if (is_function(/*editTooltip*/ ctx[2]
+					? /*click_handler_1*/ ctx[16]
+					: /*closeTooltip*/ ctx[10])) (/*editTooltip*/ ctx[2]
+					? /*click_handler_1*/ ctx[16]
+					: /*closeTooltip*/ ctx[10]).apply(this, arguments);
+				});
+
+				mounted = true;
+			}
+		},
+		p(new_ctx, [dirty]) {
+			ctx = new_ctx;
+
+			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block0) {
+				if_block0.p(ctx, dirty);
+			} else {
+				if_block0.d(1);
+				if_block0 = current_block_type(ctx);
+
+				if (if_block0) {
+					if_block0.c();
+					if_block0.m(div0, null);
+				}
 			}
 
-			if (dirty & /*activeMarkerInformation*/ 1) {
-				set_style(div4, "--stage-color", /*activeMarkerInformation*/ ctx[0]?.message.onboardingStage.backgroundColor);
+			if (/*$isEditModeActive*/ ctx[6] && !/*editTooltip*/ ctx[2]) {
+				if (if_block1) {
+					if_block1.p(ctx, dirty);
+				} else {
+					if_block1 = create_if_block_3(ctx);
+					if_block1.c();
+					if_block1.m(div2, t1);
+				}
+			} else if (if_block1) {
+				if_block1.d(1);
+				if_block1 = null;
+			}
+
+			if (/*editTooltip*/ ctx[2]) {
+				if (if_block2) {
+					if_block2.p(ctx, dirty);
+				} else {
+					if_block2 = create_if_block_2(ctx);
+					if_block2.c();
+					if_block2.m(div2, t2);
+				}
+			} else if (if_block2) {
+				if_block2.d(1);
+				if_block2 = null;
+			}
+
+			if (current_block_type_1 !== (current_block_type_1 = select_block_type_1(ctx))) {
+				if_block3.d(1);
+				if_block3 = current_block_type_1(ctx);
+
+				if (if_block3) {
+					if_block3.c();
+					if_block3.m(div1, null);
+				}
+			}
+
+			if (current_block_type_2 === (current_block_type_2 = select_block_type_2(ctx)) && if_block4) {
+				if_block4.p(ctx, dirty);
+			} else {
+				if_block4.d(1);
+				if_block4 = current_block_type_2(ctx);
+
+				if (if_block4) {
+					if_block4.c();
+					if_block4.m(div5, t4);
+				}
+			}
+
+			if (dirty & /*$activeMarker, $activeOnboardingStage*/ 48 && div5_class_value !== (div5_class_value = "visahoi-tooltip " + (/*$activeMarker*/ ctx[4] && /*$activeOnboardingStage*/ ctx[5]
+			? ''
+			: 'hidden') + " svelte-k8nzd4")) {
+				attr(div5, "class", div5_class_value);
+			}
+
+			if (dirty & /*activeMarkerInformation*/ 8) {
+				set_style(div5, "--stage-color", /*activeMarkerInformation*/ ctx[3]?.message.onboardingStage.backgroundColor);
 			}
 		},
 		i: noop,
 		o: noop,
 		d(detaching) {
-			if (detaching) detach(div4);
+			if (detaching) detach(div5);
+			if_block0.d();
+			if (if_block1) if_block1.d();
+			if (if_block2) if_block2.d();
+			if_block3.d();
+			if_block4.d();
 			mounted = false;
 			dispose();
 		}
@@ -22055,14 +22573,18 @@ function create_fragment$3(ctx) {
 }
 
 function instance$3($$self, $$props, $$invalidate) {
-	let $selectedMarker;
+	let $onboardingStages;
 	let $markerInformation;
-	let $activeOnboardingStage;
 	let $activeMarker;
-	component_subscribe($$self, selectedMarker, $$value => $$invalidate(8, $selectedMarker = $$value));
-	component_subscribe($$self, markerInformation, $$value => $$invalidate(9, $markerInformation = $$value));
-	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(1, $activeOnboardingStage = $$value));
-	component_subscribe($$self, activeMarker, $$value => $$invalidate(2, $activeMarker = $$value));
+	let $selectedMarker;
+	let $activeOnboardingStage;
+	let $isEditModeActive;
+	component_subscribe($$self, onboardingStages, $$value => $$invalidate(18, $onboardingStages = $$value));
+	component_subscribe($$self, markerInformation, $$value => $$invalidate(19, $markerInformation = $$value));
+	component_subscribe($$self, activeMarker, $$value => $$invalidate(4, $activeMarker = $$value));
+	component_subscribe($$self, selectedMarker, $$value => $$invalidate(20, $selectedMarker = $$value));
+	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(5, $activeOnboardingStage = $$value));
+	component_subscribe($$self, isEditModeActive, $$value => $$invalidate(6, $isEditModeActive = $$value));
 
 	var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
 		function adopt(value) {
@@ -22101,6 +22623,9 @@ function instance$3($$self, $$props, $$invalidate) {
 	};
 
 	let { visElement } = $$props;
+	let tempTitle = "";
+	let tempText = "";
+	let editTooltip = false;
 
 	const sanitizerOptions = {
 		allowedTags: ["span", "b", "em", "strong"],
@@ -22136,6 +22661,61 @@ function instance$3($$self, $$props, $$invalidate) {
 		activeMarker.set(null);
 	};
 
+	const saveChanges = () => {
+		const tempMarkerInformation = $markerInformation;
+
+		tempMarkerInformation.map(m => {
+			if (m.marker.id === ($activeMarker === null || $activeMarker === void 0
+			? void 0
+			: $activeMarker.marker.id)) {
+				if (tempTitle) {
+					m.message.title = tempTitle;
+					m.tooltip.title = tempTitle;
+				}
+
+				if (tempText) {
+					m.message.text = tempText;
+					m.tooltip.text = tempText;
+				}
+			}
+		});
+
+		markerInformation.set(tempMarkerInformation);
+		$$invalidate(2, editTooltip = false);
+	};
+
+	const deleteOnboardingMessage = () => {
+		// Delete onboarding message for the active marker.
+		$markerInformation.map((m, i) => {
+			if (m.marker.id === ($activeMarker === null || $activeMarker === void 0
+			? void 0
+			: $activeMarker.marker.id)) {
+				const tempMarkerInformation = $markerInformation;
+				tempMarkerInformation.splice(i, 1);
+				closeTooltip();
+				markerInformation.set(tempMarkerInformation);
+
+				// check whether the onboarding message deleted is the last message of the activeOboarding stage.
+				// If it is then show all the onboarding stages.
+				$onboardingStages.map((o, i) => {
+					const res = $markerInformation.find(m => m.message.onboardingStage.id === o.id);
+
+					if (res === undefined) {
+						const tempOnboardinStages = $onboardingStages;
+						tempOnboardinStages.splice(i, 1);
+						onboardingStages.set(tempOnboardinStages);
+						activeOnboardingStage.set(null);
+					}
+				});
+			}
+		});
+
+		// Console message is shown when all the onboarding messages are delete
+		if ($onboardingStages.length === 0) {
+			console.error("No onboarding messages are available. It seems that all onboarding messages have been deleted.");
+		}
+	};
+
 	activeOnboardingStage.subscribe(onboardingStage => {
 		if (!onboardingStage) {
 			activeMarker.set(null);
@@ -22148,7 +22728,11 @@ function instance$3($$self, $$props, $$invalidate) {
 		const arrowElement = document.getElementById(arrowId);
 
 		if (marker) {
-			$$invalidate(0, activeMarkerInformation = marker);
+			// set title of current tooltip
+			$$invalidate(0, tempTitle = marker.tooltip.title);
+
+			$$invalidate(1, tempText = marker.tooltip.text);
+			$$invalidate(3, activeMarkerInformation = marker);
 			const markerElement = document.getElementById(getMarkerDomId(marker.marker.id));
 
 			if (markerElement && tooltipElement) {
@@ -22171,26 +22755,57 @@ function instance$3($$self, $$props, $$invalidate) {
 		}
 	}));
 
+	function input_input_handler() {
+		tempTitle = this.value;
+		$$invalidate(0, tempTitle);
+	}
+
+	const click_handler = () => {
+		$$invalidate(2, editTooltip = true);
+
+		// set title of current tooltip
+		$$invalidate(0, tempTitle = $activeMarker?.tooltip.title || "");
+	};
+
+	const click_handler_1 = () => {
+		$$invalidate(2, editTooltip = false);
+	};
+
+	function textarea_input_handler() {
+		tempText = this.value;
+		$$invalidate(1, tempText);
+	}
+
 	$$self.$$set = $$props => {
-		if ('visElement' in $$props) $$invalidate(7, visElement = $$props.visElement);
+		if ('visElement' in $$props) $$invalidate(13, visElement = $$props.visElement);
 	};
 
 	return [
+		tempTitle,
+		tempText,
+		editTooltip,
 		activeMarkerInformation,
-		$activeOnboardingStage,
 		$activeMarker,
+		$activeOnboardingStage,
+		$isEditModeActive,
 		sanitizerOptions,
 		tooltipId,
 		arrowId,
 		closeTooltip,
-		visElement
+		saveChanges,
+		deleteOnboardingMessage,
+		visElement,
+		input_input_handler,
+		click_handler,
+		click_handler_1,
+		textarea_input_handler
 	];
 }
 
 class Tooltip extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$3, create_fragment$3, safe_not_equal, { visElement: 7 });
+		init(this, options, instance$3, create_fragment$3, safe_not_equal, { visElement: 13 });
 	}
 }
 
@@ -23086,6 +23701,9 @@ const injectOnboarding = (ahoiConfig, visElement, alignment) => {
 const getOnboardingStages = () => {
     return get_store_value(onboardingStages);
 };
+const getOnboardingMessages = () => {
+    return get_store_value(onboardingMessages);
+};
 const createBasicOnboardingStage = (stage) => {
     if (!stage.id) {
         stage.id = `visahoi-stage-${v4()}`;
@@ -23102,6 +23720,44 @@ const createBasicOnboardingMessage = (message) => {
         ...message,
     };
     return onboardingMessage;
+};
+const deleteOnboardingStage = (id) => {
+    const stages = get_store_value(onboardingStages);
+    stages.map((m, i) => {
+        if (m.id === id) {
+            stages.splice(i, 1);
+        }
+    });
+    return onboardingStages.set(stages);
+};
+const setOnboardingStage = (stage) => {
+    if (stage.id === undefined) {
+        console.error("Provide the id of stage to be updated");
+        return null;
+    }
+    else {
+        const tempOnboardingStages = get_store_value(onboardingStages);
+        for (const tempStage of tempOnboardingStages) {
+            if (tempStage.id === stage.id) {
+                tempStage.order = stage.order ? stage.order : tempStage.order;
+                tempStage.title = stage.title ? stage.title : tempStage.title;
+                tempStage.activeBackgroundColor = stage.activeBackgroundColor
+                    ? stage.activeBackgroundColor
+                    : tempStage.activeBackgroundColor;
+                tempStage.backgroundColor = stage.backgroundColor
+                    ? stage.backgroundColor
+                    : tempStage.backgroundColor;
+                tempStage.hoverBackgroundColor = stage.hoverBackgroundColor
+                    ? stage.hoverBackgroundColor
+                    : tempStage.hoverBackgroundColor;
+                tempStage.iconClass = stage.iconClass
+                    ? stage.iconClass
+                    : tempStage.iconClass;
+                break;
+            }
+        }
+        return onboardingStages.set(tempOnboardingStages);
+    }
 };
 
 function generateMessages(visType, spec, visElement) {
@@ -23122,12 +23778,15 @@ function generateMessages(visType, spec, visElement) {
         case EVisualizationType.TREEMAP:
             messages = treemap.generateMessages(spec, visElement);
             break;
+        case EVisualizationType.HEATMAP:
+            messages = heatmap.generateMessages(spec, visElement);
+            break;
     }
     onboardingStages.set([...new Set(messages.map((m) => m.onboardingStage))]);
     return messages;
 }
 
-function extractOnboardingSpec$4(chart, coords) {
+function extractOnboardingSpec$5(chart, coords) {
     // from https://github.com/plotly/plotly.js/blob/bff79dc5e76739f674ac3d4c41b63b0fbd6f2ebc/test/jasmine/tests/bar_test.js
     const traceNodes = chart.querySelectorAll("g.points");
     const barNodes = traceNodes[0].querySelectorAll("g.point");
@@ -23197,11 +23856,11 @@ function extractOnboardingSpec$4(chart, coords) {
     };
 }
 function barChartFactory(chart, coords, visElementId) {
-    const onbordingSpec = extractOnboardingSpec$4(chart);
+    const onbordingSpec = extractOnboardingSpec$5(chart);
     return generateMessages(EVisualizationType.BAR_CHART, onbordingSpec, visElementId);
 }
 
-function extractOnboardingSpec$3(chart, coords) {
+function extractOnboardingSpec$4(chart, coords) {
     const heatmapData = (Array.from(chart.querySelectorAll(".hm"))[0]).__data__;
     const t = heatmapData[0].trace;
     return {
@@ -23256,11 +23915,11 @@ function extractOnboardingSpec$3(chart, coords) {
     };
 }
 function changeMatrixFactory(chart, coords, visElementId) {
-    const onbordingSpec = extractOnboardingSpec$3(chart);
+    const onbordingSpec = extractOnboardingSpec$4(chart);
     return generateMessages(EVisualizationType.CHANGE_MATRIX, onbordingSpec, visElementId);
 }
 
-function extractOnboardingSpec$2(chart, coords) {
+function extractOnboardingSpec$3(chart, coords) {
     // from https://github.com/plotly/plotly.js/blob/bff79dc5e76739f674ac3d4c41b63b0fbd6f2ebc/test/jasmine/tests/bar_test.js
     const traceNodes = chart.querySelectorAll("g.fills");
     const areaNodes = traceNodes[0].querySelectorAll("path.js-fill");
@@ -23328,11 +23987,11 @@ function extractOnboardingSpec$2(chart, coords) {
     };
 }
 function horizonGraphFactory(chart, coords, visElementId) {
-    const onbordingSpec = extractOnboardingSpec$2(chart);
+    const onbordingSpec = extractOnboardingSpec$3(chart);
     return generateMessages(EVisualizationType.HORIZON_GRAPH, onbordingSpec, visElementId);
 }
 
-function extractOnboardingSpec$1(chart, coords) {
+function extractOnboardingSpec$2(chart, coords) {
     const traceNodes = chart.querySelectorAll("g.points");
     const areaNodes = traceNodes[0].querySelectorAll("path.point");
     const areaNodesData = Array.from(areaNodes).map((point) => point.__data__);
@@ -23387,11 +24046,11 @@ function extractOnboardingSpec$1(chart, coords) {
     };
 }
 function scatterplotFactory(chart, coords, visElementId) {
-    const onbordingSpec = extractOnboardingSpec$1(chart);
+    const onbordingSpec = extractOnboardingSpec$2(chart);
     return generateMessages(EVisualizationType.SCATTERPLOT, onbordingSpec, visElementId);
 }
 
-function extractOnboardingSpec(chart, coords) {
+function extractOnboardingSpec$1(chart, coords) {
     let indexArr = [];
     let valArr = [];
     let childArr = [];
@@ -23522,8 +24181,60 @@ function extractOnboardingSpec(chart, coords) {
     };
 }
 function treemapFactory(chart, coords, visElementId) {
-    const onbordingSpec = extractOnboardingSpec(chart);
+    const onbordingSpec = extractOnboardingSpec$1(chart);
     return generateMessages(EVisualizationType.TREEMAP, onbordingSpec, visElementId);
+}
+
+function extractOnboardingSpec(chart, coords) {
+    const heatmapData = (Array.from(chart.querySelectorAll(".hm"))[0]).__data__;
+    const t = heatmapData[0].trace;
+    return {
+        chartTitle: {
+            value: chart.layout.title.text,
+            anchor: {
+                findDomNodeByValue: true,
+                offset: { left: -20, top: 10 },
+            },
+        },
+        heatmapDescription: {
+            value: t.type,
+            anchor: {
+                sel: ".heatmaplayer > .hm > image",
+                offset: { left: -50, top: -30 },
+            },
+        },
+        legendDescription: {
+            value: t.colorbar.title.text,
+            anchor: {
+                sel: ".infolayer > .colorbar",
+                offset: { top: -10 },
+            },
+        },
+        axisDescription: {
+            value: t?.yaxis?.title?.text,
+            anchor: {
+                sel: ".infolayer > .g-ytitle",
+                offset: { bottom: -320, left: -50 },
+            },
+        },
+        xAxis: {
+            value: chart.layout.xaxis.title.text,
+        },
+        yAxis: {
+            value: chart.layout.yaxis.title.text,
+        },
+        hoverDescription: {
+            value: t?.xaxis?.title?.text,
+            anchor: {
+                sel: ".cartesianlayer",
+                offset: { top: -50, left: -120 },
+            },
+        },
+    };
+}
+function heatmapFactory(chart, coords, visElementId) {
+    const onbordingSpec = extractOnboardingSpec(chart);
+    return generateMessages(EVisualizationType.HEATMAP, onbordingSpec, visElementId);
 }
 
 /**
@@ -23540,10 +24251,10 @@ const generateBasicAnnotations = (visType, chart) => {
         return [];
     }
     // TODO: coords
-    const chartTitlePosition = chart._fullLayout._dfltTitle;
+    const chartTitlePosition = chart?._fullLayout?._dfltTitle;
     coords["chartTitle"] = {
-        x: chartTitlePosition.x,
-        y: chartTitlePosition.y + 20,
+        x: chartTitlePosition?.x,
+        y: chartTitlePosition?.y + 20,
     };
     let onboardingMessages;
     switch (visType) {
@@ -23562,8 +24273,9 @@ const generateBasicAnnotations = (visType, chart) => {
         case EVisualizationType.TREEMAP:
             onboardingMessages = treemapFactory(chart, coords, visElement);
             break;
-        default:
-            throw new Error(`No onboarding for visualization type ${visType} available.`);
+        case EVisualizationType.HEATMAP:
+            onboardingMessages = heatmapFactory(chart, coords, visElement);
+            break;
     }
     return onboardingMessages;
 };
@@ -23578,5 +24290,5 @@ async function ahoi(visType, chart, ahoiConfig) {
     return injectOnboarding(ahoiConfig, visElement, "column");
 }
 
-export { EVisualizationType, ahoi, createBasicOnboardingMessage, createBasicOnboardingStage, generateBasicAnnotations, getOnboardingStages };
+export { EVisualizationType, ahoi, createBasicOnboardingMessage, createBasicOnboardingStage, deleteOnboardingStage, generateBasicAnnotations, getOnboardingMessages, getOnboardingStages, setOnboardingStage };
 //# sourceMappingURL=bundle.js.map
