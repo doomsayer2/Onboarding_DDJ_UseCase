@@ -6,7 +6,7 @@ export const populateHtml = (selector, html) => {
 };
 
 export const convertToObject = (jsonString) => {
- return Function('"use strict";return (' + jsonString + ')')();
+  return Function('"use strict";return (' + jsonString + ')')();
 };
 
 export const loadData = (dataURL) => {
@@ -14,9 +14,28 @@ export const loadData = (dataURL) => {
 };
 
 /**
+ * This function is used to compare two objects by their values and also if they
+ * are deep nested they are compared.
+ * @param {Object} a First object to compare
+ * @param {Object} b Second object to compare
+ * @returns true if objects are equals - false otherwise
+ */
+export const equals = (a, b) => {
+  if (a === b) return true;
+  if (a instanceof Date && b instanceof Date)
+    return a.getTime() === b.getTime();
+  if (!a || !b || (typeof a !== 'object' && typeof b !== 'object'))
+    return a === b;
+  if (a.prototype !== b.prototype) return false;
+  const keys = Object.keys(a);
+  if (keys.length !== Object.keys(b).length) return false;
+  return keys.every((k) => equals(a[k], b[k]));
+};
+
+/**
  * This is just used to show the current environment of Flourish in the console.
  */
- export const showEnvironment = () => {
+export const showEnvironment = () => {
   const env = Flourish.environment;
 
   switch (env) {
@@ -70,7 +89,7 @@ export const loadData = (dataURL) => {
 export const logger = (msg, bgColor = 'transparent', color = 'white') => {
   const styling = `background-color: ${bgColor}; color: ${color}; font-size: 1.2em; padding: 4px;`;
   console.log(`%c${JSON.stringify(msg)}`, styling);
-}
+};
 
 /**
  * Creates a toast message. If it is just called without any parameters it shows a default message of
@@ -80,7 +99,12 @@ export const logger = (msg, bgColor = 'transparent', color = 'white') => {
  * @param {string} icon Icon of the toast. Available are: 'success', 'error', 'waring', 'info', 'question'
  * @param {string} position Position of the toast. Available are: 'top', 'top-start', 'top-end', 'center', 'center-start', 'center-end', 'bottom', 'bottom-start', 'bottom-end'
  */
-export const toast = (msg = 'Hello World!', timer = 3000, icon = 'success', position = 'top-end') => {
+export const toast = (
+  msg = 'Hello World!',
+  timer = 3000,
+  icon = 'success',
+  position = 'top-end'
+) => {
   const Toast = Swal.mixin({
     toast: true,
     position,
@@ -88,13 +112,13 @@ export const toast = (msg = 'Hello World!', timer = 3000, icon = 'success', posi
     timer,
     timerProgressBar: true,
     didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    },
   });
 
   Toast.fire({
     icon,
-    text: msg
+    text: msg,
   });
-}
+};

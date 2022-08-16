@@ -4,7 +4,7 @@ import {
   createBasicOnboardingStage,
 } from '../static/lib/bundle.js';
 import { onboarding } from './utils/store';
-import { state } from './index';
+import { state, update } from './index';
 
 // All the elements of the dialog and others
 let select = null;
@@ -147,7 +147,8 @@ function formValidation() {
           iconClass,
           backgroundColor,
         });
-        state.stages = [...state.stages, newOnboardingStage]
+        state.stages = [...state.stages, newOnboardingStage];
+
         fillDropdown(); // Fill the dropdown again with new stage
         toast('Success: The stage was added!', 1200);
 

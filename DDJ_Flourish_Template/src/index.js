@@ -2,6 +2,7 @@ import Treemap from './treemap.js';
 import initLayout from '@flourish/layout';
 import { moveOnboardigBtn, toggleSettingsMenu, initSettingsMenu } from './ui';
 import Swal from 'sweetalert2';
+import { equals } from './utils/utils.js';
 
 let plotlyTreemap = null;
 let layout = null;
@@ -23,10 +24,12 @@ export const state = {
   rightOffset: 100,
   bottomOffset: 20,
 
+  messageStore: '',
+  stageStore: '',
+
   messages: [],
   stages: [],
-  messagesStore: "",
-  stagesStore: ""
+  dataObj: null,
 };
 
 export async function update() {
@@ -68,14 +71,32 @@ export async function update() {
     : null;
 
   // Show the settings menu if we are in onboarding mode and its not live
-  if (!(Flourish.environment === 'live' || Flourish.environment === 'preview')) {
+  if (
+    !(Flourish.environment === 'live' || Flourish.environment === 'preview')
+  ) {
     state.toggleEditMode ? toggleSettingsMenu(true) : toggleSettingsMenu(false);
   }
 
-  // Only show the dialog if we are in onboarding mode
-  state.showOnboarding
-    ? null
-    : cleanState();
+  // Only show the dialog if we are in onboarding mode and clean it
+  state.showOnboarding ? null : cleanState();
+
+  // Check if the data has changed and therefore we need to reload
+  if (!equals(state.dataObj, data.data[0])) {
+    Swal.fire({
+      title: 'Changes',
+      html: `We have detected some changes to your data. Please reload the entire page by pressing the <i class="fa-solid fa-arrow-rotate-right"></i> 
+      in your browser or use a shortcut. This is necessary in order for the changes to take effect!`,
+      iconHtml: '<i class="fas fa-exclamation-triangle"></i>',
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText: 'Understood',
+      buttonsStyling: false,
+      customClass: {
+        confirmButton: 'btn btn-lg btn-dark',
+      },
+      backdrop: false,
+    });
+  }
 
   console.log('THE STATE at ' + new Date().toTimeString() + ': ', state);
 }
@@ -105,13 +126,15 @@ export async function draw() {
   // Initialize the menu
   initSettingsMenu(plotlyTreemap);
 
+  // Initialize the data change detection
+  state.dataObj = data.data[0];
+
   // ===================
   //   ⚡ Finally ⚡
   // ===================
   // Always call the update() after the initial draw
   update();
 }
-
 
 /**
  * HELPERS
@@ -121,4 +144,4 @@ const cleanState = () => {
     state.messages = [];
     state.stages = [];
   }
-}
+};
