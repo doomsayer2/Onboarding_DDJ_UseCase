@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import { attachClickListener } from './onboardingDialog';
+import { attachClickListenerSave } from './saveDialog';
 import { setOnboardingState } from './utils/store';
 
 /**
@@ -15,6 +16,16 @@ export const setFont = ({name, url}) => {
 
     font_link.setAttribute('href', url);
     document.body.style.fontFamily = name;
+}
+
+/**
+ * Initializes the save menu for the onboarding. It is hidden by default.
+ */
+export const initSaveMenu = () => {
+    const saveBtn = d3.select('#btnSave');                  // Grab the save button
+
+    setOnboardingState({ saveBtn });                        // Pass the information to the dialog
+    attachClickListenerSave();                              // Attach the click listener for the onboarding menu button
 }
 
 /**

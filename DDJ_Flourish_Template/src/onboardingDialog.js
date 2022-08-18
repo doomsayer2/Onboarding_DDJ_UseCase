@@ -4,7 +4,7 @@ import {
   createBasicOnboardingStage,
 } from '../static/lib/bundle.js';
 import { onboarding } from './utils/store';
-import { state, update } from './index';
+import { state } from './index';
 
 // All the elements of the dialog and others
 let select = null;

@@ -28,16 +28,39 @@
 <body>
 	<!-- If you want to start with a non-empty document, add elements here -->
 	<!-- Relative links are rewritten to refer to the files in the static directory -->
-	
+
 	<!-- Settings Menu -->
 	<div id="onboardingSettingsBtn">
-		<span><strong>Note</strong> The settings menu will be removed once you publish it! It's just for customizing the
-			onboarding.</span>
-		<button id="btnOnboardingSettings" type="button" class="btn btn-light btn-sm"><i
-				class="fa-solid fa-gear"></i></button>
+		<span><strong>Note:</strong> The <strong>customization menu</strong> and <strong>save button</strong> will be
+			removed once you publish it! This is only in the editor.</span>
+		<div>
+			<button id="btnOnboardingSettings" type="button" class="btn btn-light btn-sm" title="Settings"><i
+					class="fa-solid fa-gear"></i></button>
+			<button id="btnSave" type="button" class="btn btn-warning btn-sm" title="Save"><i
+					class="fa-solid fa-floppy-disk"></i></button>
+		</div>
 	</div>
 
-	<!-- Modal -->
+	<!-- Modal Save -->
+	<div class="modal fade" id="onboardingSave" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+	aria-labelledby="saveDialogHeading" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="saveDialogHeading">VisAhoi - SAVE</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				WIP...
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<!-- Modal Settings -->
 	<div class="modal fade" id="onboardingSettings" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
 		aria-labelledby="onboardingDialogHeading" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen">

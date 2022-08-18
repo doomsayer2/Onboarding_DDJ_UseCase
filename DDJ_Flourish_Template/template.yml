@@ -85,10 +85,13 @@ settings:
     show_if: showOnboarding
   - property: messageStore
     name: Messages Store
-    type: string
+    type: text
+    show_if: showOnboarding
+    new_section: ━━━━━━━━━━━▼━━━━━━━━━━━
   - property: stageStore
     name: Stages Store
-    type: string
+    type: text
+    show_if: showOnboarding
 
 
   - Layout

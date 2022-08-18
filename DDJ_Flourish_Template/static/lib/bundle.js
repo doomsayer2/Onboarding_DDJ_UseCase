@@ -2950,7 +2950,6 @@ const treemap = {
 function generateMessages$1(spec, visElement) {
     const reading = defaultOnboardingStages.get(EDefaultOnboardingStages.READING);
     const interacting = defaultOnboardingStages.get(EDefaultOnboardingStages.USING);
-    console.log("check-4");
     const messages = [
         {
             anchor: getAnchor(spec.chartTitle, visElement),
@@ -6823,14 +6822,14 @@ function create_if_block_1$2(ctx) {
 	return {
 		c() {
 			div = element("div");
-			div.innerHTML = `<i class="fas fa-trash svelte-19bz78m"></i>`;
-			attr(div, "class", "visahoi-delete-stage svelte-19bz78m");
+			div.innerHTML = `<i class="fas fa-trash svelte-za78id"></i>`;
+			attr(div, "class", "visahoi-delete-stage svelte-za78id");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
 
 			if (!mounted) {
-				dispose = listen(div, "click", /*deleteOnboardingStage*/ ctx[9]);
+				dispose = listen(div, "click", /*deleteOnboardingStage*/ ctx[7]);
 				mounted = true;
 			}
 		},
@@ -6843,7 +6842,7 @@ function create_if_block_1$2(ctx) {
 	};
 }
 
-// (79:2) {:else}
+// (71:2) {:else}
 function create_else_block$1(ctx) {
 	let span;
 	let i;
@@ -6863,8 +6862,8 @@ function create_else_block$1(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(i, "click", /*toggleNavigation*/ ctx[7]),
-					listen(span, "click", /*toggleNavigation*/ ctx[7])
+					listen(i, "click", /*toggleNavigation*/ ctx[6]),
+					listen(span, "click", /*toggleNavigation*/ ctx[6])
 				];
 
 				mounted = true;
@@ -6879,7 +6878,7 @@ function create_else_block$1(ctx) {
 	};
 }
 
-// (75:2) {#if $showOnboardingNavigation}
+// (67:2) {#if $showOnboardingNavigation}
 function create_if_block$3(ctx) {
 	let span;
 	let mounted;
@@ -6894,7 +6893,7 @@ function create_if_block$3(ctx) {
 			insert(target, span, anchor);
 
 			if (!mounted) {
-				dispose = listen(span, "click", /*toggleNavigation*/ ctx[7]);
+				dispose = listen(span, "click", /*toggleNavigation*/ ctx[6]);
 				mounted = true;
 			}
 		},
@@ -6914,33 +6913,29 @@ function create_fragment$8(ctx) {
 	let t1;
 	let span;
 
-	let t2_value = (/*$activeOnboardingStage*/ ctx[2]
-	? /*$activeOnboardingStage*/ ctx[2]?.title
-	: /*$showOnboardingSteps*/ ctx[4] && /*$showHideCloseText*/ ctx[5]
+	let t2_value = (/*$activeOnboardingStage*/ ctx[1]
+	? /*$activeOnboardingStage*/ ctx[1]?.title
+	: /*$showOnboardingSteps*/ ctx[3] && /*$showHideCloseText*/ ctx[4]
 		? "Close"
-		: /*$showHideCloseText*/ ctx[5] ? "Help" : "") + "";
+		: /*$showHideCloseText*/ ctx[4] ? "Help" : "") + "";
 
 	let t2;
 	let t3;
 	let div2;
-	let button;
-	let t4;
-	let t5;
-	let div3;
 	let mounted;
 	let dispose;
 
 	function select_block_type(ctx, dirty) {
-		if (/*$showOnboardingSteps*/ ctx[4]) return create_if_block_2$1;
+		if (/*$showOnboardingSteps*/ ctx[3]) return create_if_block_2$1;
 		return create_else_block_1$1;
 	}
 
 	let current_block_type = select_block_type(ctx);
 	let if_block0 = current_block_type(ctx);
-	let if_block1 = /*$activeOnboardingStage*/ ctx[2] && /*$isEditModeActive*/ ctx[0] && create_if_block_1$2(ctx);
+	let if_block1 = /*$activeOnboardingStage*/ ctx[1] && /*$isEditModeActive*/ ctx[0] && create_if_block_1$2(ctx);
 
 	function select_block_type_1(ctx, dirty) {
-		if (/*$showOnboardingNavigation*/ ctx[3]) return create_if_block$3;
+		if (/*$showOnboardingNavigation*/ ctx[2]) return create_if_block$3;
 		return create_else_block$1;
 	}
 
@@ -6959,19 +6954,12 @@ function create_fragment$8(ctx) {
 			t2 = text(t2_value);
 			t3 = space();
 			div2 = element("div");
-			button = element("button");
-			t4 = text(/*buttonLabel*/ ctx[1]);
-			t5 = space();
-			div3 = element("div");
 			if_block2.c();
-			attr(div0, "class", "visahoi-navigation-item-circle svelte-19bz78m");
-			set_style(div0, "background-color", /*$activeOnboardingStage*/ ctx[2]?.backgroundColor || navigationMainItemDefaultColor);
-			attr(span, "class", "visahoi-stage-title svelte-19bz78m");
-			attr(div1, "class", "visahoi-navigation-main-item svelte-19bz78m");
-			set_style(button, "background-color", /*$activeOnboardingStage*/ ctx[2]?.backgroundColor || navigationMainItemDefaultColor);
-			attr(button, "class", "svelte-19bz78m");
-			attr(div2, "class", "visahoi-edit-mode-button svelte-19bz78m");
-			attr(div3, "class", "toggle-button svelte-19bz78m");
+			attr(div0, "class", "visahoi-navigation-item-circle svelte-za78id");
+			set_style(div0, "background-color", /*$activeOnboardingStage*/ ctx[1]?.backgroundColor || navigationMainItemDefaultColor);
+			attr(span, "class", "visahoi-stage-title svelte-za78id");
+			attr(div1, "class", "visahoi-navigation-main-item svelte-za78id");
+			attr(div2, "class", "toggle-button svelte-za78id");
 		},
 		m(target, anchor) {
 			insert(target, div1, anchor);
@@ -6984,18 +6972,10 @@ function create_fragment$8(ctx) {
 			append(span, t2);
 			insert(target, t3, anchor);
 			insert(target, div2, anchor);
-			append(div2, button);
-			append(button, t4);
-			insert(target, t5, anchor);
-			insert(target, div3, anchor);
-			if_block2.m(div3, null);
+			if_block2.m(div2, null);
 
 			if (!mounted) {
-				dispose = [
-					listen(div1, "click", /*handleClick*/ ctx[6]),
-					listen(button, "click", /*toggleEditMode*/ ctx[8])
-				];
-
+				dispose = listen(div1, "click", /*handleClick*/ ctx[5]);
 				mounted = true;
 			}
 		},
@@ -7010,7 +6990,7 @@ function create_fragment$8(ctx) {
 				}
 			}
 
-			if (/*$activeOnboardingStage*/ ctx[2] && /*$isEditModeActive*/ ctx[0]) {
+			if (/*$activeOnboardingStage*/ ctx[1] && /*$isEditModeActive*/ ctx[0]) {
 				if (if_block1) {
 					if_block1.p(ctx, dirty);
 				} else {
@@ -7023,21 +7003,15 @@ function create_fragment$8(ctx) {
 				if_block1 = null;
 			}
 
-			if (dirty & /*$activeOnboardingStage*/ 4) {
-				set_style(div0, "background-color", /*$activeOnboardingStage*/ ctx[2]?.backgroundColor || navigationMainItemDefaultColor);
+			if (dirty & /*$activeOnboardingStage*/ 2) {
+				set_style(div0, "background-color", /*$activeOnboardingStage*/ ctx[1]?.backgroundColor || navigationMainItemDefaultColor);
 			}
 
-			if (dirty & /*$activeOnboardingStage, $showOnboardingSteps, $showHideCloseText*/ 52 && t2_value !== (t2_value = (/*$activeOnboardingStage*/ ctx[2]
-			? /*$activeOnboardingStage*/ ctx[2]?.title
-			: /*$showOnboardingSteps*/ ctx[4] && /*$showHideCloseText*/ ctx[5]
+			if (dirty & /*$activeOnboardingStage, $showOnboardingSteps, $showHideCloseText*/ 26 && t2_value !== (t2_value = (/*$activeOnboardingStage*/ ctx[1]
+			? /*$activeOnboardingStage*/ ctx[1]?.title
+			: /*$showOnboardingSteps*/ ctx[3] && /*$showHideCloseText*/ ctx[4]
 				? "Close"
-				: /*$showHideCloseText*/ ctx[5] ? "Help" : "") + "")) set_data(t2, t2_value);
-
-			if (dirty & /*buttonLabel*/ 2) set_data(t4, /*buttonLabel*/ ctx[1]);
-
-			if (dirty & /*$activeOnboardingStage*/ 4) {
-				set_style(button, "background-color", /*$activeOnboardingStage*/ ctx[2]?.backgroundColor || navigationMainItemDefaultColor);
-			}
+				: /*$showHideCloseText*/ ctx[4] ? "Help" : "") + "")) set_data(t2, t2_value);
 
 			if (current_block_type_1 === (current_block_type_1 = select_block_type_1(ctx)) && if_block2) {
 				if_block2.p(ctx, dirty);
@@ -7047,7 +7021,7 @@ function create_fragment$8(ctx) {
 
 				if (if_block2) {
 					if_block2.c();
-					if_block2.m(div3, null);
+					if_block2.m(div2, null);
 				}
 			}
 		},
@@ -7059,17 +7033,14 @@ function create_fragment$8(ctx) {
 			if (if_block1) if_block1.d();
 			if (detaching) detach(t3);
 			if (detaching) detach(div2);
-			if (detaching) detach(t5);
-			if (detaching) detach(div3);
 			if_block2.d();
 			mounted = false;
-			run_all(dispose);
+			dispose();
 		}
 	};
 }
 
 function instance$8($$self, $$props, $$invalidate) {
-	let buttonLabel;
 	let $onboardingStages;
 	let $activeOnboardingStage;
 	let $markerInformation;
@@ -7077,13 +7048,13 @@ function instance$8($$self, $$props, $$invalidate) {
 	let $showOnboardingNavigation;
 	let $showOnboardingSteps;
 	let $showHideCloseText;
-	component_subscribe($$self, onboardingStages, $$value => $$invalidate(10, $onboardingStages = $$value));
-	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(2, $activeOnboardingStage = $$value));
-	component_subscribe($$self, markerInformation, $$value => $$invalidate(11, $markerInformation = $$value));
+	component_subscribe($$self, onboardingStages, $$value => $$invalidate(9, $onboardingStages = $$value));
+	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(1, $activeOnboardingStage = $$value));
+	component_subscribe($$self, markerInformation, $$value => $$invalidate(10, $markerInformation = $$value));
 	component_subscribe($$self, isEditModeActive, $$value => $$invalidate(0, $isEditModeActive = $$value));
-	component_subscribe($$self, showOnboardingNavigation, $$value => $$invalidate(3, $showOnboardingNavigation = $$value));
-	component_subscribe($$self, showOnboardingSteps, $$value => $$invalidate(4, $showOnboardingSteps = $$value));
-	component_subscribe($$self, showHideCloseText, $$value => $$invalidate(5, $showHideCloseText = $$value));
+	component_subscribe($$self, showOnboardingNavigation, $$value => $$invalidate(2, $showOnboardingNavigation = $$value));
+	component_subscribe($$self, showOnboardingSteps, $$value => $$invalidate(3, $showOnboardingSteps = $$value));
+	component_subscribe($$self, showHideCloseText, $$value => $$invalidate(4, $showHideCloseText = $$value));
 
 	const handleClick = () => {
 		if ($activeOnboardingStage) {
@@ -7095,10 +7066,6 @@ function instance$8($$self, $$props, $$invalidate) {
 
 	const toggleNavigation = () => {
 		showOnboardingNavigation.set(!$showOnboardingNavigation);
-	};
-
-	const toggleEditMode = () => {
-		isEditModeActive.set(!$isEditModeActive);
 	};
 
 	const deleteOnboardingStage = () => {
@@ -7127,21 +7094,17 @@ function instance$8($$self, $$props, $$invalidate) {
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$isEditModeActive*/ 1) {
-			$$invalidate(1, buttonLabel = $isEditModeActive ? "Exit edit mode" : "Enter edit mode");
-		}
+		if ($$self.$$.dirty & /*$isEditModeActive*/ 1) ;
 	};
 
 	return [
 		$isEditModeActive,
-		buttonLabel,
 		$activeOnboardingStage,
 		$showOnboardingNavigation,
 		$showOnboardingSteps,
 		$showHideCloseText,
 		handleClick,
 		toggleNavigation,
-		toggleEditMode,
 		deleteOnboardingStage
 	];
 }
@@ -23759,6 +23722,9 @@ const setOnboardingStage = (stage) => {
         return onboardingStages.set(tempOnboardingStages);
     }
 };
+const setEditMode = (value) => {
+    return isEditModeActive.set(value);
+};
 
 function generateMessages(visType, spec, visElement) {
     let messages = [];
@@ -24290,5 +24256,5 @@ async function ahoi(visType, chart, ahoiConfig) {
     return injectOnboarding(ahoiConfig, visElement, "column");
 }
 
-export { EVisualizationType, ahoi, createBasicOnboardingMessage, createBasicOnboardingStage, deleteOnboardingStage, generateBasicAnnotations, getOnboardingMessages, getOnboardingStages, setOnboardingStage };
+export { EVisualizationType, ahoi, createBasicOnboardingMessage, createBasicOnboardingStage, deleteOnboardingStage, generateBasicAnnotations, getOnboardingMessages, getOnboardingStages, setEditMode, setOnboardingStage };
 //# sourceMappingURL=bundle.js.map

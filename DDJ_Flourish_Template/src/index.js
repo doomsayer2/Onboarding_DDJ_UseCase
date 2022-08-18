@@ -1,6 +1,6 @@
 import Treemap from './treemap.js';
 import initLayout from '@flourish/layout';
-import { moveOnboardigBtn, toggleSettingsMenu, initSettingsMenu } from './ui';
+import { moveOnboardigBtn, toggleSettingsMenu, initSettingsMenu, initSaveMenu } from './ui';
 import Swal from 'sweetalert2';
 import { equals } from './utils/utils.js';
 
@@ -124,7 +124,8 @@ export async function draw() {
   plotlyTreemap = new Treemap('fl-layout-primary', data);
 
   // Initialize the menu
-  initSettingsMenu(plotlyTreemap);
+  initSettingsMenu(plotlyTreemap);    // Settings
+  initSaveMenu();                     // Save
 
   // Initialize the data change detection
   state.dataObj = data.data[0];

@@ -87,23 +87,19 @@
 
 .visahoi-stage-title.svelte-15kr85e.svelte-15kr85e{font-weight:bold}
 
-.visahoi-edit-mode-button.svelte-19bz78m.svelte-19bz78m{position:absolute;bottom:0;right:3em}
+.toggle-button.svelte-za78id{position:absolute;display:flex;align-items:center;justify-content:center;cursor:pointer;width:80px;opacity:1;z-index:15}
 
-.visahoi-edit-mode-button.svelte-19bz78m>button.svelte-19bz78m{width:125px;border-radius:15px;padding:5px;border:none;color:white;font-size:13px;font-weight:bold;white-space:nowrap;cursor:pointer}
+.visahoi-navigation-main-item.svelte-za78id{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:opacity 0.5s ease, bottom 0.5s ease;margin:5px;width:80px;bottom:0;opacity:1;z-index:15}
 
-.toggle-button.svelte-19bz78m.svelte-19bz78m{position:absolute;display:flex;align-items:center;justify-content:center;cursor:pointer;width:80px;opacity:1;z-index:15}
+.visahoi-navigation-main-item.svelte-za78id:hover{filter:brightness(0.85)}
 
-.visahoi-navigation-main-item.svelte-19bz78m.svelte-19bz78m{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:opacity 0.5s ease, bottom 0.5s ease;margin:5px;width:80px;bottom:0;opacity:1;z-index:15}
+.visahoi-navigation-item-circle.svelte-za78id{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;color:white;margin:5px}
 
-.visahoi-navigation-main-item.svelte-19bz78m.svelte-19bz78m:hover{filter:brightness(0.85)}
+.visahoi-stage-title.svelte-za78id{font-weight:bold}
 
-.visahoi-navigation-item-circle.svelte-19bz78m.svelte-19bz78m{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;color:white;margin:5px}
+.visahoi-delete-stage.svelte-za78id{position:absolute;margin-left:110px}
 
-.visahoi-stage-title.svelte-19bz78m.svelte-19bz78m{font-weight:bold}
-
-.visahoi-delete-stage.svelte-19bz78m.svelte-19bz78m{position:absolute;margin-left:110px}
-
-.fa-trash.svelte-19bz78m.svelte-19bz78m{color:black}
+.fa-trash.svelte-za78id{color:black}
 
 .visahoi-marker-navigation-item.svelte-8ax7to{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:opacity 0.5s ease, bottom 0.5s ease;margin:5px;width:30px;bottom:var(--bottom);opacity:1;z-index:15}
 
