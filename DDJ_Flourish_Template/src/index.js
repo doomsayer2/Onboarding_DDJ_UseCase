@@ -1,8 +1,8 @@
 import Treemap from './treemap.js';
 import initLayout from '@flourish/layout';
-import { moveOnboardigBtn, toggleSettingsMenu, initSettingsMenu, initSaveMenu } from './ui';
-import Swal from 'sweetalert2';
+import { moveOnboardigBtn, toggleSettingsMenu, initSettingsMenu, initSaveMenu, dialogChanges, dialogSave } from './ui';
 import { equals } from './utils/utils.js';
+import { setEditMode } from '../static/lib/bundle.js';
 
 let plotlyTreemap = null;
 let layout = null;
@@ -29,7 +29,7 @@ export const state = {
 
   messages: [],
   stages: [],
-  dataObj: null,
+  dataObj: null,    // Used to check if the data changed which means a new one uploaded
 };
 
 export async function update() {
@@ -75,6 +75,10 @@ export async function update() {
     !(Flourish.environment === 'live' || Flourish.environment === 'preview')
   ) {
     state.toggleEditMode ? toggleSettingsMenu(true) : toggleSettingsMenu(false);
+    setEditMode(state.toggleEditMode);
+  } else {  // Disable all the settings
+    toggleSettingsMenu(false);
+    setEditMode(false);
   }
 
   // Only show the dialog if we are in onboarding mode and clean it
@@ -82,20 +86,8 @@ export async function update() {
 
   // Check if the data has changed and therefore we need to reload
   if (!equals(state.dataObj, data.data[0])) {
-    Swal.fire({
-      title: 'Changes',
-      html: `We have detected some changes to your data. Please reload the entire page by pressing the <i class="fa-solid fa-arrow-rotate-right"></i> 
-      in your browser or use a shortcut. This is necessary in order for the changes to take effect!`,
-      iconHtml: '<i class="fas fa-exclamation-triangle"></i>',
-      showCancelButton: false,
-      showConfirmButton: true,
-      confirmButtonText: 'Understood',
-      buttonsStyling: false,
-      customClass: {
-        confirmButton: 'btn btn-lg btn-dark',
-      },
-      backdrop: false,
-    });
+    state.dataObj = data.data[0];   // Update the data object
+    dialogChanges()                 // Show the warning message
   }
 
   console.log('THE STATE at ' + new Date().toTimeString() + ': ', state);
@@ -114,7 +106,7 @@ export async function draw() {
   // ===================
   Flourish.environment === 'live' || Flourish.environment === 'preview'
     ? toggleSettingsMenu(false)
-    : null;
+    : dialogSave();
 
   // ===================
   //  📊 Visualization

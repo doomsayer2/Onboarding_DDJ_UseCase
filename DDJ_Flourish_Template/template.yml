@@ -4,7 +4,7 @@ name: Onboarding VisAhoi (Advanced)
 description: A template showing the usage of the VisAhoi.js library by using the example of a treemap. The data of the treemap is fixed! The onboarding can be enabled or disabled and is automatically generated based on the data.
 author: FH St. Pölten (Florian Grassinger)
 credits: Wolfgang Aigner (FHStp), Christina Stoiber (FHStp), Dominic Girardi (datavisyn), Daniela Moitzi (datavisyn), Holger Stitz (datavisyn)
-version: 0.2.40
+version: 0.2.42
 
 # This template is compatible with SDK version 3
 sdk_version: 3
@@ -83,16 +83,15 @@ settings:
     type: boolean # See available types above
     new_section: Onboarding Messages and Stages
     show_if: showOnboarding
-  - property: messageStore
-    name: Messages Store
-    type: text
-    show_if: showOnboarding
-    new_section: ━━━━━━━━━━━▼━━━━━━━━━━━
   - property: stageStore
     name: Stages Store
     type: text
     show_if: showOnboarding
-
+    new_section: ━━━━━━━━━━━▼━━━━━━━━━━━
+  - property: messageStore
+    name: Messages Store
+    type: text
+    show_if: showOnboarding
 
   - Layout
   - property: layout

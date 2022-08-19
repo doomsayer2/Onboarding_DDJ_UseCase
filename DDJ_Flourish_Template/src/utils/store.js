@@ -21,21 +21,6 @@ export let onboarding = {
   set messages(val) {
     this._messages = val;
   },
-
-  // Other
-  storeMessages(msg) {
-    msg.forEach(e => {
-      if (e.anchor.hasOwnProperty('element')) {
-        e.anchor.element = e.anchor.element.outerHTML;
-      }
-    })
-    // localStorage.setItem('visaohi-onboarding-messages', JSON.stringify(serialize(msg, true)));
-  },
-
-  retrieveMessages() {
-    // const msg = serialize(JSON.parse(localStorage.getItem('visahoi-onboarding-messages')), false);
-    // console.log('RETRIEVED', msg);
-  },
 };
 
 /**

@@ -43,22 +43,80 @@
 
 	<!-- Modal Save -->
 	<div class="modal fade" id="onboardingSave" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-	aria-labelledby="saveDialogHeading" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="saveDialogHeading">VisAhoi - SAVE</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				WIP...
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+		aria-labelledby="saveDialogHeading" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="saveDialogHeading">VisAhoi - <strong>SAVE</strong></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="card card-bordered">
+						<div class="card-body">
+							<small><mark>Attention <i class="fa-solid fa-triangle-exclamation"></i>: </mark>In order to
+								save
+								your custom made onboarding and your changes we need you to help us a bit! Don't worry
+								it is just copying something and pasting it. We need to do this as this is the only way
+								for us to let Flourish save
+								your progress. <strong>Thank you</strong> for your help!
+							</small>
+						</div>
+					</div>
+					<br />
+					<h5>Stage Data</h5>
+					<small>Copy all of the text below and paste it into the <mark>"Stage Store"</mark> field in your
+						settings
+						panel.</small>
+					<div class="input-group">
+						<input id="stageInput" type="text" class="form-control" readonly />
+						<button class="btn btn-warning" data-clipboard-target="#stageInput">
+							<i class="fa-solid fa-clipboard fa-lg"></i>
+						</button>
+					</div>
+					<br />
+					<p>
+						<button class="btn btn-sm btn-light" type="button" data-bs-toggle="collapse"
+							data-bs-target="#explainStage" aria-expanded="false" aria-controls="explainStage">
+							Guide
+						</button>
+					</p>
+					<div class="collapse" id="explainStage">
+						<div class="card card-body">
+							Some placeholder content for the collapse component. This panel is hidden by default but
+							revealed when the user activates the relevant trigger.
+						</div>
+					</div>
+					<hr />
+					<h5>Message Data</h5>
+					<small>Copy all of the text below and paste it into the <mark>"Message Store"</mark> field in your
+						settings
+						panel.</small>
+					<div class="input-group">
+						<input id="messageInput" type="text" class="form-control" readonly />
+						<button class="btn btn-warning" data-clipboard-target="#messageInput">
+							<i class="fa-solid fa-clipboard fa-lg"></i>
+						</button>
+					</div>
+					<br />
+					<p>
+						<button class="btn btn-sm btn-light" type="button" data-bs-toggle="collapse"
+							data-bs-target="#explainMsg" aria-expanded="false" aria-controls="explainMsg">
+							Guide
+						</button>
+					</p>
+					<div class="collapse" id="explainMsg">
+						<div class="card card-body">
+							Some placeholder content for the collapse component. This panel is hidden by default but
+							revealed when the user activates the relevant trigger.
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
 	<!-- Modal Settings -->
 	<div class="modal fade" id="onboardingSettings" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"

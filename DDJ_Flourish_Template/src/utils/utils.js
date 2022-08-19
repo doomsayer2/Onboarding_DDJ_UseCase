@@ -122,3 +122,12 @@ export const toast = (
     text: msg,
   });
 };
+
+export const checkObjectProps = (obj, props = []) => {
+  // Doesn't need to check anything if the props array is empty or the object is not passed
+  if (props.length === 0 || obj === null) {
+    return;
+  }
+
+
+};
