@@ -3,6 +3,7 @@ import {
   ahoi,
   generateBasicAnnotations,
   getOnboardingStages,
+  getOnboardingMessages,
 } from '../static/lib/bundle.js';
 import { state } from './index';
 import { getCssSelector } from 'css-selector-generator';
@@ -115,6 +116,7 @@ export default class Treemap {
    * @returns The configuration object for the visahoi library
    */
   static getAhoiConfig() {
+    
     if (state.messages.length === 0) {
       let defaultOnboardingMessages = generateBasicAnnotations(
         EVisualizationType.TREEMAP,

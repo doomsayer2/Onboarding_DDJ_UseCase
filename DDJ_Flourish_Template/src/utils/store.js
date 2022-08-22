@@ -21,6 +21,9 @@ export let onboarding = {
   set messages(val) {
     this._messages = val;
   },
+
+  messagesTopLevelProps: ["anchor", "marker", "onboardingStage", "text", "title"],
+  stagesTopLevelProps: ["backgroundColor", "iconClass", "id", "title"],
 };
 
 /**

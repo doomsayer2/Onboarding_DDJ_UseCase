@@ -1,8 +1,8 @@
 import Treemap from './treemap.js';
 import initLayout from '@flourish/layout';
 import { moveOnboardigBtn, toggleSettingsMenu, initSettingsMenu, initSaveMenu, dialogChanges, dialogSave } from './ui';
-import { equals } from './utils/utils.js';
-import { setEditMode } from '../static/lib/bundle.js';
+import { equals, logger } from './utils/utils.js';
+import { getOnboardingMessages, getOnboardingStages, setEditMode } from '../static/lib/bundle.js';
 
 let plotlyTreemap = null;
 let layout = null;
@@ -70,6 +70,14 @@ export async function update() {
     ? moveOnboardigBtn(state.rightOffset, state.bottomOffset)
     : null;
 
+  // Watch for changes to the onboarding ui when we are in edit mode
+  if (state.toggleEditMode) {
+    observer.observe(document.querySelector('.visahoi-onboarding-ui'), {
+      subtree: true,
+      childList: true
+    });
+  }
+
   // Show the settings menu if we are in onboarding mode and its not live
   if (
     !(Flourish.environment === 'live' || Flourish.environment === 'preview')
@@ -89,6 +97,8 @@ export async function update() {
     state.dataObj = data.data[0];   // Update the data object
     dialogChanges()                 // Show the warning message
   }
+
+  console.log('From update() | Messages - getOnobardingMessages(): ', getOnboardingMessages());
 
   console.log('THE STATE at ' + new Date().toTimeString() + ': ', state);
 }
@@ -138,3 +148,11 @@ const cleanState = () => {
     state.stages = [];
   }
 };
+
+const observer = new MutationObserver((mutations, observer) => {
+  logger(`Mutation | Stages - getOnboardingStages():`, '#D08770', '#2E3440');
+  console.log(getOnboardingStages());
+
+  logger(`Mutation | Messages - getOnboardingMessages():`, '#B48EAD', '#2E3440');
+  console.log(getOnboardingMessages());
+});

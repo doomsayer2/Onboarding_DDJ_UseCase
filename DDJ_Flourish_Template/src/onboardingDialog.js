@@ -2,6 +2,7 @@ import { toast } from './utils/utils';
 import {
   createBasicOnboardingMessage,
   createBasicOnboardingStage,
+  getOnboardingStages,
 } from '../static/lib/bundle.js';
 import { onboarding } from './utils/store';
 import { state } from './index';

@@ -129,5 +129,6 @@ export const checkObjectProps = (obj, props = []) => {
     return;
   }
 
+  
 
 };
