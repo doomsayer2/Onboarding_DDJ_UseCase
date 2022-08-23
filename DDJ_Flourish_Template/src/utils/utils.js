@@ -125,10 +125,18 @@ export const toast = (
 
 export const checkObjectProps = (obj, props = []) => {
   // Doesn't need to check anything if the props array is empty or the object is not passed
-  if (props.length === 0 || obj === null) {
-    return;
+  if (props.length === 0 || obj === null || !isLiteralObject(obj)) {
+    return false;
   }
 
-  
+  return props.reduce((i, j) => i && j in obj, true); // Basically a nice reduce combined with the in functionality of objects
+};
 
+/**
+ * Little helper function to check if an object is a literal object
+ * @param {*} o Is the object to be checked
+ * @returns true if it's a literal object, otherwise false
+ */
+const isLiteralObject = (o) => {
+  return !!o && o.constructor === Object;
 };

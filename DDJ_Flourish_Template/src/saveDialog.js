@@ -129,5 +129,5 @@ function updateDataInputs() {
   stageInput.value = JSON.stringify(stages);
   messageInput.value = JSON.stringify(messages);
 
-  console.log("CURRENTLY SAVED WOULD BE: ", { stages, messages });
+  console.log("Save Dialog | SAVED would be: ", { stages, messages });
 }

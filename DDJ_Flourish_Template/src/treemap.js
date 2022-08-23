@@ -4,9 +4,12 @@ import {
   generateBasicAnnotations,
   getOnboardingStages,
   getOnboardingMessages,
+  setOnboardingStage,
 } from '../static/lib/bundle.js';
 import { state } from './index';
 import { getCssSelector } from 'css-selector-generator';
+import { onboarding } from './utils/store.js';
+import { checkObjectProps } from './utils/utils.js';
 
 // Static variables for onboarding
 let chart = null;
@@ -83,7 +86,7 @@ export default class Treemap {
     };
 
     chart = await Plotly.react(this.container, data, layout, config); // Plotly.react() is more efficient that Plotly.newPlot() for recreation
-    chart.on('plotly_treemapclick', () => false);   // Disable the zooming of the tiles
+    chart.on('plotly_treemapclick', () => false); // Disable the zooming of the tiles
   }
 
   updatePlotlyData(data_update) {
@@ -116,13 +119,33 @@ export default class Treemap {
    * @returns The configuration object for the visahoi library
    */
   static getAhoiConfig() {
-    
+    try {   // Check if we have some previous values already
+      let storeStages = JSON.parse(state.stageStore);
+      let storeMessages = JSON.parse(state.messageStore);
+      if (
+        checkObjectProps(storeMessages[0], onboarding.messagesTopLevelProps) &&
+        checkObjectProps(storeStages[0], onboarding.stagesTopLevelProps)
+      ) {
+        // If there are some messages and stages stored by the user we use those
+        state.stages = storeStages;
+        state.messages = storeMessages;
+
+        return {
+          onboardingMessages: storeMessages,
+          showHelpCloseText: false,
+        };
+      }
+    } catch (e) {}
+
     if (state.messages.length === 0) {
+      // First check if we have no messages in the local store
+      // Otherwise we create new ones
       let defaultOnboardingMessages = generateBasicAnnotations(
         EVisualizationType.TREEMAP,
         chart
       );
 
+      // Cleaning the default messages from the library by inserting new selectors so we can store it
       defaultOnboardingMessages.forEach((el) => {
         if (el.anchor.hasOwnProperty('element')) {
           el.anchor.sel = getCssSelector(el.anchor.element);
@@ -141,7 +164,7 @@ export default class Treemap {
         onboardingMessages: defaultOnboardingMessages,
         showHelpCloseText: false,
       };
-    } else {
+    } else {  // If there are messages already created we use those
       return {
         onboardingMessages: state.messages,
         showHelpCloseText: false,
