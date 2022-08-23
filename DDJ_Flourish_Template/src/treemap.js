@@ -3,8 +3,6 @@ import {
   ahoi,
   generateBasicAnnotations,
   getOnboardingStages,
-  getOnboardingMessages,
-  setOnboardingStage,
 } from '../static/lib/bundle.js';
 import { state } from './index';
 import { getCssSelector } from 'css-selector-generator';
@@ -120,8 +118,8 @@ export default class Treemap {
    */
   static getAhoiConfig() {
     try {   // Check if we have some previous values already
-      let storeStages = JSON.parse(state.stageStore);
-      let storeMessages = JSON.parse(state.messageStore);
+      let storeStages = JSON.parse(JSON.parse(state.stageStore));
+      let storeMessages = JSON.parse(JSON.parse(state.messageStore));
       if (
         checkObjectProps(storeMessages[0], onboarding.messagesTopLevelProps) &&
         checkObjectProps(storeStages[0], onboarding.stagesTopLevelProps)

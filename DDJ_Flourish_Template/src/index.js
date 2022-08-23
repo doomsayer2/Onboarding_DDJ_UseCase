@@ -8,12 +8,8 @@ import {
   dialogChanges,
   dialogSave,
 } from './ui';
-import { equals, logger } from './utils/utils.js';
-import {
-  getOnboardingMessages,
-  getOnboardingStages,
-  setEditMode,
-} from '../static/lib/bundle.js';
+import { equals } from './utils/utils.js';
+import { setEditMode } from '../static/lib/bundle.js';
 
 let plotlyTreemap = null;
 let layout = null;
@@ -53,7 +49,6 @@ export async function update() {
   // ===================
   //    🔥 Basics
   // ===================
-  console.count('update() called...');
 
   // Update the layout
   layout.update();
@@ -119,7 +114,6 @@ export async function draw() {
   // ===================
   //    🔥 Basics
   // ===================
-  console.count('draw() called...');
   layout = initLayout(state.layout);
 
   // ===================
@@ -153,6 +147,9 @@ export async function draw() {
 /**
  * HELPERS
  */
+/**
+ * This function is used to clean the state once we disable the onboarding
+ */
 const cleanState = () => {
   if (state.messages.length > 0 && state.stages.length > 0) {
     state.messages = [];
@@ -160,6 +157,9 @@ const cleanState = () => {
   }
 };
 
+/**
+ * This function is used to update the state based on user interactions with the onboarding like deleting or adding things
+ */
 const observer = new MutationObserver((mutations, observer) => {
   console.log('Save would happen...');
 });

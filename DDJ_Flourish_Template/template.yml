@@ -1,10 +1,10 @@
 # The 'id' should be a string that uniquely identifies your template
-id: 'visahoi_treemap_fhstp_data_change'
+id: 'visahoi_treemap_fhstp_beta'
 name: Onboarding VisAhoi (Advanced)
 description: A template showing the usage of the VisAhoi.js library by using the example of a treemap. The data of the treemap is fixed! The onboarding can be enabled or disabled and is automatically generated based on the data.
 author: FH St. Pölten (Florian Grassinger)
 credits: Wolfgang Aigner (FHStp), Christina Stoiber (FHStp), Dominic Girardi (datavisyn), Daniela Moitzi (datavisyn), Holger Stitz (datavisyn)
-version: 0.2.44
+version: 0.0.1
 
 # This template is compatible with SDK version 3
 sdk_version: 3

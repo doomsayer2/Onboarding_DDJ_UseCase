@@ -123,6 +123,13 @@ export const toast = (
   });
 };
 
+/**
+ * This function is used to check the provided object for the list of properties provided. If
+ * it contains all of them it is returning true otherwise false.
+ * @param {Object} obj The object to check if it has the list of properties
+ * @param {Array} props The properties that should be in the object
+ * @returns true if all properties are in the object otherwise false
+ */
 export const checkObjectProps = (obj, props = []) => {
   // Doesn't need to check anything if the props array is empty or the object is not passed
   if (props.length === 0 || obj === null || !isLiteralObject(obj)) {

@@ -1,5 +1,4 @@
 import { onboarding } from './utils/store';
-import { state } from './index';
 import { toast } from './utils/utils';
 import ClipboardJS from 'clipboard';
 import { getOnboardingMessages, getOnboardingStages } from '../static/lib/bundle';
@@ -126,8 +125,8 @@ function updateDataInputs() {
   const stages = getOnboardingStages();
   const messages = getOnboardingMessages();
 
-  stageInput.value = JSON.stringify(stages);
-  messageInput.value = JSON.stringify(messages);
+  stageInput.value = `${JSON.stringify(stages)}`;
+  messageInput.value = `${JSON.stringify(messages)}`;
 
   console.log("Save Dialog | SAVED would be: ", { stages, messages });
 }
