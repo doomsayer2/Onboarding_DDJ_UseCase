@@ -147,3 +147,9 @@ export const checkObjectProps = (obj, props = []) => {
 const isLiteralObject = (o) => {
   return !!o && o.constructor === Object;
 };
+
+export function jsonParser(blob) {
+  let parsed = JSON.parse(blob);
+  if (typeof parsed === 'string') parsed = jsonParser(parsed);
+  return parsed;
+}

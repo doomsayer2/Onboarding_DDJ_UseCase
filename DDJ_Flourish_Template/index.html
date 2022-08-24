@@ -68,9 +68,11 @@
 						settings
 						panel.</small>
 					<div class="input-group">
-						<input id="stageInput" type="text" class="form-control" readonly />
-						<button class="btn btn-warning" data-clipboard-target="#stageInput">
-							<i class="fa-solid fa-clipboard fa-lg"></i>
+						<input id="stageInput" type="text" class="form-control" onselectstart="return false"
+							onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false"
+							onDrop="return false" readonly />
+						<button class="btn btn-warning btn-lg w-25" data-clipboard-target="#stageInput">
+							Copy &nbsp; <i class="fa-solid fa-clipboard fa-lg"></i>
 						</button>
 					</div>
 					<br />
@@ -83,12 +85,15 @@
 					<div class="collapse" id="explainStage">
 						<div class="card card-body" style="font-size: 0.9em;">
 							<ol>
-								<li>Copy the content of the <strong>Stage</strong> field here - it's all the data you modified. You can copy it with
-								the <i class="fa-solid fa-clipboard"></i> or by marking it inside the input.</li>
-								<li>Go to your <strong>Settings Panel</strong> on the right of the editor. Open the "Onboarding" category if it is not open
-								already.</li>
-								<li>At the bottom you will find a <strong>textarea</strong> with a label of <mark>"Stages Store"</mark>. 
-								Click inside of the area and paste everything.</li>
+								<li>Copy the content of the <strong>Stage</strong> field here - it's all the data you
+									modified. You can copy it with
+									the <i class="fa-solid fa-clipboard"></i> or by marking it inside the input.</li>
+								<li>Go to your <strong>Settings Panel</strong> on the right of the editor. Open the
+									"Onboarding" category if it is not open
+									already.</li>
+								<li>At the bottom you will find a <strong>textarea</strong> with a label of
+									<mark>"Stages Store"</mark>.
+									Click inside of the area and paste everything.</li>
 								<li>If there is something inside make sure you remove it first.</li>
 								<li><strong>Thats it!!</strong></li>
 							</ol>
@@ -100,9 +105,11 @@
 						settings
 						panel.</small>
 					<div class="input-group">
-						<input id="messageInput" type="text" class="form-control" readonly />
-						<button class="btn btn-warning" data-clipboard-target="#messageInput">
-							<i class="fa-solid fa-clipboard fa-lg"></i>
+						<input id="messageInput" type="text" class="form-control" onselectstart="return false"
+							onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false"
+							onDrop="return false" readonly />
+						<button class="btn btn-warning btn-lg w-25" data-clipboard-target="#messageInput">
+							Copy &nbsp; <i class="fa-solid fa-clipboard fa-lg"></i>
 						</button>
 					</div>
 					<br />
@@ -115,12 +122,15 @@
 					<div class="collapse" id="explainMsg">
 						<div class="card card-body" style="font-size: 0.8em;">
 							<ol>
-								<li>Copy the content of the <strong>Message</strong> field here - it's all the data you modified. You can copy it with
-								the <i class="fa-solid fa-clipboard"></i> or by marking it inside the input.</li>
-								<li>Go to your <strong>Settings Panel</strong> on the right of the editor. Open the "Onboarding" category if it is not open
-								already.</li>
-								<li>At the bottom you will find a <strong>textarea</strong> with a label of <mark>"Messages Store"</mark>. 
-								Click inside of the area and paste everything.</li>
+								<li>Copy the content of the <strong>Message</strong> field here - it's all the data you
+									modified. You can copy it with
+									the <i class="fa-solid fa-clipboard"></i> or by marking it inside the input.</li>
+								<li>Go to your <strong>Settings Panel</strong> on the right of the editor. Open the
+									"Onboarding" category if it is not open
+									already.</li>
+								<li>At the bottom you will find a <strong>textarea</strong> with a label of
+									<mark>"Messages Store"</mark>.
+									Click inside of the area and paste everything.</li>
 								<li>If there is something inside make sure you remove it first.</li>
 								<li><strong>Thats it!!</strong></li>
 							</ol>

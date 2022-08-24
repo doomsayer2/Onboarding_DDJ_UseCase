@@ -7,7 +7,7 @@ import {
 import { state } from './index';
 import { getCssSelector } from 'css-selector-generator';
 import { onboarding } from './utils/store.js';
-import { checkObjectProps } from './utils/utils.js';
+import { checkObjectProps, jsonParser } from './utils/utils.js';
 
 // Static variables for onboarding
 let chart = null;
@@ -118,8 +118,8 @@ export default class Treemap {
    */
   static getAhoiConfig() {
     try {   // Check if we have some previous values already
-      let storeStages = JSON.parse(JSON.parse(state.stageStore));
-      let storeMessages = JSON.parse(JSON.parse(state.messageStore));
+      let storeStages = jsonParser(state.stageStore);
+      let storeMessages = jsonParser(state.messageStore);
       if (
         checkObjectProps(storeMessages[0], onboarding.messagesTopLevelProps) &&
         checkObjectProps(storeStages[0], onboarding.stagesTopLevelProps)

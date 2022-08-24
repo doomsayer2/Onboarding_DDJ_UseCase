@@ -1,7 +1,10 @@
 import { onboarding } from './utils/store';
 import { toast } from './utils/utils';
 import ClipboardJS from 'clipboard';
-import { getOnboardingMessages, getOnboardingStages } from '../static/lib/bundle';
+import {
+  getOnboardingMessages,
+  getOnboardingStages,
+} from '../static/lib/bundle';
 
 // All the elements of the dialog
 let modalEl = null;
@@ -37,7 +40,7 @@ function toggleModal() {
     isInitialized = true;
   } else {
     modal.toggle();
-    updateDataInputs();    // Always grab the latest data
+    updateDataInputs(); // Always grab the latest data
   }
 }
 
@@ -57,11 +60,10 @@ function initDialog() {
   const clipboardStage = new ClipboardJS(stageBtnCopy, {
     container: document.getElementById('onboardingSave'),
     target: stageInput,
-    text: function() {
-      return JSON.stringify(stageInput.value)
-    }
+    text: function () {
+      return JSON.stringify(stageInput.value);
+    },
   });
-
 
   clipboardStage.on('success', () => {
     const currentLabel = stageBtnCopy.innerHTML;
@@ -69,27 +71,27 @@ function initDialog() {
     stageBtnCopy.classList.add('btn-dark');
 
     // Exit label update when already in progress
-    if(stageBtnCopy.innerHTML === 'Copied!'){
-        return;
+    if (stageBtnCopy.innerHTML === 'Copied!') {
+      return;
     }
 
     // Update button label
     stageBtnCopy.innerHTML = 'Copied!';
 
     // Revert button label after 2 seconds
-    setTimeout(function(){
-        stageBtnCopy.innerHTML = currentLabel;
-        stageBtnCopy.classList.add('btn-warning');
-        stageBtnCopy.classList.remove('btn-dark');
-    }, 2000)
-  })
+    setTimeout(function () {
+      stageBtnCopy.innerHTML = currentLabel;
+      stageBtnCopy.classList.add('btn-warning');
+      stageBtnCopy.classList.remove('btn-dark');
+    }, 2000);
+  });
 
   const clipboardMessage = new ClipboardJS(messageBtnCopy, {
     container: document.getElementById('onboardingSave'),
     target: messageInput,
-    text: function() {
-      return JSON.stringify(messageInput.value)
-    }
+    text: function () {
+      return JSON.stringify(messageInput.value);
+    },
   });
 
   clipboardMessage.on('success', () => {
@@ -98,22 +100,31 @@ function initDialog() {
     messageBtnCopy.classList.add('btn-dark');
 
     // Exit label update when already in progress
-    if(messageBtnCopy.innerHTML === 'Copied!'){
-        return;
+    if (messageBtnCopy.innerHTML === 'Copied!') {
+      return;
     }
 
     // Update button label
     messageBtnCopy.innerHTML = 'Copied!';
 
     // Revert button label after 2 seconds
-    setTimeout(function(){
-        messageBtnCopy.innerHTML = currentLabel;
-        messageBtnCopy.classList.add('btn-warning');
-        messageBtnCopy.classList.remove('btn-dark');
-    }, 2000)
-  })
+    setTimeout(function () {
+      messageBtnCopy.innerHTML = currentLabel;
+      messageBtnCopy.classList.add('btn-warning');
+      messageBtnCopy.classList.remove('btn-dark');
+    }, 2000);
+  });
 
-  // X. Show the modal now
+  // 4. Show message when users try to copy normally
+  function blockCopy(event) {
+    event.preventDefault();
+    toast('Please use the provided copy button!!', 1000, 'warning', 'center');
+  }
+
+  stageInput.oncopy = blockCopy;
+  messageInput.oncopy = blockCopy;
+
+  // 5. Show the modal now
   modal.show();
 }
 
@@ -125,8 +136,8 @@ function updateDataInputs() {
   const stages = getOnboardingStages();
   const messages = getOnboardingMessages();
 
-  stageInput.value = `${JSON.stringify(stages)}`;
-  messageInput.value = `${JSON.stringify(messages)}`;
+  stageInput.value = JSON.stringify(stages);
+  messageInput.value = JSON.stringify(messages);
 
-  console.log("Save Dialog | SAVED would be: ", { stages, messages });
+  console.log('Save Dialog | SAVED would be: ', { stages, messages });
 }

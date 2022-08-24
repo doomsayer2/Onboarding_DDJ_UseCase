@@ -22142,7 +22142,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (138:6) {#if editTooltip}
+// (148:6) {#if editTooltip}
 function create_if_block_4(ctx) {
 	let input;
 	let mounted;
@@ -22176,7 +22176,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (148:6) {#if $isEditModeActive && !editTooltip}
+// (158:6) {#if $isEditModeActive && !editTooltip}
 function create_if_block_3(ctx) {
 	let div0;
 	let t;
@@ -22219,7 +22219,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (168:6) {#if editTooltip}
+// (178:6) {#if editTooltip}
 function create_if_block_2(ctx) {
 	let div;
 	let mounted;
@@ -22248,7 +22248,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (188:8) {:else}
+// (198:8) {:else}
 function create_else_block_1(ctx) {
 	let span;
 
@@ -22267,7 +22267,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (184:8) {#if editTooltip}
+// (194:8) {#if editTooltip}
 function create_if_block_1(ctx) {
 	let span;
 
@@ -22286,7 +22286,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (199:2) {:else}
+// (209:2) {:else}
 function create_else_block(ctx) {
 	let div;
 	let raw_value = sanitizeHtml$1(/*activeMarkerInformation*/ ctx[3]?.tooltip.text, /*sanitizerOptions*/ ctx[7]) + "";
@@ -22308,7 +22308,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (197:2) {#if editTooltip}
+// (207:2) {#if editTooltip}
 function create_if_block$1(ctx) {
 	let textarea;
 	let mounted;
@@ -22537,15 +22537,17 @@ function create_fragment$3(ctx) {
 
 function instance$3($$self, $$props, $$invalidate) {
 	let $onboardingStages;
+	let $onboardingMessages;
 	let $markerInformation;
 	let $activeMarker;
 	let $selectedMarker;
 	let $activeOnboardingStage;
 	let $isEditModeActive;
 	component_subscribe($$self, onboardingStages, $$value => $$invalidate(18, $onboardingStages = $$value));
-	component_subscribe($$self, markerInformation, $$value => $$invalidate(19, $markerInformation = $$value));
+	component_subscribe($$self, onboardingMessages, $$value => $$invalidate(19, $onboardingMessages = $$value));
+	component_subscribe($$self, markerInformation, $$value => $$invalidate(20, $markerInformation = $$value));
 	component_subscribe($$self, activeMarker, $$value => $$invalidate(4, $activeMarker = $$value));
-	component_subscribe($$self, selectedMarker, $$value => $$invalidate(20, $selectedMarker = $$value));
+	component_subscribe($$self, selectedMarker, $$value => $$invalidate(21, $selectedMarker = $$value));
 	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(5, $activeOnboardingStage = $$value));
 	component_subscribe($$self, isEditModeActive, $$value => $$invalidate(6, $isEditModeActive = $$value));
 
@@ -22648,11 +22650,13 @@ function instance$3($$self, $$props, $$invalidate) {
 	};
 
 	const deleteOnboardingMessage = () => {
+		const activeMarkerId = $activeMarker === null || $activeMarker === void 0
+		? void 0
+		: $activeMarker.marker.id;
+
 		// Delete onboarding message for the active marker.
 		$markerInformation.map((m, i) => {
-			if (m.marker.id === ($activeMarker === null || $activeMarker === void 0
-			? void 0
-			: $activeMarker.marker.id)) {
+			if (m.marker.id === activeMarkerId) {
 				const tempMarkerInformation = $markerInformation;
 				tempMarkerInformation.splice(i, 1);
 				closeTooltip();
@@ -22671,6 +22675,14 @@ function instance$3($$self, $$props, $$invalidate) {
 					}
 				});
 			}
+		});
+
+		$onboardingMessages.map((m, i) => {
+			if (m.marker.id === activeMarkerId) {
+				const tempOnboardingMessage = $onboardingMessages;
+				tempOnboardingMessage.splice(i, 1);
+				onboardingMessages.set(tempOnboardingMessage);
+			} // console.log(getOnboardingMessages(), "onboarding message");
 		});
 
 		// Console message is shown when all the onboarding messages are delete
@@ -23671,7 +23683,6 @@ const getOnboardingStages = () => {
     return get_store_value(onboardingStages);
 };
 const getOnboardingMessages = () => {
-    console.log(get_store_value(onboardingMessages));
     return get_store_value(onboardingMessages);
 };
 const createBasicOnboardingStage = (stage) => {
