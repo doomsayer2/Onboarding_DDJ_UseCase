@@ -90,26 +90,17 @@ export const dialogSave = () => {
     Swal.fire({
       title: 'Saving Process',
       html: `
-        <h4><mark>Instructions:</mark></h4>
         <div class="saveDialogText">
-            <p>Limitations of Flourish don't allow us to directly save the progress you make during the creation of new
-            onboarding messages or the editing. There is a dedicated save button when you enabled the onboarding:</p>
+            <h4>Important Information regarding saving</h4>
 
             <div class="mt-3 mb-3 text-center">
-              <img src="" class="rounded" alt="Save button img...">
+            Before you publish the visualization or leave the page save your adaptions by using the button in the top right corner. 
+            You have to copy and paste two <strong>“Strings”</strong> into the respective field in the setting panel <strong>“Onboarding”</strong>
+            of the Flourish template (see GIF/PNG) below!
             </div>
-
-            <p>It will open a dialog where you have to copy two "Strings" (Collection of letters) and paste them into the respective
-            fields in the settings panel.</p>
 
             <div class="mt-3 mb-3 text-center">
               <img src="" class="rounded" alt="Dialog img...">
-            </div>
-
-            <div class="mt-3 mb-3">
-                <p>Please don't forget to save your progress before you publish it or leave the page!</p>
-                <p>You also have to save it in order for it to be in the live version!</p>
-                <p><strong>Thank you very much!</strong></p>
             </div>
         </div>
       `,

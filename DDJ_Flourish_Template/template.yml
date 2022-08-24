@@ -41,7 +41,7 @@ settings:
 
   - General Settings # Headings can be used to break up the settings into collapsible sections
   - property: fixed_height
-    name: Use fixed height?
+    name: Use fixed height
     type: boolean
     description: If checked you can enter your own height in px. This will increase the size of the whole page.
     new_section: Page Height
@@ -54,13 +54,13 @@ settings:
     show_if: fixed_height
 
   - property: change_layout # Refers to a property in the template's state object
-    name: Change Layout? # Display name for the settings panel
+    name: Change Layout # Display name for the settings panel
     description: If enabled it is possible to change further parts of the page and the overall layout itself. Furthermore, headers and footers can be added. # Optional description for the settings panel
     type: boolean # See available types above
     new_section: Page Options
 
   - property: showOnboarding # Refers to a property in the template's state object
-    name: Show Onboarding # Display name for the settings panel
+    name: Add Onboarding # Display name for the settings panel
     description: This option generates the onboarding and enables further customization. # Optional description for the settings panel
     type: boolean # See available types above
     new_section: Generate Onboarding
@@ -78,18 +78,18 @@ settings:
     type: number
     show_if: showOnboarding
   - property: toggleEditMode # Refers to a property in the template's state object
-    name: Toggle Edit Mode # Display name for the settings panel
-    description: Enable this to edit the messages or stages directly. You can delete them as well. # Optional description for the settings panel
+    name: Edit Onboarding # Display name for the settings panel
+    description: Enable this to edit the messages or stages directly. You can delete them as well or add new ones. # Optional description for the settings panel
     type: boolean # See available types above
-    new_section: Onboarding Messages and Stages
+    new_section: Edit Onboarding Messages and Stages
     show_if: showOnboarding
   - property: stageStore
-    name: Stages Store
+    name: Save Onboarding Stages
     type: text
     show_if: showOnboarding
-    new_section: ━━━━━━━━━━━▼━━━━━━━━━━━
+    new_section: Save your work here!
   - property: messageStore
-    name: Messages Store
+    name: Save Onboarding Messages
     type: text
     show_if: showOnboarding
 

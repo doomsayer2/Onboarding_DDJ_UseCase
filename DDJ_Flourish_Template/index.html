@@ -34,7 +34,7 @@
 		<span><strong>Note:</strong> The <strong>customization menu</strong> and <strong>save button</strong> will be
 			removed once you publish it! This is only in the editor.</span>
 		<div>
-			<button id="btnOnboardingSettings" type="button" class="btn btn-light btn-sm" title="Settings"><i
+			<button id="btnOnboardingSettings" type="button" class="btn btn-warning btn-sm" title="Settings"><i
 					class="fa-solid fa-gear"></i></button>
 			<button id="btnSave" type="button" class="btn btn-warning btn-sm" title="Save"><i
 					class="fa-solid fa-floppy-disk"></i></button>
@@ -53,20 +53,16 @@
 				<div class="modal-body">
 					<div class="card card-bordered">
 						<div class="card-body">
-							<small><mark>Attention <i class="fa-solid fa-triangle-exclamation"></i>: </mark>In order to
-								save
-								your custom made onboarding and your changes we need you to help us a bit! Don't worry
-								it is just copying something and pasting it. We need to do this as this is the only way
-								for us to let Flourish save
-								your progress. <strong>Thank you</strong> for your help!
+							<small><strong>Note:</strong> In order to save your custom-made onboarding and your changes, 
+							you have to copy and paste the string in the settings panel of Flourish 
+							(see the Guide for more and detailed instructions).
 							</small>
 						</div>
 					</div>
 					<br />
 					<h5>Stage Data</h5>
-					<small>Copy all of the text below and paste it into the <mark>"Stage Store"</mark> field in your
-						settings
-						panel.</small>
+					<small>Copy all of the text below and paste it into the <mark>“Save Onboarding Stages”</mark> field in the
+						settings panel.</small>
 					<div class="input-group">
 						<input id="stageInput" type="text" class="form-control" onselectstart="return false"
 							onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false"
@@ -85,14 +81,12 @@
 					<div class="collapse" id="explainStage">
 						<div class="card card-body" style="font-size: 0.9em;">
 							<ol>
-								<li>Copy the content of the <strong>Stage</strong> field here - it's all the data you
-									modified. You can copy it with
-									the <i class="fa-solid fa-clipboard"></i> or by marking it inside the input.</li>
-								<li>Go to your <strong>Settings Panel</strong> on the right of the editor. Open the
-									"Onboarding" category if it is not open
-									already.</li>
+								<li>Copy the content of the <strong>Stage Data</strong> field here - it's all the data you
+									modified. You can copy it with the <i class="fa-solid fa-clipboard"></i> button.</li>
+								<li>Go to the <strong>Settings Panel</strong> on the right of the editor. Open the
+									“Onboarding” category if it is not open already.</li>
 								<li>At the bottom you will find a <strong>textarea</strong> with a label of
-									<mark>"Stages Store"</mark>.
+									<mark>“Save Onboarding Stages”</mark>.
 									Click inside of the area and paste everything.</li>
 								<li>If there is something inside make sure you remove it first.</li>
 								<li><strong>Thats it!!</strong></li>
@@ -101,9 +95,8 @@
 					</div>
 					<hr />
 					<h5>Message Data</h5>
-					<small>Copy all of the text below and paste it into the <mark>"Message Store"</mark> field in your
-						settings
-						panel.</small>
+					<small>Copy all of the text below and paste it into the <mark>“Save Onboarding Messages”</mark> field in the
+						settings panel.</small>
 					<div class="input-group">
 						<input id="messageInput" type="text" class="form-control" onselectstart="return false"
 							onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false"
@@ -122,14 +115,12 @@
 					<div class="collapse" id="explainMsg">
 						<div class="card card-body" style="font-size: 0.8em;">
 							<ol>
-								<li>Copy the content of the <strong>Message</strong> field here - it's all the data you
-									modified. You can copy it with
-									the <i class="fa-solid fa-clipboard"></i> or by marking it inside the input.</li>
-								<li>Go to your <strong>Settings Panel</strong> on the right of the editor. Open the
-									"Onboarding" category if it is not open
-									already.</li>
+								<li>Copy the content of the <strong>Message Data</strong> field here - it's all the data you
+									modified. You can copy it with the <i class="fa-solid fa-clipboard"></i> button.</li>
+								<li>Go to the <strong>Settings Panel</strong> on the right of the editor. Open the
+									“Onboarding” category if it is not open already.</li>
 								<li>At the bottom you will find a <strong>textarea</strong> with a label of
-									<mark>"Messages Store"</mark>.
+									<mark>“Save Onboarding Messages”</mark>.
 									Click inside of the area and paste everything.</li>
 								<li>If there is something inside make sure you remove it first.</li>
 								<li><strong>Thats it!!</strong></li>
@@ -172,8 +163,7 @@
 									<!-- Stage -->
 									<form id="formStage" novalidate>
 										<div class="row">
-											<h4><i class="fa-solid fa-thumbtack fa-rotate-by fa-2xs"
-													style="--fa-rotate-angle: -45deg;"></i> Onboarding Stage</h4>
+											<h4>Onboarding Stage</h4>
 											<hr class="mt-1 mb-4 customDivider">
 										</div>
 										<div class="row mb-3">
@@ -223,8 +213,7 @@
 									<!-- Message -->
 									<form id="formMessage" novalidate>
 										<div class="row mt-5">
-											<h4><i class="fa-solid fa-thumbtack fa-rotate-by fa-2xs"
-													style="--fa-rotate-angle: -45deg;"></i> Onboarding Message</h4>
+											<h4>Onboarding Message</h4>
 											<hr class="mt-1 mb-4 customDivider">
 										</div>
 										<div class="row mb-3">
