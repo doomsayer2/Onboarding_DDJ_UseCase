@@ -96,11 +96,11 @@ export const dialogSave = () => {
             <div class="mt-3 mb-3 text-center">
             Before you publish the visualization or leave the page save your adaptions by using the button in the top right corner. 
             You have to copy and paste two <strong>“Strings”</strong> into the respective field in the setting panel <strong>“Onboarding”</strong>
-            of the Flourish template (see GIF/PNG) below!
+            of the Flourish template (see GIF) below!
             </div>
 
             <div class="mt-3 mb-3 text-center">
-              <img src="" class="rounded" alt="Dialog img...">
+              <img id="saveImg" src="${Flourish.static_prefix}/media/onboarding-save-flourish.gif" class="rounded" alt="Dialog img...">
             </div>
         </div>
       `,

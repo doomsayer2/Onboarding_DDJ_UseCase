@@ -4,7 +4,7 @@ name: Onboarding VisAhoi (Beta)
 description: A template showing the usage of the VisAhoi.js library by using the example of a treemap visualization. The data can be changed! The onboarding can be enabled or disabled and is automatically generated based on the data, but can be further customized and saved with the tool provided.
 author: FH St. Pölten (Florian Grassinger)
 credits: Wolfgang Aigner (FHStp), Christina Stoiber (FHStp), Dominic Girardi (datavisyn), Daniela Moitzi (datavisyn), Holger Stitz (datavisyn)
-version: 0.0.7
+version: 0.0.9
 
 # This template is compatible with SDK version 3
 sdk_version: 3
@@ -146,6 +146,6 @@ data:
 
 
 tour:
-  - text: This template shows two treemaps side by side. They show the tax spendings for the biden administration. In this basic version you can decide to include the onboarding or not.
-  - text: Here you can adjust the appearance of the visualization. E.g. add header and footer elements or enable the Onboarding with default messages.
+  - text: This template shows a treemap with the tax spendings for the biden administration. You can include a Onboarding which you can customize.
+  - text: Here you can adjust the appearance of the visualization. E.g. add header and footer elements or enable the Onboarding.
     anchor: '.settings'

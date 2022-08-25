@@ -6795,7 +6795,7 @@ function create_else_block_1$1(ctx) {
 	};
 }
 
-// (42:4) {#if $showOnboardingSteps}
+// (46:4) {#if $showOnboardingSteps}
 function create_if_block_2$1(ctx) {
 	let span;
 
@@ -6813,7 +6813,7 @@ function create_if_block_2$1(ctx) {
 	};
 }
 
-// (48:4) {#if $activeOnboardingStage && $isEditModeActive}
+// (52:4) {#if $activeOnboardingStage && $isEditModeActive}
 function create_if_block_1$2(ctx) {
 	let div;
 	let mounted;
@@ -6842,7 +6842,7 @@ function create_if_block_1$2(ctx) {
 	};
 }
 
-// (71:2) {:else}
+// (75:2) {:else}
 function create_else_block$1(ctx) {
 	let span;
 	let i;
@@ -6878,7 +6878,7 @@ function create_else_block$1(ctx) {
 	};
 }
 
-// (67:2) {#if $showOnboardingNavigation}
+// (71:2) {#if $showOnboardingNavigation}
 function create_if_block$3(ctx) {
 	let span;
 	let mounted;
@@ -7041,16 +7041,18 @@ function create_fragment$8(ctx) {
 }
 
 function instance$8($$self, $$props, $$invalidate) {
+	let $onboardingMessages;
 	let $onboardingStages;
-	let $activeOnboardingStage;
 	let $markerInformation;
+	let $activeOnboardingStage;
 	let $isEditModeActive;
 	let $showOnboardingNavigation;
 	let $showOnboardingSteps;
 	let $showHideCloseText;
-	component_subscribe($$self, onboardingStages, $$value => $$invalidate(9, $onboardingStages = $$value));
+	component_subscribe($$self, onboardingMessages, $$value => $$invalidate(9, $onboardingMessages = $$value));
+	component_subscribe($$self, onboardingStages, $$value => $$invalidate(10, $onboardingStages = $$value));
+	component_subscribe($$self, markerInformation, $$value => $$invalidate(11, $markerInformation = $$value));
 	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(1, $activeOnboardingStage = $$value));
-	component_subscribe($$self, markerInformation, $$value => $$invalidate(10, $markerInformation = $$value));
 	component_subscribe($$self, isEditModeActive, $$value => $$invalidate(0, $isEditModeActive = $$value));
 	component_subscribe($$self, showOnboardingNavigation, $$value => $$invalidate(2, $showOnboardingNavigation = $$value));
 	component_subscribe($$self, showOnboardingSteps, $$value => $$invalidate(3, $showOnboardingSteps = $$value));
@@ -7069,28 +7071,32 @@ function instance$8($$self, $$props, $$invalidate) {
 	};
 
 	const deleteOnboardingStage = () => {
+		const stageId = $activeOnboardingStage === null || $activeOnboardingStage === void 0
+		? void 0
+		: $activeOnboardingStage.id;
+
 		const tempOnboardingStages = $onboardingStages;
 
 		// The stage is removed from the array
 		tempOnboardingStages.map((onboardingStage, i) => {
-			if (onboardingStage.id === ($activeOnboardingStage === null || $activeOnboardingStage === void 0
-			? void 0
-			: $activeOnboardingStage.id)) {
+			if (onboardingStage.id === stageId) {
 				tempOnboardingStages.splice(i, 1);
 			}
 
 			// The onboarding messages for the stage is filtered out
-			const tempMarkerInformation = $markerInformation.filter(m => m.message.onboardingStage.id !== ($activeOnboardingStage === null || $activeOnboardingStage === void 0
-			? void 0
-			: $activeOnboardingStage.id));
+			const tempMarkerInformation = $markerInformation.filter(m => m.message.onboardingStage.id !== stageId);
 
+			const tempOnboardingMessage = $onboardingMessages.filter(message => message.onboardingStage.id !== stageId);
 			markerInformation.set(tempMarkerInformation);
+			onboardingMessages.set(tempOnboardingMessage);
 			onboardingStages.set(tempOnboardingStages);
 
 			if ($onboardingStages.length === 0) {
 				console.error("No onboarding stages are available. It seems that all onboarding stages have been deleted.");
 			}
 		});
+
+		console.log($onboardingMessages, "onboarding messages");
 	};
 
 	$$self.$$.update = () => {

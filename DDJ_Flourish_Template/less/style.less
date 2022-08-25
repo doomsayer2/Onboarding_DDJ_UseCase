@@ -33,7 +33,7 @@ body {
     i {
       transform: scale(1.1);
     }
-    
+
     &:hover {
       transform: scale(1.2);
       transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -47,7 +47,7 @@ body {
     i {
       transform: scale(1.2);
     }
-    
+
     &:hover {
       transform: scale(1.2);
       transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -145,6 +145,36 @@ body {
   border: none !important;
 }
 
+/**
+  Dialogs and Images
+*/
 .saveDialogText {
   font-size: 0.8em;
+}
+
+#saveImg {
+  max-height: 200px;
+}
+
+#explainStageImg {
+  width: 60%;
+  align-self: center;
+}
+
+#explainMessageImg {
+  width: 60%;
+  align-self: center;
+}
+
+.btnExplainTerms {
+  width: 27px;
+  height: 27px;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 6px;
+  margin-top: 1px;
+  border: 1px dashed #E5E9F0;
+  border-radius: 50%;
 }
