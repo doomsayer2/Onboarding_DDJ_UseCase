@@ -25,5 +25,5 @@ var template=function(e){"use strict";var o,i;(B6=o=o||{}).BAR_CHART="bar-chart"
               <img id="saveImg" src="${Flourish.static_prefix}/media/onboarding-save-flourish.gif" class="rounded" alt="Dialog img...">
             </div>
         </div>
-      `,iconHtml:'<i class="fas fa-exclamation-triangle"></i>',showCancelButton:!1,showConfirmButton:!0,confirmButtonText:"Understood",buttonsStyling:!1,customClass:{confirmButton:"btn btn-lg btn-dark"},backdrop:!1}),Sn=new k9("fl-layout-primary",Tn),Vn(Sn),Ln(),On.dataObj=Tn.data[0],Pn()},e.state=On,e.update=Pn,e}({});
+      `,iconHtml:'<i class="fas fa-exclamation-triangle"></i>',showCancelButton:!1,showConfirmButton:!0,confirmButtonText:"Understood",buttonsStyling:!1,customClass:{confirmButton:"btn btn-lg btn-dark"},backdrop:"#efefefe",width:"46em",allowOutsideClick:!1}),Sn=new k9("fl-layout-primary",Tn),Vn(Sn),Ln(),On.dataObj=Tn.data[0],Pn()},e.state=On,e.update=Pn,e}({});
 //# sourceMappingURL=template.js.map

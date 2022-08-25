@@ -112,6 +112,8 @@ export const dialogSave = () => {
       customClass: {
         confirmButton: 'btn btn-lg btn-dark',
       },
-      backdrop: false,
+      backdrop: "#efefefe",
+      width: '46em',
+      allowOutsideClick: false
     });
   };

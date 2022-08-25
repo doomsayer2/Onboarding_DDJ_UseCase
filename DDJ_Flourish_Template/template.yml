@@ -84,12 +84,12 @@ settings:
     new_section: Edit Onboarding Messages and Stages
     show_if: showOnboarding
   - property: stageStore
-    name: Save Onboarding Stages
+    name: Save your added Onboarding Stages
     type: text
     show_if: showOnboarding
-    new_section: Save your work here!
+    new_section: Save your Additions!
   - property: messageStore
-    name: Save Onboarding Messages
+    name: Save your added Onboarding Messages
     type: text
     show_if: showOnboarding
 
