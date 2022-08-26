@@ -22,7 +22,7 @@ export const state = {
   // The current state of template. You can make some or all of the properties
   // of the state object available to the user as settings in settings.js.
   fixed_height: true,
-  height: 650,
+  height: 750,
   change_layout: false,
   layout: {},
 

@@ -46,6 +46,7 @@ function toggleModal() {
     isInitialized = true;
   } else {
     modal.toggle();
+    fillDropdown();   // Refill the dropdown if something changed
   }
 }
 
@@ -117,8 +118,11 @@ function fillDropdown() {
   });
 }
 
+// ============================================================
+//                          ADD TAB
+// ============================================================
 /**
- * This function initializes the listeners for the form validation
+ * This function initializes the listeners for the form validation in the ADD tab
  */
 function formValidation() {
   const formStage = document.getElementById('formStage');
@@ -244,3 +248,7 @@ function addMsgToStage(msg, stage) {
     );
   }
 }
+
+// ============================================================
+//                          EDIT TAB
+// ============================================================

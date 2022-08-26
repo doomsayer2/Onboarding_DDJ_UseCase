@@ -35,7 +35,7 @@ const defaultOnboardingStages = new Map([
             hoverBackgroundColor: "rgb(92, 59, 112)",
             backgroundColor: "rgb(123, 80, 150)",
             activeBackgroundColor: "rgb(76, 46, 94)",
-            order: 1,
+            order: 3,
         },
     ],
     [
@@ -55,7 +55,7 @@ const defaultOnboardingStages = new Map([
             title: "Analyzing",
             iconClass: "fas fa-lightbulb",
             backgroundColor: "rgb(254, 128, 41)",
-            order: 3,
+            order: 1,
         },
     ],
 ]);
@@ -6795,7 +6795,7 @@ function create_else_block_1$1(ctx) {
 	};
 }
 
-// (46:4) {#if $showOnboardingSteps}
+// (45:4) {#if $showOnboardingSteps}
 function create_if_block_2$1(ctx) {
 	let span;
 
@@ -6813,7 +6813,7 @@ function create_if_block_2$1(ctx) {
 	};
 }
 
-// (52:4) {#if $activeOnboardingStage && $isEditModeActive}
+// (51:4) {#if $activeOnboardingStage && $isEditModeActive}
 function create_if_block_1$2(ctx) {
 	let div;
 	let mounted;
@@ -6822,8 +6822,8 @@ function create_if_block_1$2(ctx) {
 	return {
 		c() {
 			div = element("div");
-			div.innerHTML = `<i class="fas fa-trash svelte-za78id"></i>`;
-			attr(div, "class", "visahoi-delete-stage svelte-za78id");
+			div.innerHTML = `<i class="fas fa-trash svelte-ipawuf"></i>`;
+			attr(div, "class", "visahoi-delete-stage svelte-ipawuf");
 		},
 		m(target, anchor) {
 			insert(target, div, anchor);
@@ -6842,7 +6842,7 @@ function create_if_block_1$2(ctx) {
 	};
 }
 
-// (75:2) {:else}
+// (74:2) {:else}
 function create_else_block$1(ctx) {
 	let span;
 	let i;
@@ -6855,6 +6855,7 @@ function create_else_block$1(ctx) {
 			i = element("i");
 			attr(i, "class", "fas fa-solid fa-toggle-off");
 			set_style(i, "width", "20px, height:20px");
+			attr(span, "title", "Enable navigation steps");
 		},
 		m(target, anchor) {
 			insert(target, span, anchor);
@@ -6878,7 +6879,7 @@ function create_else_block$1(ctx) {
 	};
 }
 
-// (71:2) {#if $showOnboardingNavigation}
+// (70:2) {#if $showOnboardingNavigation}
 function create_if_block$3(ctx) {
 	let span;
 	let mounted;
@@ -6888,6 +6889,7 @@ function create_if_block$3(ctx) {
 		c() {
 			span = element("span");
 			span.innerHTML = `<i class="fas fa-solid fa-toggle-on"></i>`;
+			attr(span, "title", "Disable navigation steps");
 		},
 		m(target, anchor) {
 			insert(target, span, anchor);
@@ -6955,11 +6957,11 @@ function create_fragment$8(ctx) {
 			t3 = space();
 			div2 = element("div");
 			if_block2.c();
-			attr(div0, "class", "visahoi-navigation-item-circle svelte-za78id");
+			attr(div0, "class", "visahoi-navigation-item-circle svelte-ipawuf");
 			set_style(div0, "background-color", /*$activeOnboardingStage*/ ctx[1]?.backgroundColor || navigationMainItemDefaultColor);
-			attr(span, "class", "visahoi-stage-title svelte-za78id");
-			attr(div1, "class", "visahoi-navigation-main-item svelte-za78id");
-			attr(div2, "class", "toggle-button svelte-za78id");
+			attr(span, "class", "visahoi-stage-title svelte-ipawuf");
+			attr(div1, "class", "visahoi-navigation-main-item svelte-ipawuf");
+			attr(div2, "class", "toggle-button svelte-ipawuf");
 		},
 		m(target, anchor) {
 			insert(target, div1, anchor);
@@ -7041,16 +7043,16 @@ function create_fragment$8(ctx) {
 }
 
 function instance$8($$self, $$props, $$invalidate) {
-	let $onboardingMessages;
 	let $onboardingStages;
+	let $onboardingMessages;
 	let $markerInformation;
 	let $activeOnboardingStage;
 	let $isEditModeActive;
 	let $showOnboardingNavigation;
 	let $showOnboardingSteps;
 	let $showHideCloseText;
-	component_subscribe($$self, onboardingMessages, $$value => $$invalidate(9, $onboardingMessages = $$value));
-	component_subscribe($$self, onboardingStages, $$value => $$invalidate(10, $onboardingStages = $$value));
+	component_subscribe($$self, onboardingStages, $$value => $$invalidate(9, $onboardingStages = $$value));
+	component_subscribe($$self, onboardingMessages, $$value => $$invalidate(10, $onboardingMessages = $$value));
 	component_subscribe($$self, markerInformation, $$value => $$invalidate(11, $markerInformation = $$value));
 	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(1, $activeOnboardingStage = $$value));
 	component_subscribe($$self, isEditModeActive, $$value => $$invalidate(0, $isEditModeActive = $$value));
@@ -7095,8 +7097,6 @@ function instance$8($$self, $$props, $$invalidate) {
 				console.error("No onboarding stages are available. It seems that all onboarding stages have been deleted.");
 			}
 		});
-
-		console.log($onboardingMessages, "onboarding messages");
 	};
 
 	$$self.$$.update = () => {

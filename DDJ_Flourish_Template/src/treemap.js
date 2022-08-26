@@ -3,6 +3,7 @@ import {
   ahoi,
   generateBasicAnnotations,
   getOnboardingStages,
+  setOnboardingStage,
 } from '../static/lib/bundle.js';
 import { state } from './index';
 import { getCssSelector } from 'css-selector-generator';
@@ -127,6 +128,8 @@ export default class Treemap {
         // If there are some messages and stages stored by the user we use those
         state.stages = storeStages;
         state.messages = storeMessages;
+
+        storeStages.forEach(stage => setOnboardingStage(stage));
 
         return {
           onboardingMessages: storeMessages,
