@@ -9,7 +9,7 @@ import {
   dialogSave,
 } from './ui';
 import { equals } from './utils/utils.js';
-import { getOnboardingMessages, getOnboardingStages, setEditMode } from '../static/lib/bundle.js';
+import { getOnboardingMessages, getOnboardingStages, setEditMode, setOnboardingStage } from '../static/lib/bundle.js';
 
 let plotlyTreemap = null;
 let layout = null;

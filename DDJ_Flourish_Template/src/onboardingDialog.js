@@ -1,13 +1,17 @@
-import { toast } from './utils/utils';
+import { rgbToHex, toast } from './utils/utils';
 import {
   createBasicOnboardingMessage,
   createBasicOnboardingStage,
+  deleteOnboardingStage,
   getOnboardingStages,
+  setOnboardingStage,
 } from '../static/lib/bundle.js';
 import { onboarding } from './utils/store';
 import { state } from './index';
+import * as d3 from 'd3';
 
 // All the elements of the dialog and others
+// Elements for the first tab
 let select = null;
 let btnInspect = null;
 let overlay = null;
@@ -15,6 +19,16 @@ let modalEl = null;
 let xEl = null;
 let yEl = null;
 let modal = null;
+
+// Elements for the second tab
+// let sortList = null;
+// let formStageEdit = null;
+// let stageEditBtn = null;
+// let cancelEditBtn = null;
+// let editIdInput = null;
+// let editTitleInput = null;
+// let editColorInput = null;
+// let editIconInput = null;
 
 // Other things
 let isInitialized = false;
@@ -46,7 +60,7 @@ function toggleModal() {
     isInitialized = true;
   } else {
     modal.toggle();
-    fillDropdown();   // Refill the dropdown if something changed
+    fillDropdown(); // Refill the dropdown if something changed
   }
 }
 
@@ -63,11 +77,22 @@ function initDialog() {
   yEl = document.getElementById('addYMsg');
   modal = bootstrap.Modal.getOrCreateInstance(modalEl);
 
-  // 2. Fill the dropdown with the stages
+  // sortList = document.getElementById('sortableList');
+  // formStageEdit = document.getElementById('formStageEdit');
+  // stageEditBtn = document.getElementById('btnEditStage');
+  // cancelEditBtn = document.getElementById('btnEditCancel');
+  // editIdInput = document.getElementById('editId');
+  // editTitleInput = document.getElementById('editTitle');
+  // editColorInput = document.getElementById('editColor');
+  // editIconInput = document.getElementById('editIcon');
+
+  // 2. Fill the dropdown with the stages and also the edit tab
   fillDropdown();
+  // fillStageEditList();
 
   // 3. Add the form validation
   formValidation();
+  // formValidationTab2Edit();
 
   // 4. Add general listeners and other
   document.addEventListener('keydown', function (e) {
@@ -98,7 +123,11 @@ function initDialog() {
     overlay.style.display = 'block';
   });
 
-  // 5. Show the modal now
+  // // 5. Bring functions to window scope for them to be used dynamically
+  // window.editListItem = editListItem;
+  // window.deleteListItem = deleteListItem;
+
+  // 6. Show the modal now
   modal.show();
 }
 
@@ -155,6 +184,7 @@ function formValidation() {
         state.stages = [...state.stages, newOnboardingStage];
 
         fillDropdown(); // Fill the dropdown again with new stage
+        // fillStageEditList(); // Fill also the stages edit tab again.
         toast('Success: The stage was added!', 1200);
 
         // Reset the form to previous state
@@ -235,7 +265,7 @@ function addMsgToStage(msg, stage) {
 
     // Update the onboarding
     onboarding.treemap.onboardingUI?.updateOnboarding({
-      onboardingMessages: state.messages
+      onboardingMessages: state.messages,
     });
 
     toast('Success: The message was added!', 1200); // Show success message also
@@ -252,3 +282,154 @@ function addMsgToStage(msg, stage) {
 // ============================================================
 //                          EDIT TAB
 // ============================================================
+
+// /**
+//  * This function is used to fill the stage edit list with all the stages available.
+//  */
+// function fillStageEditList() {
+//   // Clear the old ones first
+//   sortList.innerHTML = '';
+
+//   // Fill the list with the stages
+//   state.stages.forEach((stage) =>
+//     sortList.insertAdjacentHTML('afterbegin', createListItem(stage))
+//   );
+// }
+
+// /**
+//  * This function creates a list item with the given object.
+//  * @param {*} item The object holding the information of a list item
+//  * @returns The html string for the list item
+//  */
+// function createListItem(item) {
+//   return `<li data-id="${item.id}" class="list-group-item d-flex justify-content-between align-items-center">
+//   <div class="col-3">
+//     <span class="listDescription">Title:</span>
+//     <span>${item.title}</span>
+//   </div>  
+//   <div class="col-3 d-inline-flex align-items-center">
+//       <span class="listDescription">Color: </span>
+//       <div style="width: 30px; height: 30px; background-color: ${item.backgroundColor}" class="rounded-circle"></div>
+//     </div>
+//     <div class="col-3">
+//       <span class="listDescription">Icon:</span>
+//       <i class="${item.iconClass}"></i>
+//     </div>
+//     <div class="col-3">
+//       <span class="listDescription">Actions:</span>
+//       <a class="listMenuIcon" title="Edit Stage" onclick="editListItem(this, '${item.id}')"><i class="fas fa-edit"></i></a>
+//       <a class="listMenuIcon" title="Delete Stage" onclick="deleteListItem(this, '${item.id}')"><i class="fas fa-trash-alt" style="color: #ef475f;"></i></a>
+//     </div>
+//   </li>`;
+// }
+
+// /**
+//  * This function is called whenever a list item is edited. It fills the form with the respective data
+//  * and requires the id of the stage to be edited.
+//  * @param {string} id The id as string of the stage to be edited.
+//  */
+// function fillFormTab2Stages(id) {
+
+// }
+
+// /**
+//  * This function initializes the form validation for the second tab. More precisely the form validation for 
+//  * the edit tab form.
+//  */
+// function formValidationTab2Edit() {
+//   // Listener for Stage Edit form button
+//   stageEditBtn.addEventListener(
+//     'click',
+//     (event) => {
+//       if (!formStageEdit.checkValidity()) {
+//         event.preventDefault();
+//         event.stopPropagation();
+
+//         formStageEdit.classList.add('was-validated');
+//       } else {
+//         event.preventDefault();
+
+//         // Get the values out
+//         const elements = formStageEdit.elements;
+//         const { id, title, backgroundColor, iconClass } = getFormVals(elements);
+
+//         // Update the stage and everything else
+//         updateStageInformation();
+//         setOnboardingStage({
+//           id,
+//           title,
+//           backgroundColor,
+//           iconClass,
+//           hoverBackgroundColor: backgroundColor,
+//           activeBackgroundColor: backgroundColor,
+//         });
+
+//         // Reset the form to previous state
+//         formStageEdit.classList.remove('was-validated');
+//         formStageEdit.reset();
+
+//         // Hide the form
+//         d3.select('#formStageEdit')
+//           .transition()
+//           .duration(200)
+//           .style('opacity', 0);
+//       }
+//     },
+//     false
+//   );
+
+//   // Listener for Cancel button
+//   cancelEditBtn.addEventListener('click', (event) => {
+//     event.preventDefault();
+//     event.stopPropagation();
+
+//     d3.select('#formStageEdit').transition().duration(200).style('opacity', 0);
+//   });
+// }
+
+// /**
+//  * This function deletes a onbaording stage from the onboarding and also from the list it will be removed
+//  * @param {*} elm The current list element
+//  * @param {*} id The id of the onboarding stage to be removed
+//  */
+// function deleteListItem(elm, id) {
+//   // Remove the stage itself
+//   deleteOnboardingStage(id);
+//   // Update the state
+//   state.stages = getOnboardingStages();
+//   // Remove the element itself
+//   elm.parentElement.parentElement.remove();
+//   // Update the other forms dropdown
+//   fillDropdown();
+// }
+
+// /**
+//  * This function fills the form with the current stage and shows it
+//  * @param {*} elm The current list element
+//  * @param {*} id The id of the onboarding stage to be edited
+//  */
+// function editListItem(elm, id) {
+//   const currentStage = state.stages.find((e) => e.id === id);
+
+//   editIdInput.value = id;
+//   editTitleInput.value = currentStage.title;
+//   editColorInput.value =
+//     rgbToHex(currentStage.backgroundColor) || currentStage.backgroundColor;
+//   editIconInput.value = currentStage.iconClass;
+
+//   d3.select('#formStageEdit').transition().duration(200).style('opacity', 1);
+// }
+
+// /**
+//  * This function updates the stage information everywhere whenever
+//  * we change one stage.
+//  */
+// function updateStageInformation() {
+//   state.stages = getOnboardingStages();
+
+//   // Just wait for the other changes to take effect
+//   setTimeout(() => {
+//     fillStageEditList();
+//     fillDropdown();
+//   }, 1);
+// }

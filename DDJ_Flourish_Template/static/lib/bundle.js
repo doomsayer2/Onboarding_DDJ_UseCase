@@ -7309,6 +7309,8 @@ function instance$7($$self, $$props, $$invalidate) {
 			: elementId.style.opacity = 0.5;
 
 			const activeOnboardingStageMarkers = $markInfo.filter(m => m.message.onboardingStage === $activeOnboardingStage);
+
+			// selectedMarker.set(activeOnboardingStageMarkers[0]);
 			selectedMarker.set(activeOnboardingStageMarkers[0]);
 
 			$markInfo.map((marker, i) => {
@@ -22126,7 +22128,7 @@ var sanitizeHtml$1 = sanitizeHtml_1;
 
 function create_else_block_2(ctx) {
 	let b;
-	let t_value = /*$activeMarker*/ ctx[4]?.tooltip.title + "";
+	let t_value = /*$activeMarker*/ ctx[5]?.tooltip.title + "";
 	let t;
 
 	return {
@@ -22140,7 +22142,7 @@ function create_else_block_2(ctx) {
 			append(b, t);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*$activeMarker*/ 16 && t_value !== (t_value = /*$activeMarker*/ ctx[4]?.tooltip.title + "")) set_data(t, t_value);
+			if (dirty & /*$activeMarker*/ 32 && t_value !== (t_value = /*$activeMarker*/ ctx[5]?.tooltip.title + "")) set_data(t, t_value);
 		},
 		d(detaching) {
 			if (detaching) detach(b);
@@ -22148,7 +22150,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (148:6) {#if editTooltip}
+// (161:6) {#if editTooltip}
 function create_if_block_4(ctx) {
 	let input;
 	let mounted;
@@ -22182,7 +22184,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (158:6) {#if $isEditModeActive && !editTooltip}
+// (171:6) {#if $isEditModeActive && !editTooltip}
 function create_if_block_3(ctx) {
 	let div0;
 	let t;
@@ -22225,7 +22227,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (178:6) {#if editTooltip}
+// (191:6) {#if editTooltip}
 function create_if_block_2(ctx) {
 	let div;
 	let mounted;
@@ -22254,7 +22256,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (198:8) {:else}
+// (211:8) {:else}
 function create_else_block_1(ctx) {
 	let span;
 
@@ -22273,7 +22275,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (194:8) {#if editTooltip}
+// (207:8) {#if editTooltip}
 function create_if_block_1(ctx) {
 	let span;
 
@@ -22292,7 +22294,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (209:2) {:else}
+// (222:2) {:else}
 function create_else_block(ctx) {
 	let div;
 	let raw_value = sanitizeHtml$1(/*activeMarkerInformation*/ ctx[3]?.tooltip.text, /*sanitizerOptions*/ ctx[7]) + "";
@@ -22314,7 +22316,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (207:2) {#if editTooltip}
+// (220:2) {#if editTooltip}
 function create_if_block$1(ctx) {
 	let textarea;
 	let mounted;
@@ -22417,7 +22419,7 @@ function create_fragment$3(ctx) {
 			attr(div4, "data-popper-arrow", "");
 			attr(div5, "id", /*tooltipId*/ ctx[8]);
 
-			attr(div5, "class", div5_class_value = "visahoi-tooltip " + (/*$activeMarker*/ ctx[4] && /*$activeOnboardingStage*/ ctx[5]
+			attr(div5, "class", div5_class_value = "visahoi-tooltip " + (/*$activeMarker*/ ctx[5] && /*$activeOnboardingStage*/ ctx[4]
 			? ''
 			: 'hidden') + " svelte-k8nzd4");
 
@@ -22516,7 +22518,7 @@ function create_fragment$3(ctx) {
 				}
 			}
 
-			if (dirty & /*$activeMarker, $activeOnboardingStage*/ 48 && div5_class_value !== (div5_class_value = "visahoi-tooltip " + (/*$activeMarker*/ ctx[4] && /*$activeOnboardingStage*/ ctx[5]
+			if (dirty & /*$activeMarker, $activeOnboardingStage*/ 48 && div5_class_value !== (div5_class_value = "visahoi-tooltip " + (/*$activeMarker*/ ctx[5] && /*$activeOnboardingStage*/ ctx[4]
 			? ''
 			: 'hidden') + " svelte-k8nzd4")) {
 				attr(div5, "class", div5_class_value);
@@ -22544,17 +22546,17 @@ function create_fragment$3(ctx) {
 function instance$3($$self, $$props, $$invalidate) {
 	let $onboardingStages;
 	let $onboardingMessages;
+	let $activeOnboardingStage;
 	let $markerInformation;
 	let $activeMarker;
 	let $selectedMarker;
-	let $activeOnboardingStage;
 	let $isEditModeActive;
 	component_subscribe($$self, onboardingStages, $$value => $$invalidate(18, $onboardingStages = $$value));
 	component_subscribe($$self, onboardingMessages, $$value => $$invalidate(19, $onboardingMessages = $$value));
+	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(4, $activeOnboardingStage = $$value));
 	component_subscribe($$self, markerInformation, $$value => $$invalidate(20, $markerInformation = $$value));
-	component_subscribe($$self, activeMarker, $$value => $$invalidate(4, $activeMarker = $$value));
+	component_subscribe($$self, activeMarker, $$value => $$invalidate(5, $activeMarker = $$value));
 	component_subscribe($$self, selectedMarker, $$value => $$invalidate(21, $selectedMarker = $$value));
-	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(5, $activeOnboardingStage = $$value));
 	component_subscribe($$self, isEditModeActive, $$value => $$invalidate(6, $isEditModeActive = $$value));
 
 	var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
@@ -22670,16 +22672,34 @@ function instance$3($$self, $$props, $$invalidate) {
 
 				// check whether the onboarding message deleted is the last message of the activeOboarding stage.
 				// If it is then show all the onboarding stages.
-				$onboardingStages.map((o, i) => {
-					const res = $markerInformation.find(m => m.message.onboardingStage.id === o.id);
+				// $onboardingStages.map((o, i) => {
+				//   const res = $markerInformation.find(
+				//     (m) => m.message.onboardingStage.id === o.id
+				//   );
+				//   if (res === undefined) {
+				//     const tempOnboardinStages = $onboardingStages;
+				//     tempOnboardinStages.splice(i, 1);
+				//     onboardingStages.set(tempOnboardinStages);
+				//     activeOnboardingStage.set(null);
+				//   }
+				// });
+				const result = $markerInformation.find(m => m.message.onboardingStage.id === ($activeOnboardingStage === null || $activeOnboardingStage === void 0
+				? void 0
+				: $activeOnboardingStage.id));
 
-					if (res === undefined) {
-						const tempOnboardinStages = $onboardingStages;
-						tempOnboardinStages.splice(i, 1);
-						onboardingStages.set(tempOnboardinStages);
-						activeOnboardingStage.set(null);
-					}
-				});
+				if (result === undefined) {
+					const tempOnboardinStages = $onboardingStages;
+
+					tempOnboardinStages.map((o, i) => {
+						if (o.id === ($activeOnboardingStage === null || $activeOnboardingStage === void 0
+						? void 0
+						: $activeOnboardingStage.id)) {
+							tempOnboardinStages.splice(i, 1);
+							onboardingStages.set(tempOnboardinStages);
+							activeOnboardingStage.set(null);
+						}
+					});
+				}
 			}
 		});
 
@@ -22766,8 +22786,8 @@ function instance$3($$self, $$props, $$invalidate) {
 		tempText,
 		editTooltip,
 		activeMarkerInformation,
-		$activeMarker,
 		$activeOnboardingStage,
+		$activeMarker,
 		$isEditModeActive,
 		sanitizerOptions,
 		tooltipId,

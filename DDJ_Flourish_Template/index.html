@@ -307,7 +307,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="col-md-6" style="margin-top: auto;">
+											<div class="col-md-6" style="margin-top: 28px;">
 												<button id="btnInspect" class="btn btn-dark p-2 rounded-1"><i
 														class="fa fa-crosshairs fa-lg"></i></button>
 												<span class="form-text" style="margin-left: 10px;">
@@ -328,22 +328,31 @@
 								<!-- EDIT Form -->
 								<div class="wrapper">
                                     <div class="row">
-                                        <h4><i class="fa-solid fa-thumbtack fa-rotate-by fa-2xs"
-                                                style="--fa-rotate-angle: -45deg;"></i> Onboarding Stages</h4>
+										<div class="d-inline-flex">
+											<h4>Edit Onboarding Stage</h4>
+											<button class="btnExplainTerms" type="button" data-bs-toggle="collapse"
+												data-bs-target="#explainOnboardingStage" aria-expanded="false"
+												aria-controls="explainOnboardingStage"
+												title="What is a Onboarding Stage?">
+												<i class="fa-solid fa-question"></i>
+											</button>
+										</div>
+										<div class="collapse" id="explainOnboardingStage">
+											<div class="card card-body">
+												<img id="explainStageImg" src="./media/onboarding-stages-help.png"
+													class="rounded" alt="Explaination of Onboarding Stages...">
+											</div>
+										</div>
                                         <hr class="mt-1 mb-4 customDivider">
                                         <small class="mb-4"><strong>Explanation</strong>:
-                                            <ul class="fa-ul">
-                                                <li><span class="fa-li"><i class="fas fa-share"></i></span>Drag and Drop
+                                            <ul>
+                                                <!-- <li><span class="fa-li"><i class="fas fa-share"></i></span>Drag and Drop
                                                     the a stage (list item) to
-                                                    reorder it.</li>
-                                                <li><span class="fa-li"><i class="fas fa-share"></i></span>Click on the
-                                                    <i class="fas fa-trash-alt"></i> icon to delete a
-                                                    stage.
-                                                </li>
-                                                <li><span class="fa-li"><i
-                                                            class="fas fa-share"></i></span><mark>Warning!</mark> 
-                                                    This will also delete all messages
-                                                    that are associated with the deleted stage.</li>
+                                                    reorder it.</li> -->
+												<li>Click on the <i class="fas fa-edit"></i>&nbsp; icon to edit a stage.</li>
+                                                <li>Click on the <i class="fas fa-trash-alt"></i>&nbsp; icon to delete a stage.</li>
+                                                <li style="list-style: none"><mark>Warning!</mark> This will also delete all messages 
+													that are associated with the deleted stage.</li>
                                             </ul>
                                         </small>
                                     </div>
@@ -358,6 +367,7 @@
                                                     <div class="alert alert-warning text-center" role="alert">
                                                         <strong>Editing Stage!</strong>
                                                     </div>
+													<input type="text" class="form-control beGone" id="editId" data-visahoi-name="id" />
                                                 </div>
                                                 <div class="row mb-3">
                                                     <div class="col-md-12">
@@ -386,19 +396,15 @@
                                                 <div class="row mb-3">
                                                     <div class="col-md-12">
                                                         <label for="editIcon" class="form-label">Icon</label>
-                                                        <input type="text" class="form-control" id="editIcon"
-                                                            placeholder="Enter a icon name..." pattern="fas? fa-\w[\w-]*"
-                                                            data-visahoi-name="iconClass" required>
-                                                        <span class="form-text">Only FontAwesome icons are available
-                                                            (e.g. "fa
-                                                            fa-thumbs-up"). See: <a
-                                                                href="https://fontawesome.com/v4/icons/" target="_blank"
-                                                                class="link-dark">Icon
-                                                                List</a></span>
-                                                        <div class="invalid-feedback">
-                                                            Not a valid FontAwesome icon. Has to have the format of "fa
-                                                            fa-*".
-                                                        </div>
+														<input type="text" class="form-control" id="editIcon"
+														placeholder="Enter a icon name..." pattern="fa[srla]? fa-\w[\w-]*"
+														data-visahoi-name="iconClass" required>
+														<span class="form-text">Only FontAwesome 5 icons are available (e.g. "fa
+															fa-thumbs-up" or "fas fa-fire"). See: <a href="https://fontawesome.com/v5/search"
+																target="_blank" class="link-dark">https://fontawesome.com/v5/search</a></span>
+														<div class="invalid-feedback">
+															Not a valid FontAwesome 5 icon. Format must be fa fa-*, fas fa-*, fad fa-* or fal fa-*.
+														</div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
