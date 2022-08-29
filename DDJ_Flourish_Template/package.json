@@ -22,6 +22,7 @@
     "rollup": "^1.16.2",
     "rollup-plugin-node-resolve": "^5.1.0",
     "rollup-plugin-uglify": "^6.0.2",
+    "sortablejs": "^1.15.0",
     "sweetalert2": "^11.4.19",
     "uuidv4": "^6.2.13"
   },
