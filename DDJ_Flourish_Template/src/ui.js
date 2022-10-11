@@ -104,7 +104,6 @@ export const dialogSave = () => {
             </div>
         </div>
       `,
-      iconHtml: '<i class="fas fa-exclamation-triangle"></i>',
       showCancelButton: false,
       showConfirmButton: true,
       confirmButtonText: 'Understood',
@@ -113,7 +112,7 @@ export const dialogSave = () => {
         confirmButton: 'btn btn-lg btn-dark',
       },
       backdrop: "#efefefe",
-      width: '46em',
+      width: '56em',
       allowOutsideClick: false
     });
   };

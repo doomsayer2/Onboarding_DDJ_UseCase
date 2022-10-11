@@ -1869,6 +1869,8 @@ function generateMessages$6(spec, visElement, ahoiConfig) {
             marker: {
                 id: "unique-marker-id-2",
             },
+            id: "unique-message-id-2",
+            order: 2,
         },
         {
             anchor: getAnchor(spec.yAxisTitle, visElement),
@@ -1879,6 +1881,8 @@ function generateMessages$6(spec, visElement, ahoiConfig) {
             marker: {
                 id: "unique-marker-id-3",
             },
+            id: "unique-message-id-3",
+            order: 3,
         },
         {
             anchor: getAnchor(spec.xAxisTitle, visElement),
@@ -1889,6 +1893,8 @@ function generateMessages$6(spec, visElement, ahoiConfig) {
             marker: {
                 id: "unique-marker-id-4",
             },
+            id: "unique-message-id-4",
+            order: 4,
         },
         {
             anchor: getAnchor(spec.yMin, visElement),
@@ -1899,6 +1905,8 @@ function generateMessages$6(spec, visElement, ahoiConfig) {
             marker: {
                 id: "unique-marker-id-5",
             },
+            id: "unique-message-id-5",
+            order: 1,
         },
         {
             anchor: getAnchor(spec.yMax, visElement),
@@ -1909,6 +1917,8 @@ function generateMessages$6(spec, visElement, ahoiConfig) {
             marker: {
                 id: "unique-marker-id-6",
             },
+            id: "unique-message-id-6",
+            order: 2,
         },
     ];
     if (spec.chartTitle?.value !== undefined) {
@@ -1921,6 +1931,8 @@ function generateMessages$6(spec, visElement, ahoiConfig) {
             marker: {
                 id: "unique-marker-id-1",
             },
+            id: "unique-message-id-1",
+            order: 1,
         });
     }
     // Filter for messages where all template variables are available in the spec
@@ -1943,6 +1955,8 @@ function generateMessages$5(spec, visElement) {
             marker: {
                 id: "unique-marker-id-2",
             },
+            id: "unique-message-id-2",
+            order: 2,
         },
         {
             anchor: getAnchor(spec.legendTitle, visElement),
@@ -1953,6 +1967,8 @@ function generateMessages$5(spec, visElement) {
             marker: {
                 id: "unique-marker-id-3",
             },
+            id: "unique-message-id-3",
+            order: 3,
         },
         {
             anchor: getAnchor(spec.xAxis, visElement),
@@ -1963,6 +1979,8 @@ function generateMessages$5(spec, visElement) {
             marker: {
                 id: "unique-marker-id-4",
             },
+            id: "unique-message-id-4",
+            order: 4,
         },
     ];
     if (spec.chartTitle?.value !== undefined) {
@@ -1979,6 +1997,8 @@ function generateMessages$5(spec, visElement) {
                 fontSize: "20px",
                 id: "unique-marker-id-1",
             },
+            id: "unique-message-id-1",
+            order: 1,
         });
     }
     // Filter for messages where all template variables are available in the spec
@@ -2004,6 +2024,8 @@ function generateMessages$4(spec, visElement) {
             marker: {
                 id: "unique-marker-id-2",
             },
+            id: "unique-message-id-2",
+            order: 2,
         },
         {
             anchor: getAnchor(spec.xAxis, visElement),
@@ -2014,6 +2036,8 @@ function generateMessages$4(spec, visElement) {
             marker: {
                 id: "unique-marker-id-3",
             },
+            id: "unique-message-id-3",
+            order: 3,
         },
         {
             anchor: getAnchor(spec.positiveColor, visElement),
@@ -2025,6 +2049,8 @@ function generateMessages$4(spec, visElement) {
             marker: {
                 id: "unique-marker-id-4",
             },
+            id: "unique-message-id-4",
+            order: 4,
         },
         {
             anchor: getAnchor(spec.negativeColor, visElement),
@@ -2035,6 +2061,8 @@ function generateMessages$4(spec, visElement) {
             marker: {
                 id: "unique-marker-id-5",
             },
+            id: "unique-message-id-5",
+            order: 5,
         },
         {
             anchor: spec.yMin?.anchor,
@@ -2045,6 +2073,8 @@ function generateMessages$4(spec, visElement) {
             marker: {
                 id: "unique-marker-id-6",
             },
+            id: "unique-message-id-6",
+            order: 6,
         },
         {
             anchor: spec.yMax?.anchor,
@@ -2055,6 +2085,8 @@ function generateMessages$4(spec, visElement) {
             marker: {
                 id: "unique-marker-id-7",
             },
+            id: "unique-message-id-7",
+            order: 7,
         },
     ];
     if (spec.chartTitle?.value !== undefined) {
@@ -2067,6 +2099,8 @@ function generateMessages$4(spec, visElement) {
             marker: {
                 id: "unique-marker-id-1",
             },
+            id: "unique-message-id-1",
+            order: 1,
         });
     }
     // Filter for messages where all template variables are available in the spec
@@ -2090,6 +2124,8 @@ function generateMessages$3(spec, visElement) {
             marker: {
                 id: "unique-marker-id-2",
             },
+            id: "unique-message-id-2",
+            order: 1,
         },
         {
             anchor: getAnchor(spec.legendTitle, visElement),
@@ -2100,6 +2136,8 @@ function generateMessages$3(spec, visElement) {
             marker: {
                 id: "unique-marker-id-3",
             },
+            id: "unique-message-id-3",
+            order: 1,
         },
         {
             anchor: getAnchor(spec.xAxisTitle, visElement),
@@ -2110,6 +2148,8 @@ function generateMessages$3(spec, visElement) {
             marker: {
                 id: "unique-marker-id-4",
             },
+            id: "unique-message-id-4",
+            order: 2,
         },
         {
             anchor: getAnchor(spec.yAxisTitle, visElement),
@@ -2120,6 +2160,8 @@ function generateMessages$3(spec, visElement) {
             marker: {
                 id: "unique-marker-id-5",
             },
+            id: "unique-message-id-5",
+            order: 2,
         },
         {
             anchor: getAnchor(spec.maxValue, visElement),
@@ -2130,6 +2172,8 @@ function generateMessages$3(spec, visElement) {
             marker: {
                 id: "unique-marker-id-6",
             },
+            id: "unique-message-id-6",
+            order: 3,
         },
     ];
     if (spec.chartTitle?.value !== undefined) {
@@ -2142,6 +2186,8 @@ function generateMessages$3(spec, visElement) {
             marker: {
                 id: "unique-marker-id-1",
             },
+            id: "unique-message-id-1",
+            order: 1,
         });
     }
     // Filter for messages where all template variables are available in the spec
@@ -2860,12 +2906,14 @@ function generateMessages$2(spec, visElement) {
         {
             anchor: getAnchor(spec.desc, visElement),
             requires: ["desc"],
-            text: `The treemap visualization shows the breakdown of hierarchical data level by level.The size of each rectangle represents a quantitative value associated with each element in the hierarchy.`,
+            text: `The treemap visualization shows the breakdown of hierarchical data level by level. The size of each rectangle represents a quantitative value associated with each element in the hierarchy.`,
             title: "Reading the chart",
             onboardingStage: reading,
             marker: {
                 id: "unique-marker-id-2",
             },
+            id: "unique-message-id-2",
+            order: 1,
         },
         {
             anchor: getAnchor(spec.subDesc, visElement),
@@ -2876,6 +2924,8 @@ function generateMessages$2(spec, visElement) {
             marker: {
                 id: "unique-marker-id-3",
             },
+            id: "unique-message-id-3",
+            order: 3,
         },
         {
             anchor: getAnchor(spec.otherDesc, visElement),
@@ -2886,6 +2936,8 @@ function generateMessages$2(spec, visElement) {
             marker: {
                 id: "unique-marker-id-4",
             },
+            id: "unique-message-id-4",
+            order: 4,
         },
         {
             anchor: getAnchor(spec.gapDesc, visElement),
@@ -2896,6 +2948,8 @@ function generateMessages$2(spec, visElement) {
             marker: {
                 id: "unique-marker-id-5",
             },
+            id: "unique-message-id-5",
+            order: 5,
         },
         {
             anchor: getAnchor(spec.interactingDesc, visElement),
@@ -2906,6 +2960,7 @@ function generateMessages$2(spec, visElement) {
             marker: {
                 id: "unique-marker-id-6",
             },
+            id: "unique-message-id-6",
         },
         {
             anchor: getAnchor(spec.maxValueDesc, visElement),
@@ -2916,6 +2971,7 @@ function generateMessages$2(spec, visElement) {
             marker: {
                 id: "unique-marker-id-7",
             },
+            id: "unique-message-id-7",
         },
         {
             anchor: getAnchor(spec.minValueDesc, visElement),
@@ -2926,6 +2982,7 @@ function generateMessages$2(spec, visElement) {
             marker: {
                 id: "unique-marker-id-8",
             },
+            id: "unique-message-id-8",
         },
     ];
     if (spec.chartTitle?.value !== undefined) {
@@ -2938,6 +2995,8 @@ function generateMessages$2(spec, visElement) {
             marker: {
                 id: "unique-marker-id-1",
             },
+            id: "unique-message-id-1",
+            order: 2,
         });
     }
     // Filter for messages where all template variables are available in the spec
@@ -2960,6 +3019,8 @@ function generateMessages$1(spec, visElement) {
             marker: {
                 id: "unique-marker-id-1",
             },
+            id: "unique-message-id-2",
+            order: 1,
         },
         {
             anchor: getAnchor(spec.heatmapDescription, visElement),
@@ -2970,6 +3031,8 @@ function generateMessages$1(spec, visElement) {
             marker: {
                 id: "unique-marker-id-2",
             },
+            id: "unique-message-id-2",
+            order: 2,
         },
         {
             anchor: getAnchor(spec.legendDescription, visElement),
@@ -2980,6 +3043,8 @@ function generateMessages$1(spec, visElement) {
             marker: {
                 id: "unique-marker-id-3",
             },
+            id: "unique-message-id-3",
+            order: 3,
         },
         {
             anchor: getAnchor(spec.axisDescription, visElement),
@@ -2990,6 +3055,8 @@ function generateMessages$1(spec, visElement) {
             marker: {
                 id: "unique-marker-id-4",
             },
+            id: "unique-message-id-4",
+            order: 4,
         },
         {
             anchor: getAnchor(spec.hoverDescription, visElement),
@@ -3000,6 +3067,8 @@ function generateMessages$1(spec, visElement) {
             marker: {
                 id: "unique-marker-id-5",
             },
+            id: "unique-message-id-5",
+            order: 1,
         },
     ];
     // Filter for messages where all template variables are available in the spec
@@ -6647,86 +6716,114 @@ function createCommonjsModule(fn) {
 
 /* src\components\OnboardingNavigationItem.svelte generated by Svelte v3.49.0 */
 
-function create_fragment$9(ctx) {
-	let div1;
-	let div0;
+function create_key_block$1(ctx) {
+	let div;
 	let i;
 	let i_class_value;
-	let t0;
-	let span;
-	let t1_value = /*stage*/ ctx[0].title + "";
-	let t1;
-	let div1_class_value;
-	let mounted;
-	let dispose;
 
 	return {
 		c() {
-			div1 = element("div");
-			div0 = element("div");
+			div = element("div");
 			i = element("i");
-			t0 = space();
-			span = element("span");
-			t1 = text(t1_value);
 
 			attr(i, "class", i_class_value = "" + (null_to_empty(!/*$activeOnboardingStage*/ ctx[2] || /*stage*/ ctx[0].id !== /*$activeOnboardingStage*/ ctx[2]?.id
 			? /*stage*/ ctx[0].iconClass
 			: "fas fa-times") + " svelte-15kr85e"));
 
-			attr(div0, "class", "visahoi-navigation-item-circle svelte-15kr85e");
-			attr(span, "class", "visahoi-stage-title svelte-15kr85e");
-			set_style(div1, "--background-color", /*stage*/ ctx[0].backgroundColor);
-			set_style(div1, "--hover-background-color", /*stage*/ ctx[0].hoverBackgroundColor || /*stage*/ ctx[0].backgroundColor);
-			set_style(div1, "--bottom", /*bottom*/ ctx[4]);
+			attr(div, "class", "visahoi-navigation-item-circle svelte-15kr85e");
+		},
+		m(target, anchor) {
+			insert(target, div, anchor);
+			append(div, i);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*$activeOnboardingStage, stage*/ 5 && i_class_value !== (i_class_value = "" + (null_to_empty(!/*$activeOnboardingStage*/ ctx[2] || /*stage*/ ctx[0].id !== /*$activeOnboardingStage*/ ctx[2]?.id
+			? /*stage*/ ctx[0].iconClass
+			: "fas fa-times") + " svelte-15kr85e"))) {
+				attr(i, "class", i_class_value);
+			}
+		},
+		d(detaching) {
+			if (detaching) detach(div);
+		}
+	};
+}
 
-			attr(div1, "class", div1_class_value = "visahoi-navigation-item " + (!/*$showOnboardingSteps*/ ctx[1] || /*$activeOnboardingStage*/ ctx[2]
+function create_fragment$9(ctx) {
+	let div;
+	let previous_key = /*$onboardingStages*/ ctx[4];
+	let t0;
+	let span;
+	let t1_value = /*stage*/ ctx[0].title + "";
+	let t1;
+	let div_class_value;
+	let mounted;
+	let dispose;
+	let key_block = create_key_block$1(ctx);
+
+	return {
+		c() {
+			div = element("div");
+			key_block.c();
+			t0 = space();
+			span = element("span");
+			t1 = text(t1_value);
+			attr(span, "class", "visahoi-stage-title svelte-15kr85e");
+			set_style(div, "--background-color", /*stage*/ ctx[0].backgroundColor);
+			set_style(div, "--hover-background-color", /*stage*/ ctx[0].hoverBackgroundColor || /*stage*/ ctx[0].backgroundColor);
+			set_style(div, "--bottom", /*bottom*/ ctx[5]);
+
+			attr(div, "class", div_class_value = "visahoi-navigation-item " + (!/*$showOnboardingSteps*/ ctx[1] || /*$activeOnboardingStage*/ ctx[2]
 			? 'removed'
 			: '') + " " + (/*$navigationAlignment*/ ctx[3] === 'row'
 			? 'horizontal'
 			: 'vertical') + " svelte-15kr85e");
 		},
 		m(target, anchor) {
-			insert(target, div1, anchor);
-			append(div1, div0);
-			append(div0, i);
-			append(div1, t0);
-			append(div1, span);
+			insert(target, div, anchor);
+			key_block.m(div, null);
+			append(div, t0);
+			append(div, span);
 			append(span, t1);
 
 			if (!mounted) {
-				dispose = listen(div1, "click", /*handleClick*/ ctx[5]);
+				dispose = listen(div, "click", /*handleClick*/ ctx[6]);
 				mounted = true;
 			}
 		},
 		p(ctx, [dirty]) {
-			if (dirty & /*$activeOnboardingStage, stage*/ 5 && i_class_value !== (i_class_value = "" + (null_to_empty(!/*$activeOnboardingStage*/ ctx[2] || /*stage*/ ctx[0].id !== /*$activeOnboardingStage*/ ctx[2]?.id
-			? /*stage*/ ctx[0].iconClass
-			: "fas fa-times") + " svelte-15kr85e"))) {
-				attr(i, "class", i_class_value);
+			if (dirty & /*$onboardingStages*/ 16 && safe_not_equal(previous_key, previous_key = /*$onboardingStages*/ ctx[4])) {
+				key_block.d(1);
+				key_block = create_key_block$1(ctx);
+				key_block.c();
+				key_block.m(div, t0);
+			} else {
+				key_block.p(ctx, dirty);
 			}
 
 			if (dirty & /*stage*/ 1 && t1_value !== (t1_value = /*stage*/ ctx[0].title + "")) set_data(t1, t1_value);
 
 			if (dirty & /*stage*/ 1) {
-				set_style(div1, "--background-color", /*stage*/ ctx[0].backgroundColor);
+				set_style(div, "--background-color", /*stage*/ ctx[0].backgroundColor);
 			}
 
 			if (dirty & /*stage*/ 1) {
-				set_style(div1, "--hover-background-color", /*stage*/ ctx[0].hoverBackgroundColor || /*stage*/ ctx[0].backgroundColor);
+				set_style(div, "--hover-background-color", /*stage*/ ctx[0].hoverBackgroundColor || /*stage*/ ctx[0].backgroundColor);
 			}
 
-			if (dirty & /*$showOnboardingSteps, $activeOnboardingStage, $navigationAlignment*/ 14 && div1_class_value !== (div1_class_value = "visahoi-navigation-item " + (!/*$showOnboardingSteps*/ ctx[1] || /*$activeOnboardingStage*/ ctx[2]
+			if (dirty & /*$showOnboardingSteps, $activeOnboardingStage, $navigationAlignment*/ 14 && div_class_value !== (div_class_value = "visahoi-navigation-item " + (!/*$showOnboardingSteps*/ ctx[1] || /*$activeOnboardingStage*/ ctx[2]
 			? 'removed'
 			: '') + " " + (/*$navigationAlignment*/ ctx[3] === 'row'
 			? 'horizontal'
 			: 'vertical') + " svelte-15kr85e")) {
-				attr(div1, "class", div1_class_value);
+				attr(div, "class", div_class_value);
 			}
 		},
 		i: noop,
 		o: noop,
 		d(detaching) {
-			if (detaching) detach(div1);
+			if (detaching) detach(div);
+			key_block.d(detaching);
 			mounted = false;
 			dispose();
 		}
@@ -6737,9 +6834,11 @@ function instance$9($$self, $$props, $$invalidate) {
 	let $showOnboardingSteps;
 	let $activeOnboardingStage;
 	let $navigationAlignment;
+	let $onboardingStages;
 	component_subscribe($$self, showOnboardingSteps, $$value => $$invalidate(1, $showOnboardingSteps = $$value));
 	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(2, $activeOnboardingStage = $$value));
 	component_subscribe($$self, navigationAlignment, $$value => $$invalidate(3, $navigationAlignment = $$value));
+	component_subscribe($$self, onboardingStages, $$value => $$invalidate(4, $onboardingStages = $$value));
 	let { stage } = $$props;
 	let { index } = $$props;
 	const bottom = (index + 1) * 75 + "px";
@@ -6752,7 +6851,7 @@ function instance$9($$self, $$props, $$invalidate) {
 
 	$$self.$$set = $$props => {
 		if ('stage' in $$props) $$invalidate(0, stage = $$props.stage);
-		if ('index' in $$props) $$invalidate(6, index = $$props.index);
+		if ('index' in $$props) $$invalidate(7, index = $$props.index);
 	};
 
 	return [
@@ -6760,6 +6859,7 @@ function instance$9($$self, $$props, $$invalidate) {
 		$showOnboardingSteps,
 		$activeOnboardingStage,
 		$navigationAlignment,
+		$onboardingStages,
 		bottom,
 		handleClick,
 		index
@@ -6769,7 +6869,7 @@ function instance$9($$self, $$props, $$invalidate) {
 class OnboardingNavigationItem extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$9, create_fragment$9, safe_not_equal, { stage: 0, index: 6 });
+		init(this, options, instance$9, create_fragment$9, safe_not_equal, { stage: 0, index: 7 });
 	}
 }
 
@@ -7128,7 +7228,6 @@ function create_fragment$7(ctx) {
 	let div1;
 	let div0;
 	let div0_class_value;
-	let div1_class_value;
 	let mounted;
 	let dispose;
 
@@ -7136,34 +7235,25 @@ function create_fragment$7(ctx) {
 		c() {
 			div1 = element("div");
 			div0 = element("div");
-			set_style(div0, "--active-background-color", /*activeBackgroundColor*/ ctx[2] || /*hoverBackgroundColor*/ ctx[3]);
-			set_style(div0, "--background-color", /*activeBackgroundColor*/ ctx[2] || /*backgroundColor*/ ctx[4]);
-			set_style(div0, "--hover-background-color", /*hoverBackgroundColor*/ ctx[3] || /*backgroundColor*/ ctx[4]);
-			attr(div0, "id", "visahoi-marker-navigation-" + getMarkerDomId(/*marker*/ ctx[5].id));
-			attr(div0, "class", div0_class_value = "visahoi-marker-navigation-item-circle " + /*$activeOnboardingStage*/ ctx[1] + " svelte-8ax7to");
-			set_style(div1, "--bottom", /*bottom*/ ctx[0]);
-			attr(div1, "class", div1_class_value = "visahoi-marker-navigation-item " + /*$activeOnboardingStage*/ ctx[1] + " svelte-8ax7to");
+			set_style(div0, "--active-background-color", /*activeBackgroundColor*/ ctx[1] || /*hoverBackgroundColor*/ ctx[2]);
+			set_style(div0, "--background-color", /*activeBackgroundColor*/ ctx[1] || /*backgroundColor*/ ctx[3]);
+			set_style(div0, "--hover-background-color", /*hoverBackgroundColor*/ ctx[2] || /*backgroundColor*/ ctx[3]);
+			attr(div0, "id", "visahoi-marker-navigation-" + getMarkerDomId(/*marker*/ ctx[4].id));
+			attr(div0, "class", div0_class_value = "visahoi-marker-navigation-item-circle " + /*$activeOnboardingStage*/ ctx[0] + " svelte-1uk3owe");
+			attr(div1, "class", "visahoi-navigation-wrapper svelte-1uk3owe");
 		},
 		m(target, anchor) {
 			insert(target, div1, anchor);
 			append(div1, div0);
 
 			if (!mounted) {
-				dispose = listen(div0, "click", /*handleClick*/ ctx[6]);
+				dispose = listen(div0, "click", /*handleClick*/ ctx[5]);
 				mounted = true;
 			}
 		},
 		p(ctx, [dirty]) {
-			if (dirty & /*$activeOnboardingStage*/ 2 && div0_class_value !== (div0_class_value = "visahoi-marker-navigation-item-circle " + /*$activeOnboardingStage*/ ctx[1] + " svelte-8ax7to")) {
+			if (dirty & /*$activeOnboardingStage*/ 1 && div0_class_value !== (div0_class_value = "visahoi-marker-navigation-item-circle " + /*$activeOnboardingStage*/ ctx[0] + " svelte-1uk3owe")) {
 				attr(div0, "class", div0_class_value);
-			}
-
-			if (dirty & /*bottom*/ 1) {
-				set_style(div1, "--bottom", /*bottom*/ ctx[0]);
-			}
-
-			if (dirty & /*$activeOnboardingStage*/ 2 && div1_class_value !== (div1_class_value = "visahoi-marker-navigation-item " + /*$activeOnboardingStage*/ ctx[1] + " svelte-8ax7to")) {
-				attr(div1, "class", div1_class_value);
 			}
 		},
 		i: noop,
@@ -7177,18 +7267,17 @@ function create_fragment$7(ctx) {
 }
 
 function instance$7($$self, $$props, $$invalidate) {
-	let bottom;
 	let getNavSelectedMarkerIndex;
 	let $selectedMarker;
 	let $markInfo;
 	let $activeOnboardingStage;
 	let $activeMarker;
 	let $previousMarkerId;
-	component_subscribe($$self, selectedMarker, $$value => $$invalidate(12, $selectedMarker = $$value));
-	component_subscribe($$self, markerInformation, $$value => $$invalidate(10, $markInfo = $$value));
-	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(1, $activeOnboardingStage = $$value));
-	component_subscribe($$self, activeMarker, $$value => $$invalidate(13, $activeMarker = $$value));
-	component_subscribe($$self, previousMarkerId, $$value => $$invalidate(11, $previousMarkerId = $$value));
+	component_subscribe($$self, selectedMarker, $$value => $$invalidate(11, $selectedMarker = $$value));
+	component_subscribe($$self, markerInformation, $$value => $$invalidate(9, $markInfo = $$value));
+	component_subscribe($$self, activeOnboardingStage, $$value => $$invalidate(0, $activeOnboardingStage = $$value));
+	component_subscribe($$self, activeMarker, $$value => $$invalidate(12, $activeMarker = $$value));
+	component_subscribe($$self, previousMarkerId, $$value => $$invalidate(10, $previousMarkerId = $$value));
 
 	var __awaiter = this && this.__awaiter || function (thisArg, _arguments, P, generator) {
 		function adopt(value) {
@@ -7228,11 +7317,21 @@ function instance$7($$self, $$props, $$invalidate) {
 
 	let { markerInformation: markerInformation$1 } = $$props;
 	let { order } = $$props;
+
+	// $: bottom = order * 35 + 15 + "px";
 	const { activeBackgroundColor, hoverBackgroundColor, backgroundColor } = markerInformation$1.message.onboardingStage;
+
 	const { marker } = markerInformation$1;
 	let arrValue = [];
 
 	/**First navigation marker which belongs to the activeOnboarding stage is selected */
+	// $markInfo.map(async (message) => {
+	//   if (
+	//     message.message.onboardingStage.title === $activeOnboardingStage?.title
+	//   ) {
+	//     arrValue.push(message);
+	//   }
+	// });
 	$markInfo.map(message => __awaiter(void 0, void 0, void 0, function* () {
 		var _a;
 
@@ -7240,6 +7339,8 @@ function instance$7($$self, $$props, $$invalidate) {
 		? void 0
 		: $activeOnboardingStage.title)) {
 			arrValue.push(message);
+
+			// selectedMarker.set(arrValue[arrValue.length - 1]);
 			selectedMarker.set(arrValue[0]);
 
 			activeOnboardingStage.update(v => $selectedMarker === null || $selectedMarker === void 0
@@ -7326,17 +7427,13 @@ function instance$7($$self, $$props, $$invalidate) {
 	};
 
 	$$self.$$set = $$props => {
-		if ('markerInformation' in $$props) $$invalidate(7, markerInformation$1 = $$props.markerInformation);
-		if ('order' in $$props) $$invalidate(8, order = $$props.order);
+		if ('markerInformation' in $$props) $$invalidate(6, markerInformation$1 = $$props.markerInformation);
+		if ('order' in $$props) $$invalidate(7, order = $$props.order);
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*order*/ 256) {
-			$$invalidate(0, bottom = order * 35 + 15 + "px");
-		}
-
-		if ($$self.$$.dirty & /*$markInfo, $previousMarkerId*/ 3072) {
-			$$invalidate(9, getNavSelectedMarkerIndex = () => {
+		if ($$self.$$.dirty & /*$markInfo, $previousMarkerId*/ 1536) {
+			$$invalidate(8, getNavSelectedMarkerIndex = () => {
 				$markInfo.map((maker, i) => {
 					if (maker.marker.id === $previousMarkerId) {
 						markerIndexId.set(i);
@@ -7345,13 +7442,12 @@ function instance$7($$self, $$props, $$invalidate) {
 			});
 		}
 
-		if ($$self.$$.dirty & /*getNavSelectedMarkerIndex*/ 512) {
+		if ($$self.$$.dirty & /*getNavSelectedMarkerIndex*/ 256) {
 			getNavSelectedMarkerIndex();
 		}
 	};
 
 	return [
-		bottom,
 		$activeOnboardingStage,
 		activeBackgroundColor,
 		hoverBackgroundColor,
@@ -7369,7 +7465,7 @@ function instance$7($$self, $$props, $$invalidate) {
 class NavigationMarker extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$7, create_fragment$7, safe_not_equal, { markerInformation: 7, order: 8 });
+		init(this, options, instance$7, create_fragment$7, safe_not_equal, { markerInformation: 6, order: 7 });
 	}
 }
 
@@ -7389,7 +7485,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (120:4) {#if $activeOnboardingStage && $showOnboardingNavigation}
+// (127:6) {#if $activeOnboardingStage && $showOnboardingNavigation}
 function create_if_block_1$1(ctx) {
 	let each_1_anchor;
 	let current;
@@ -7473,7 +7569,7 @@ function create_if_block_1$1(ctx) {
 	};
 }
 
-// (121:6) {#each $markerInformation.sort( (a, b) => (a.message.onboardingStage.title < b.message.onboardingStage.title ? -1 : a.message.onboardingStage.title > b.message.onboardingStage.title ? 1 : 0) ) as marker, index}
+// (128:8) {#each $markerInformation.sort((a, b) => {            if (a.message.onboardingStage.title === b.message.onboardingStage.title) {              return a.message?.order < b.message?.order ? -1 : 1;            } else {              return a.message.onboardingStage.title > b.message.onboardingStage.title ? -1 : 1;            }          }) as marker, index}
 function create_each_block_1(ctx) {
 	let navigationmarker;
 	let current;
@@ -7513,7 +7609,7 @@ function create_each_block_1(ctx) {
 	};
 }
 
-// (126:4) {#if $activeOnboardingStage && $showOnboardingNavigation}
+// (139:6) {#if $activeOnboardingStage && $showOnboardingNavigation}
 function create_if_block$2(ctx) {
 	let div0;
 	let span0;
@@ -7534,10 +7630,10 @@ function create_if_block$2(ctx) {
 			span1.innerHTML = `<i class="fas fa-chevron-down"></i>`;
 			attr(div0, "id", "navigation-next");
 			set_style(div0, "--bottom-height", /*nextHeight*/ ctx[2]);
-			attr(div0, "class", "visahoi-navigation-next svelte-1xcg7mz");
+			attr(div0, "class", "visahoi-navigation-next svelte-4yr4h7");
 			attr(div1, "id", "navigation-previous");
 			set_style(div1, "--bottom-height", /*prevHeight*/ ctx[1]);
-			attr(div1, "class", "visahoi-navigation-previous svelte-1xcg7mz");
+			attr(div1, "class", "visahoi-navigation-previous svelte-4yr4h7");
 		},
 		m(target, anchor) {
 			insert(target, div0, anchor);
@@ -7548,8 +7644,8 @@ function create_if_block$2(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(div0, "click", /*navNext*/ ctx[8]),
-					listen(div1, "click", /*navPrev*/ ctx[9])
+					listen(div0, "click", /*navPrev*/ ctx[9]),
+					listen(div1, "click", /*navNext*/ ctx[8])
 				];
 
 				mounted = true;
@@ -7574,7 +7670,84 @@ function create_if_block$2(ctx) {
 	};
 }
 
-// (146:2) {#each $onboardingStages.sort((a, b) => a.order - b.order) as stage, index}
+// (119:2) {#key $markerInformation}
+function create_key_block(ctx) {
+	let div;
+	let t;
+	let current;
+	let if_block0 = /*$activeOnboardingStage*/ ctx[4] && /*$showOnboardingNavigation*/ ctx[5] && create_if_block_1$1(ctx);
+	let if_block1 = /*$activeOnboardingStage*/ ctx[4] && /*$showOnboardingNavigation*/ ctx[5] && create_if_block$2(ctx);
+
+	return {
+		c() {
+			div = element("div");
+			if (if_block0) if_block0.c();
+			t = space();
+			if (if_block1) if_block1.c();
+			attr(div, "class", "visahoi-navigation-marker-container svelte-4yr4h7");
+		},
+		m(target, anchor) {
+			insert(target, div, anchor);
+			if (if_block0) if_block0.m(div, null);
+			append(div, t);
+			if (if_block1) if_block1.m(div, null);
+			current = true;
+		},
+		p(ctx, dirty) {
+			if (/*$activeOnboardingStage*/ ctx[4] && /*$showOnboardingNavigation*/ ctx[5]) {
+				if (if_block0) {
+					if_block0.p(ctx, dirty);
+
+					if (dirty & /*$activeOnboardingStage, $showOnboardingNavigation*/ 48) {
+						transition_in(if_block0, 1);
+					}
+				} else {
+					if_block0 = create_if_block_1$1(ctx);
+					if_block0.c();
+					transition_in(if_block0, 1);
+					if_block0.m(div, t);
+				}
+			} else if (if_block0) {
+				group_outros();
+
+				transition_out(if_block0, 1, 1, () => {
+					if_block0 = null;
+				});
+
+				check_outros();
+			}
+
+			if (/*$activeOnboardingStage*/ ctx[4] && /*$showOnboardingNavigation*/ ctx[5]) {
+				if (if_block1) {
+					if_block1.p(ctx, dirty);
+				} else {
+					if_block1 = create_if_block$2(ctx);
+					if_block1.c();
+					if_block1.m(div, null);
+				}
+			} else if (if_block1) {
+				if_block1.d(1);
+				if_block1 = null;
+			}
+		},
+		i(local) {
+			if (current) return;
+			transition_in(if_block0);
+			current = true;
+		},
+		o(local) {
+			transition_out(if_block0);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(div);
+			if (if_block0) if_block0.d();
+			if (if_block1) if_block1.d();
+		}
+	};
+}
+
+// (160:2) {#each $onboardingStages.sort((a, b) => a.order - b.order) as stage, index}
 function create_each_block$1(ctx) {
 	let onboardingnavigationitem;
 	let current;
@@ -7615,15 +7788,13 @@ function create_each_block$1(ctx) {
 }
 
 function create_fragment$6(ctx) {
-	let div1;
-	let div0;
+	let div;
+	let previous_key = /*$markerInformation*/ ctx[0];
 	let t0;
 	let t1;
-	let t2;
 	let onboardingnavigationmainitem;
 	let current;
-	let if_block0 = /*$activeOnboardingStage*/ ctx[4] && /*$showOnboardingNavigation*/ ctx[5] && create_if_block_1$1(ctx);
-	let if_block1 = /*$activeOnboardingStage*/ ctx[4] && /*$showOnboardingNavigation*/ ctx[5] && create_if_block$2(ctx);
+	let key_block = create_key_block(ctx);
 	let each_value = /*$onboardingStages*/ ctx[6].sort(func_1);
 	let each_blocks = [];
 
@@ -7639,75 +7810,44 @@ function create_fragment$6(ctx) {
 
 	return {
 		c() {
-			div1 = element("div");
-			div0 = element("div");
-			if (if_block0) if_block0.c();
+			div = element("div");
+			key_block.c();
 			t0 = space();
-			if (if_block1) if_block1.c();
-			t1 = space();
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			t2 = space();
+			t1 = space();
 			create_component(onboardingnavigationmainitem.$$.fragment);
-			attr(div0, "class", "visahoi-navigation-marker-container svelte-1xcg7mz");
-			attr(div1, "class", "visahoi-navigation-container svelte-1xcg7mz");
-			set_style(div1, "--flexDirection", /*$navigationAlignment*/ ctx[3]);
-			set_style(div1, "height", "'60px'");
+			attr(div, "class", "visahoi-navigation-container svelte-4yr4h7");
+			set_style(div, "--flexDirection", /*$navigationAlignment*/ ctx[3]);
+			set_style(div, "height", "'60px'");
 		},
 		m(target, anchor) {
-			insert(target, div1, anchor);
-			append(div1, div0);
-			if (if_block0) if_block0.m(div0, null);
-			append(div0, t0);
-			if (if_block1) if_block1.m(div0, null);
-			append(div1, t1);
+			insert(target, div, anchor);
+			key_block.m(div, null);
+			append(div, t0);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
-				each_blocks[i].m(div1, null);
+				each_blocks[i].m(div, null);
 			}
 
-			append(div1, t2);
-			mount_component(onboardingnavigationmainitem, div1, null);
+			append(div, t1);
+			mount_component(onboardingnavigationmainitem, div, null);
 			current = true;
 		},
 		p(ctx, [dirty]) {
-			if (/*$activeOnboardingStage*/ ctx[4] && /*$showOnboardingNavigation*/ ctx[5]) {
-				if (if_block0) {
-					if_block0.p(ctx, dirty);
-
-					if (dirty & /*$activeOnboardingStage, $showOnboardingNavigation*/ 48) {
-						transition_in(if_block0, 1);
-					}
-				} else {
-					if_block0 = create_if_block_1$1(ctx);
-					if_block0.c();
-					transition_in(if_block0, 1);
-					if_block0.m(div0, t0);
-				}
-			} else if (if_block0) {
+			if (dirty & /*$markerInformation*/ 1 && safe_not_equal(previous_key, previous_key = /*$markerInformation*/ ctx[0])) {
 				group_outros();
-
-				transition_out(if_block0, 1, 1, () => {
-					if_block0 = null;
-				});
-
+				transition_out(key_block, 1, 1, noop);
 				check_outros();
-			}
-
-			if (/*$activeOnboardingStage*/ ctx[4] && /*$showOnboardingNavigation*/ ctx[5]) {
-				if (if_block1) {
-					if_block1.p(ctx, dirty);
-				} else {
-					if_block1 = create_if_block$2(ctx);
-					if_block1.c();
-					if_block1.m(div0, null);
-				}
-			} else if (if_block1) {
-				if_block1.d(1);
-				if_block1 = null;
+				key_block = create_key_block(ctx);
+				key_block.c();
+				transition_in(key_block, 1);
+				key_block.m(div, t0);
+			} else {
+				key_block.p(ctx, dirty);
 			}
 
 			if (dirty & /*$onboardingStages*/ 64) {
@@ -7724,7 +7864,7 @@ function create_fragment$6(ctx) {
 						each_blocks[i] = create_each_block$1(child_ctx);
 						each_blocks[i].c();
 						transition_in(each_blocks[i], 1);
-						each_blocks[i].m(div1, t2);
+						each_blocks[i].m(div, t1);
 					}
 				}
 
@@ -7738,12 +7878,12 @@ function create_fragment$6(ctx) {
 			}
 
 			if (!current || dirty & /*$navigationAlignment*/ 8) {
-				set_style(div1, "--flexDirection", /*$navigationAlignment*/ ctx[3]);
+				set_style(div, "--flexDirection", /*$navigationAlignment*/ ctx[3]);
 			}
 		},
 		i(local) {
 			if (current) return;
-			transition_in(if_block0);
+			transition_in(key_block);
 
 			for (let i = 0; i < each_value.length; i += 1) {
 				transition_in(each_blocks[i]);
@@ -7753,7 +7893,7 @@ function create_fragment$6(ctx) {
 			current = true;
 		},
 		o(local) {
-			transition_out(if_block0);
+			transition_out(key_block);
 			each_blocks = each_blocks.filter(Boolean);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -7764,20 +7904,23 @@ function create_fragment$6(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			if (detaching) detach(div1);
-			if (if_block0) if_block0.d();
-			if (if_block1) if_block1.d();
+			if (detaching) detach(div);
+			key_block.d(detaching);
 			destroy_each(each_blocks, detaching);
 			destroy_component(onboardingnavigationmainitem);
 		}
 	};
 }
 
-const func = (a, b) => a.message.onboardingStage.title < b.message.onboardingStage.title
-? -1
-: a.message.onboardingStage.title > b.message.onboardingStage.title
-	? 1
-	: 0;
+const func = (a, b) => {
+	if (a.message.onboardingStage.title === b.message.onboardingStage.title) {
+		return a.message?.order < b.message?.order ? -1 : 1;
+	} else {
+		return a.message.onboardingStage.title > b.message.onboardingStage.title
+		? -1
+		: 1;
+	}
+};
 
 const func_1 = (a, b) => a.order - b.order;
 
@@ -7851,7 +7994,7 @@ function instance$6($$self, $$props, $$invalidate) {
 			: _a.style.opacity = 0.5;
 		}
 
-		const elementId = document.getElementById("navigation-previous");
+		const elementId = document.getElementById("navigation-next");
 
 		elementId === null || elementId === void 0
 		? void 0
@@ -7867,7 +8010,7 @@ function instance$6($$self, $$props, $$invalidate) {
 					$$invalidate(7, index = i + 1);
 
 					if (index + 1 === $markerInformation.length) {
-						const elementId = document.getElementById("navigation-next");
+						const elementId = document.getElementById("navigation-previous");
 
 						elementId === null || elementId === void 0
 						? void 0
@@ -7915,7 +8058,7 @@ function instance$6($$self, $$props, $$invalidate) {
 			: _a.style.opacity = 0.5;
 		}
 
-		const elementId = document.getElementById("navigation-next");
+		const elementId = document.getElementById("navigation-previous");
 
 		elementId === null || elementId === void 0
 		? void 0
@@ -7931,7 +8074,7 @@ function instance$6($$self, $$props, $$invalidate) {
 					$$invalidate(7, index = i - 1);
 
 					if (index === 0) {
-						const elementId = document.getElementById("navigation-previous");
+						const elementId = document.getElementById("navigation-next");
 
 						elementId === null || elementId === void 0
 						? void 0
@@ -7985,7 +8128,7 @@ function instance$6($$self, $$props, $$invalidate) {
 					case 0:
 						{
 							yield tick();
-							const preElementId = document.getElementById("navigation-previous");
+							const preElementId = document.getElementById("navigation-next");
 
 							preElementId === null || preElementId === void 0
 							? void 0
@@ -7995,7 +8138,7 @@ function instance$6($$self, $$props, $$invalidate) {
 							? void 0
 							: preElementId.style.opacity = 0.5;
 
-							const nextElementId = document.getElementById("navigation-next");
+							const nextElementId = document.getElementById("navigation-previous");
 
 							nextElementId === null || nextElementId === void 0
 							? void 0
@@ -8010,7 +8153,7 @@ function instance$6($$self, $$props, $$invalidate) {
 					case $markerInformation.length - 1:
 						{
 							yield tick();
-							const nextElementId = document.getElementById("navigation-next");
+							const nextElementId = document.getElementById("navigation-previous");
 
 							nextElementId === null || nextElementId === void 0
 							? void 0
@@ -8020,7 +8163,7 @@ function instance$6($$self, $$props, $$invalidate) {
 							? void 0
 							: nextElementId.style.opacity = 0.5;
 
-							const preElementId = document.getElementById("navigation-previous");
+							const preElementId = document.getElementById("navigation-next");
 
 							preElementId === null || preElementId === void 0
 							? void 0
@@ -8384,6 +8527,91 @@ class Marker extends SvelteComponent {
 	}
 }
 
+/* src\components\Backdrop.svelte generated by Svelte v3.49.0 */
+
+function create_fragment$4(ctx) {
+	let div;
+
+	return {
+		c() {
+			div = element("div");
+			attr(div, "class", "backdrop svelte-13xsvcr");
+			set_style(div, "--clipPath", /*backdropPath*/ ctx[0]);
+			set_style(div, "--opacity", /*$backdropOpacity*/ ctx[1]);
+		},
+		m(target, anchor) {
+			insert(target, div, anchor);
+		},
+		p(ctx, [dirty]) {
+			if (dirty & /*backdropPath*/ 1) {
+				set_style(div, "--clipPath", /*backdropPath*/ ctx[0]);
+			}
+
+			if (dirty & /*$backdropOpacity*/ 2) {
+				set_style(div, "--opacity", /*$backdropOpacity*/ ctx[1]);
+			}
+		},
+		i: noop,
+		o: noop,
+		d(detaching) {
+			if (detaching) detach(div);
+		}
+	};
+}
+
+const fullAppWidth = "100vw";
+const fullAppHeight = "100vh";
+
+function instance$4($$self, $$props, $$invalidate) {
+	let backdropPath;
+	let $visXPosition;
+	let $visHeight;
+	let $visYPosition;
+	let $visWidth;
+	let $backdropOpacity;
+	component_subscribe($$self, visXPosition, $$value => $$invalidate(2, $visXPosition = $$value));
+	component_subscribe($$self, visHeight, $$value => $$invalidate(3, $visHeight = $$value));
+	component_subscribe($$self, visYPosition, $$value => $$invalidate(4, $visYPosition = $$value));
+	component_subscribe($$self, visWidth, $$value => $$invalidate(5, $visWidth = $$value));
+	component_subscribe($$self, backdropOpacity, $$value => $$invalidate(1, $backdropOpacity = $$value));
+	const scrollOffsetX = window.scrollX;
+	const scrollOffsetY = window.scrollY;
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*$visXPosition, $visYPosition, $visWidth, $visHeight*/ 60) {
+			// @see http://bennettfeely.com/clippy/ -> select `Frame` example
+			$$invalidate(0, backdropPath = `polygon(
+      0% 0%,
+      0% ${fullAppHeight},
+      ${$visXPosition + scrollOffsetX}px ${fullAppHeight},
+      ${$visXPosition + scrollOffsetX}px ${$visYPosition + scrollOffsetY}px,
+      ${$visXPosition + $visWidth + scrollOffsetX}px ${$visYPosition + scrollOffsetY}px,
+      ${$visXPosition + $visWidth + scrollOffsetX}px ${$visYPosition + $visHeight + scrollOffsetY + 5}px,
+      ${$visXPosition + scrollOffsetX}px ${$visYPosition + $visHeight + scrollOffsetY + 5}px,
+      ${$visXPosition + scrollOffsetX}px ${fullAppHeight},
+      ${fullAppWidth} ${fullAppHeight},
+      ${fullAppWidth} 0%
+    )`);
+		}
+	};
+
+	return [
+		backdropPath,
+		$backdropOpacity,
+		$visXPosition,
+		$visHeight,
+		$visYPosition,
+		$visWidth
+	];
+}
+
+class Backdrop extends SvelteComponent {
+	constructor(options) {
+		super();
+		init(this, options, instance$4, create_fragment$4, safe_not_equal, {});
+	}
+}
+
 /* src\components\Markers.svelte generated by Svelte v3.49.0 */
 
 function get_each_context(ctx, list, i) {
@@ -8393,7 +8621,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (11:2) {#each $markerInformation.filter((m) => m.message.onboardingStage.id === $activeOnboardingStage?.id) as marker, index}
+// (12:2) {#each $markerInformation.filter((m) => m.message.onboardingStage.id === $activeOnboardingStage?.id) as marker, index}
 function create_each_block(ctx) {
 	let marker;
 	let current;
@@ -8433,7 +8661,7 @@ function create_each_block(ctx) {
 	};
 }
 
-function create_fragment$4(ctx) {
+function create_fragment$3(ctx) {
 	let svg;
 	let current;
 	let each_value = /*$markerInformation*/ ctx[1].filter(/*func*/ ctx[7]);
@@ -8524,7 +8752,7 @@ function create_fragment$4(ctx) {
 	};
 }
 
-function instance$4($$self, $$props, $$invalidate) {
+function instance$3($$self, $$props, $$invalidate) {
 	let viewBox;
 	let $visHeight;
 	let $visWidth;
@@ -8566,7 +8794,7 @@ function instance$4($$self, $$props, $$invalidate) {
 class Markers extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$4, create_fragment$4, safe_not_equal, {});
+		init(this, options, instance$3, create_fragment$3, safe_not_equal, {});
 	}
 }
 
@@ -22150,7 +22378,7 @@ function create_else_block_2(ctx) {
 	};
 }
 
-// (161:6) {#if editTooltip}
+// (149:6) {#if editTooltip}
 function create_if_block_4(ctx) {
 	let input;
 	let mounted;
@@ -22184,7 +22412,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (171:6) {#if $isEditModeActive && !editTooltip}
+// (159:6) {#if $isEditModeActive && !editTooltip}
 function create_if_block_3(ctx) {
 	let div0;
 	let t;
@@ -22227,7 +22455,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (191:6) {#if editTooltip}
+// (179:6) {#if editTooltip}
 function create_if_block_2(ctx) {
 	let div;
 	let mounted;
@@ -22256,7 +22484,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (211:8) {:else}
+// (199:8) {:else}
 function create_else_block_1(ctx) {
 	let span;
 
@@ -22275,7 +22503,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (207:8) {#if editTooltip}
+// (195:8) {#if editTooltip}
 function create_if_block_1(ctx) {
 	let span;
 
@@ -22294,7 +22522,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (222:2) {:else}
+// (210:2) {:else}
 function create_else_block(ctx) {
 	let div;
 	let raw_value = sanitizeHtml$1(/*activeMarkerInformation*/ ctx[3]?.tooltip.text, /*sanitizerOptions*/ ctx[7]) + "";
@@ -22316,7 +22544,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (220:2) {#if editTooltip}
+// (208:2) {#if editTooltip}
 function create_if_block$1(ctx) {
 	let textarea;
 	let mounted;
@@ -22350,7 +22578,7 @@ function create_if_block$1(ctx) {
 	};
 }
 
-function create_fragment$3(ctx) {
+function create_fragment$2(ctx) {
 	let div5;
 	let div3;
 	let div0;
@@ -22543,7 +22771,7 @@ function create_fragment$3(ctx) {
 	};
 }
 
-function instance$3($$self, $$props, $$invalidate) {
+function instance$2($$self, $$props, $$invalidate) {
 	let $onboardingStages;
 	let $onboardingMessages;
 	let $activeOnboardingStage;
@@ -22671,18 +22899,6 @@ function instance$3($$self, $$props, $$invalidate) {
 				markerInformation.set(tempMarkerInformation);
 
 				// check whether the onboarding message deleted is the last message of the activeOboarding stage.
-				// If it is then show all the onboarding stages.
-				// $onboardingStages.map((o, i) => {
-				//   const res = $markerInformation.find(
-				//     (m) => m.message.onboardingStage.id === o.id
-				//   );
-				//   if (res === undefined) {
-				//     const tempOnboardinStages = $onboardingStages;
-				//     tempOnboardinStages.splice(i, 1);
-				//     onboardingStages.set(tempOnboardinStages);
-				//     activeOnboardingStage.set(null);
-				//   }
-				// });
 				const result = $markerInformation.find(m => m.message.onboardingStage.id === ($activeOnboardingStage === null || $activeOnboardingStage === void 0
 				? void 0
 				: $activeOnboardingStage.id));
@@ -22708,7 +22924,7 @@ function instance$3($$self, $$props, $$invalidate) {
 				const tempOnboardingMessage = $onboardingMessages;
 				tempOnboardingMessage.splice(i, 1);
 				onboardingMessages.set(tempOnboardingMessage);
-			} // console.log(getOnboardingMessages(), "onboarding message");
+			}
 		});
 
 		// Console message is shown when all the onboarding messages are delete
@@ -22806,13 +23022,13 @@ function instance$3($$self, $$props, $$invalidate) {
 class Tooltip extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$3, create_fragment$3, safe_not_equal, { visElement: 13 });
+		init(this, options, instance$2, create_fragment$2, safe_not_equal, { visElement: 13 });
 	}
 }
 
 /* src\components\Tooltips.svelte generated by Svelte v3.49.0 */
 
-function create_fragment$2(ctx) {
+function create_fragment$1(ctx) {
 	let div;
 	let tooltip;
 	let current;
@@ -22853,7 +23069,7 @@ function create_fragment$2(ctx) {
 	};
 }
 
-function instance$2($$self, $$props, $$invalidate) {
+function instance$1($$self, $$props, $$invalidate) {
 	let { visElement } = $$props;
 
 	$$self.$$set = $$props => {
@@ -22866,92 +23082,7 @@ function instance$2($$self, $$props, $$invalidate) {
 class Tooltips extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance$2, create_fragment$2, safe_not_equal, { visElement: 0 });
-	}
-}
-
-/* src\components\Backdrop.svelte generated by Svelte v3.49.0 */
-
-function create_fragment$1(ctx) {
-	let div;
-
-	return {
-		c() {
-			div = element("div");
-			attr(div, "class", "backdrop svelte-13xsvcr");
-			set_style(div, "--clipPath", /*backdropPath*/ ctx[0]);
-			set_style(div, "--opacity", /*$backdropOpacity*/ ctx[1]);
-		},
-		m(target, anchor) {
-			insert(target, div, anchor);
-		},
-		p(ctx, [dirty]) {
-			if (dirty & /*backdropPath*/ 1) {
-				set_style(div, "--clipPath", /*backdropPath*/ ctx[0]);
-			}
-
-			if (dirty & /*$backdropOpacity*/ 2) {
-				set_style(div, "--opacity", /*$backdropOpacity*/ ctx[1]);
-			}
-		},
-		i: noop,
-		o: noop,
-		d(detaching) {
-			if (detaching) detach(div);
-		}
-	};
-}
-
-const fullAppWidth = "100vw";
-const fullAppHeight = "100vh";
-
-function instance$1($$self, $$props, $$invalidate) {
-	let backdropPath;
-	let $visXPosition;
-	let $visHeight;
-	let $visYPosition;
-	let $visWidth;
-	let $backdropOpacity;
-	component_subscribe($$self, visXPosition, $$value => $$invalidate(2, $visXPosition = $$value));
-	component_subscribe($$self, visHeight, $$value => $$invalidate(3, $visHeight = $$value));
-	component_subscribe($$self, visYPosition, $$value => $$invalidate(4, $visYPosition = $$value));
-	component_subscribe($$self, visWidth, $$value => $$invalidate(5, $visWidth = $$value));
-	component_subscribe($$self, backdropOpacity, $$value => $$invalidate(1, $backdropOpacity = $$value));
-	const scrollOffsetX = window.scrollX;
-	const scrollOffsetY = window.scrollY;
-
-	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$visXPosition, $visYPosition, $visWidth, $visHeight*/ 60) {
-			// @see http://bennettfeely.com/clippy/ -> select `Frame` example
-			$$invalidate(0, backdropPath = `polygon(
-      0% 0%,
-      0% ${fullAppHeight},
-      ${$visXPosition + scrollOffsetX}px ${fullAppHeight},
-      ${$visXPosition + scrollOffsetX}px ${$visYPosition + scrollOffsetY}px,
-      ${$visXPosition + $visWidth + scrollOffsetX}px ${$visYPosition + scrollOffsetY}px,
-      ${$visXPosition + $visWidth + scrollOffsetX}px ${$visYPosition + $visHeight + scrollOffsetY + 5}px,
-      ${$visXPosition + scrollOffsetX}px ${$visYPosition + $visHeight + scrollOffsetY + 5}px,
-      ${$visXPosition + scrollOffsetX}px ${fullAppHeight},
-      ${fullAppWidth} ${fullAppHeight},
-      ${fullAppWidth} 0%
-    )`);
-		}
-	};
-
-	return [
-		backdropPath,
-		$backdropOpacity,
-		$visXPosition,
-		$visHeight,
-		$visYPosition,
-		$visWidth
-	];
-}
-
-class Backdrop extends SvelteComponent {
-	constructor(options) {
-		super();
-		init(this, options, instance$1, create_fragment$1, safe_not_equal, {});
+		init(this, options, instance$1, create_fragment$1, safe_not_equal, { visElement: 0 });
 	}
 }
 
@@ -23766,6 +23897,40 @@ const setOnboardingStage = (stage) => {
         return onboardingStages.set(tempOnboardingStages);
     }
 };
+const setOnboardingMessage = (message) => {
+    if (message.id === undefined) {
+        console.error("Provide the id of message to be updated");
+        return null;
+    }
+    else {
+        const tempOnboardingMessages = get_store_value(onboardingMessages);
+        const tempMarkerInfo = get_store_value(markerInformation);
+        for (const tempMessage of tempOnboardingMessages) {
+            if (tempMessage.id === message.id) {
+                // tempMessage.anchor = message.anchor
+                //   ? message.anchor
+                //   : tempMessage.anchor;
+                tempMessage.text = message.text ? message.text : tempMessage.text;
+                tempMessage.title = message.title ? message.title : tempMessage.title;
+                break;
+            }
+        }
+        for (const tempMarker of tempMarkerInfo) {
+            if (tempMarker.message.id === message.id) {
+                tempMarker.tooltip.title = message.title
+                    ? message.title
+                    : tempMarker.tooltip.title;
+                tempMarker.tooltip.text = message.text
+                    ? message.text
+                    : tempMarker.tooltip.text;
+                break;
+            }
+        }
+        markerInformation.set(tempMarkerInfo);
+        onboardingMessages.set(tempOnboardingMessages);
+        return onboardingMessages.set(tempOnboardingMessages);
+    }
+};
 const setEditMode = (value) => {
     return isEditModeActive.set(value);
 };
@@ -24300,5 +24465,5 @@ async function ahoi(visType, chart, ahoiConfig) {
     return injectOnboarding(ahoiConfig, visElement, "column");
 }
 
-export { EVisualizationType, ahoi, createBasicOnboardingMessage, createBasicOnboardingStage, deleteOnboardingStage, generateBasicAnnotations, getOnboardingMessages, getOnboardingStages, setEditMode, setOnboardingStage };
+export { EVisualizationType, ahoi, createBasicOnboardingMessage, createBasicOnboardingStage, deleteOnboardingStage, generateBasicAnnotations, getOnboardingMessages, getOnboardingStages, setEditMode, setOnboardingMessage, setOnboardingStage };
 //# sourceMappingURL=bundle.js.map
