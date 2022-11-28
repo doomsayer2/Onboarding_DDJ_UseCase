@@ -3,6 +3,7 @@ import {
   createBasicOnboardingMessage,
   createBasicOnboardingStage,
   deleteOnboardingStage,
+  getOnboardingMessages,
   getOnboardingStages,
   setOnboardingStage,
 } from '../static/lib/bundle.js';
@@ -62,7 +63,7 @@ function toggleModal() {
   } else {
     modal.toggle();
     fillDropdown(); // Refill the dropdown if something changed
-    fillStageEditList() // Refill the edit list if something changed
+    fillStageEditList(); // Refill the edit list if something changed
   }
 }
 
@@ -142,6 +143,9 @@ function fillDropdown() {
   document
     .querySelectorAll('#addSelectMsg option')
     .forEach((option) => option.remove());
+
+  // Sort stages first
+  state.stages.sort((a, b) => b.order - a.order);
 
   state.stages.forEach((e) => {
     const option = new Option(e.title, e.title);
@@ -292,10 +296,13 @@ function fillStageEditList() {
   // Clear the old ones first
   sortList.innerHTML = '';
 
+  // Sort stages first
+  state.stages.sort((a, b) => b.order - a.order);
+
   // Fill the list with the stages
-  state.stages.forEach((stage) =>
-    sortList.insertAdjacentHTML('afterbegin', createListItem(stage))
-  );
+  state.stages.forEach((stage) => {
+    sortList.insertAdjacentHTML('beforeend', createListItem(stage));
+  });
 }
 
 /**
@@ -326,7 +333,7 @@ function createListItem(item) {
 }
 
 /**
- * This function initializes the form validation for the second tab. More precisely the form validation for 
+ * This function initializes the form validation for the second tab. More precisely the form validation for
  * the edit tab form.
  */
 function formValidationTab2Edit() {
@@ -337,19 +344,22 @@ function formValidationTab2Edit() {
     handle: '.list-group-item',
     sort: true,
     chosenClass: 'sorting',
-      // Called by any change to the list (add / update / remove)
+    // Called by any change to the list (add / update / remove)
     onSort: function () {
       const idOrder = this.toArray();
 
       idOrder.forEach((id, i) => {
         setOnboardingStage({
           id,
-          order: idOrder.length - i
+          order: idOrder.length - i,
         });
       });
-    }
+
+      // Also order the dropdown in the other tab
+      fillDropdown();
+    },
   });
-  
+
   // Listener for Stage Edit form button
   stageEditBtn.addEventListener(
     'click',
@@ -367,13 +377,15 @@ function formValidationTab2Edit() {
         const { id, title, backgroundColor, iconClass } = getFormVals(elements);
 
         // Update the stage and everything else
-        updateStageInformation();
         setOnboardingStage({
           id,
           title,
           backgroundColor,
-          iconClass
+          activeBackgroundColor: backgroundColor,
+          hoverBackgroundColor: backgroundColor,
+          iconClass,
         });
+        updateStageInformation();
 
         // Reset the form to previous state
         formStageEdit.classList.remove('was-validated');
@@ -436,10 +448,10 @@ function editListItem(elm, id) {
  * we change one stage.
  */
 function updateStageInformation() {
-  state.stages = getOnboardingStages();
-
   // Just wait for the other changes to take effect
   setTimeout(() => {
+    state.stages = getOnboardingStages();
+    state.messages = getOnboardingMessages();
     fillStageEditList();
     fillDropdown();
   }, 1);

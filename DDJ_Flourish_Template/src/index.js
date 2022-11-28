@@ -123,6 +123,11 @@ export async function draw() {
     ? toggleSettingsMenu(false)
     : dialogSave();
 
+  // document.getElementById('log').addEventListener('click', () => {
+  //   console.log('Stages: ', getOnboardingStages());
+  //   console.log('Messages: ', getOnboardingMessages());
+  // });
+
   // ===================
   //  📊 Visualization
   // ===================
@@ -161,6 +166,7 @@ const cleanState = () => {
  * This function is used to update the state based on user interactions with the onboarding like deleting or adding things
  */
 const observer = new MutationObserver((mutations, observer) => {
-  state.stages = getOnboardingStages();
-  state.messages = getOnboardingMessages();
+  console.log('Do nothing...');
+  // state.stages = getOnboardingStages();
+  // state.messages = getOnboardingMessages();
 });
