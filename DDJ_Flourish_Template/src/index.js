@@ -166,7 +166,7 @@ const cleanState = () => {
  * This function is used to update the state based on user interactions with the onboarding like deleting or adding things
  */
 const observer = new MutationObserver((mutations, observer) => {
-  console.log('Do nothing...');
-  // state.stages = getOnboardingStages();
-  // state.messages = getOnboardingMessages();
+  // console.log('Do nothing...');
+  state.stages = getOnboardingStages();
+  state.messages = getOnboardingMessages();
 });
