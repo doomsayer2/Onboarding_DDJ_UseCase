@@ -26,6 +26,8 @@ Also please refert to the readmes of the individual submodules. Mostly it will b
 
 ## 📫 Contribution & Credits
 [Reuters Graphics](https://www.reuters.com/graphics/USA-BIDEN/INVESTMENTS/xlbvgkbxlvq/) — The original site that was scraped (copied) in order to test it against the newly enhanced with the flourish template. The static treemap image was replaced with the flourish template generated one.
+<br/>
+<br/>
 [Flourish](https://developers.flourish.studio/sdk/introduction/) — For the flourish SDK and support pages.
 
 ## 🤝 Collaborators
