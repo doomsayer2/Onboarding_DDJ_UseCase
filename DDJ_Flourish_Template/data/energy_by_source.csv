@@ -1,0 +1,85 @@
+Label,Parent,Value,Color
+China (CN),,6671928,#003f5c
+CN - Coal,China (CN),4508568,#003f5c
+CN - Oil,China (CN),10278,#003f5c
+CN - Natural gas,China (CN),196400,#003f5c
+CN - Biofuels,China (CN),79537,#003f5c
+CN - Waste,China (CN),13386,#003f5c
+CN - Nuclear,China (CN),248070,#003f5c
+CN - Hydro,China (CN),1189840,#003f5c
+CN - Geothermal,China (CN),125,#003f5c
+CN - Solar PV,China (CN),130659,#003f5c
+CN - Solar thermal,China (CN),29,#003f5c
+CN - Tide,China (CN),11,#003f5c
+CN - Wind,China (CN),295025,#003f5c
+CN - Other sources,China (CN),0,#003f5c
+USA,,4434909,#444e86
+USA - Coal,USA,1254542,#444e86
+USA - Oil,USA,38825,#444e86
+USA - Natural gas,USA,1513414,#444e86
+USA - Biofuels,USA,58955,#444e86
+USA - Waste,USA,18259,#444e86
+USA - Nuclear,USA,841329,#444e86
+USA - Hydro,USA,315619,#444e86
+USA - Geothermal,USA,18962,#444e86
+USA - Solar PV,USA,87183,#444e86
+USA - Solar thermal,USA,4640,#444e86
+USA - Tide,USA,0,#444e86
+USA - Wind,USA,277918,#444e86
+USA - Other sources,USA,5263,#444e86
+Russia (RU),,1094289,#955196
+RU - Coal,Russia (RU),174568,#955196
+RU - Oil,Russia (RU),6976,#955196
+RU - Natural gas,Russia (RU),518660,#955196
+RU - Biofuels,Russia (RU),84,#955196
+RU - Waste,Russia (RU),2594,#955196
+RU - Nuclear,Russia (RU),203143,#955196
+RU - Hydro,Russia (RU),187131,#955196
+RU - Geothermal,Russia (RU),435,#955196
+RU - Solar PV,Russia (RU),558,#955196
+RU - Solar thermal,Russia (RU),0,#955196
+RU - Tide,Russia (RU),0,#955196
+RU - Wind,Russia (RU),140,#955196
+RU - Other sources,Russia (RU),0,#955196
+Brazil (BR),,589399,#dd5182
+BR - Coal,Brazil (BR),25337,#dd5182
+BR - Oil,Brazil (BR),15917,#dd5182
+BR - Natural gas,Brazil (BR),65593,#dd5182
+BR - Biofuels,Brazil (BR),52255,#dd5182
+BR - Waste,Brazil (BR),0,#dd5182
+BR - Nuclear,Brazil (BR),15739,#dd5182
+BR - Hydro,Brazil (BR),370906,#dd5182
+BR - Geothermal,Brazil (BR),0,#dd5182
+BR - Solar PV,Brazil (BR),832,#dd5182
+BR - Solar thermal,Brazil (BR),0,#dd5182
+BR - Tide,Brazil (BR),0,#dd5182
+BR - Wind,Brazil (BR),42373,#dd5182
+BR - Other sources,Brazil (BR),447,#dd5182
+United Kingdom (UK),,333916,#ff6e54
+UK - Coal,United Kingdom (UK),17570,#ff6e54
+UK - Oil,United Kingdom (UK),1682,#ff6e54
+UK - Natural gas,United Kingdom (UK),131482,#ff6e54
+UK - Biofuels,United Kingdom (UK),32086,#ff6e54
+UK - Waste,United Kingdom (UK),8023,#ff6e54
+UK - Nuclear,United Kingdom (UK),65064,#ff6e54
+UK - Hydro,United Kingdom (UK),7963,#ff6e54
+UK - Geothermal,United Kingdom (UK),57116,#ff6e54
+UK - Solar PV,United Kingdom (UK),12922,#ff6e54
+UK - Solar thermal,United Kingdom (UK),0,#ff6e54
+UK - Tide,United Kingdom (UK),8,#ff6e54
+UK - Wind,United Kingdom (UK),0,#ff6e54
+UK - Other sources,United Kingdom (UK),0,#ff6e54
+Sweden (SE),,159288,#ffa600
+SE - Coal,Sweden (SE),2035,#ffa600
+SE - Oil,Sweden (SE),379,#ffa600
+SE - Natural gas,Sweden (SE),564,#ffa600
+SE - Biofuels,Sweden (SE),9338,#ffa600
+SE - Waste,Sweden (SE),2539,#ffa600
+SE - Nuclear,Sweden (SE),65801,#ffa600
+SE - Hydro,Sweden (SE),61605,#ffa600
+SE - Geothermal,Sweden (SE),16623,#ffa600
+SE - Solar PV,Sweden (SE),404,#ffa600
+SE - Solar thermal,Sweden (SE),0,#ffa600
+SE - Tide,Sweden (SE),0,#ffa600
+SE - Wind,Sweden (SE),0,#ffa600
+SE - Other sources,Sweden (SE),0,#ffa600
