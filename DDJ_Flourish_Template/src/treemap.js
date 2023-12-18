@@ -1,10 +1,11 @@
-import {
-  EVisualizationType,
-  ahoi,
-  generateBasicAnnotations,
-  getOnboardingStages,
-  setOnboardingStage,
-} from '../static/lib/bundle.js';
+// import {
+//   EVisualizationType,
+//   ahoi,
+//   generateBasicAnnotations,
+//   getOnboardingStages,
+//   setOnboardingStage,
+// } from '../static/lib/bundle.js';
+import { EVisualizationType, ahoi, generateBasicAnnotations } from '@visahoi/plotly';
 import { state } from './index';
 import { getCssSelector } from 'css-selector-generator';
 import { onboarding } from './utils/store.js';
